@@ -35,13 +35,17 @@ OBJECTS     := $(patsubst $(SRCDIR)/%,$(OBJDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT
 
 #Default Make
 
-all: build $(LIB)/$(MLX)/$(MLX.A) $(LIB)/$(LIBFT)/$(LIB)/$(LIBFT.A) $(TARGETDIR)/$(TARGET) 
+all: submodule build $(LIB)/$(MLX)/$(MLX.A) $(LIB)/$(LIBFT)/$(LIB)/$(LIBFT.A) $(TARGETDIR)/$(TARGET) 
 
 #Remake
 re: fclean all
 
 debug: CFLAGS += -DDEBUG
 debug: fclean $(NAME)
+
+#Prep submodules
+submodule:
+	git submodule update --init --recursive
 
 #Make the Directories
 build:
