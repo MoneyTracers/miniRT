@@ -6,11 +6,11 @@
 /*   By: mynodeus <mynodeus@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/21 10:10:59 by mynodeus      #+#    #+#                 */
-/*   Updated: 2024/09/30 15:02:39 by spenning      ########   odam.nl         */
+/*   Updated: 2024/09/30 16:20:42 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/rt.h"
+#include <rt.h>
 
 // rotate_x(a, b, 0);
 // rotate_y(a, b, 0);

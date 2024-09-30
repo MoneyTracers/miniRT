@@ -6,11 +6,11 @@
 /*   By: mynodeus <mynodeus@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/12 14:59:08 by spenning      #+#    #+#                 */
-/*   Updated: 2024/09/30 15:02:39 by spenning      ########   odam.nl         */
+/*   Updated: 2024/09/30 16:20:42 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/rt.h"
+#include <rt.h>
 
 int	parse_rows_check_coordinate_color_rgb_hex(char *r, char *g, char *b)
 {

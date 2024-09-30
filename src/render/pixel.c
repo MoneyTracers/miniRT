@@ -6,11 +6,11 @@
 /*   By: mynodeus <mynodeus@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/07 18:24:16 by spenning      #+#    #+#                 */
-/*   Updated: 2024/09/30 15:02:39 by spenning      ########   odam.nl         */
+/*   Updated: 2024/09/30 16:20:42 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/rt.h"
+#include <rt.h>
 
 void	pixel_put(t_data *data, int x, int y, int color)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/rt.h"
+#include <rt.h>
 
 void	map_init_coords_values_vc_clr(t_data *data, char **b, int r, int c)
 {

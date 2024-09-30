@@ -6,11 +6,11 @@
 /*   By: mynodeus <mynodeus@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/21 10:12:43 by mynodeus      #+#    #+#                 */
-/*   Updated: 2024/09/30 15:02:39 by spenning      ########   odam.nl         */
+/*   Updated: 2024/09/30 16:20:42 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/rt.h"
+#include <rt.h>
 
 // // https://www.youtube.com/watch?v=RGB-wlatStc 30:00
 void	slope_less_then_one(t_data *data, t_dxy *d, t_point *a, t_point *b)

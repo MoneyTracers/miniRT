@@ -6,11 +6,11 @@
 /*   By: spenning <spenning@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/07 13:23:31 by spenning      #+#    #+#                 */
-/*   Updated: 2024/09/30 15:02:39 by spenning      ########   odam.nl         */
+/*   Updated: 2024/09/30 16:20:42 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/rt.h"
+#include <rt.h>
 
 int	add_shade(double distance, int trgb)
 {
