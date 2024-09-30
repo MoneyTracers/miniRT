@@ -1,6 +1,0 @@
-[submodule "ft_printf_tester/norminette_tester"]
-	path = ft_printf_tester/norminette_tester
-	url = https://github.com/sebastianpenning/norminette_tester
-[submodule "tests/norminette_tester"]
-	path = tests/norminette_tester
-	url = https://github.com/sebastianpenning/norminette_tester.git
