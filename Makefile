@@ -17,7 +17,7 @@ SRCEXT      := c
 OBJEXT      := o
 
 #Flags, Libraries and Includes
-CFLAGS      := -Wall -Werror -Wextra
+CFLAGS      := -Wall -Werror -Wextra -I./inc
 LIB         := lib
 LIBFT       := libft
 LIBFT.A     := libft.a
@@ -41,7 +41,7 @@ all: submodule build $(LIB)/$(MLX)/$(MLX.A) $(LIB)/$(LIBFT)/$(LIB)/$(LIBFT.A) $(
 re: fclean all
 
 debug: CFLAGS += -DDEBUG
-debug: fclean $(NAME)
+debug: fclean all
 
 #Prep submodules
 submodule:
