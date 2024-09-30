@@ -6,11 +6,11 @@
 /*   By: spenning <spenning@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/18 11:43:03 by spenning      #+#    #+#                 */
-/*   Updated: 2024/09/30 15:03:14 by spenning      ########   odam.nl         */
+/*   Updated: 2024/09/30 16:15:15 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/rt.h"
+#include <rt.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -18,6 +18,7 @@ int	main(int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
+	debugger("test test test\n");
 	return (0);
 	// if (argc == 2)
 	// 	parse(argv, &data);

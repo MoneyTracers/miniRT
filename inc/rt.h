@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: spenning <spenning@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/04 13:09:32 by spenning          #+#    #+#             */
-/*   Updated: 2024/05/21 17:58:38 by spenning         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   rt.h                                               :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: spenning <spenning@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/05/04 13:09:32 by spenning      #+#    #+#                 */
+/*   Updated: 2024/09/30 16:14:35 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -449,7 +449,7 @@ int		hstoi(char *hex);
 //function returns nothing
 //[Error]
 // No error value
-void	ft_debug(char *format, ...);
+void	debugger(char *format, ...);
 //[Description]
 //This function gives back the absolute value of the parameter.
 // This means the distance between the value and 0
