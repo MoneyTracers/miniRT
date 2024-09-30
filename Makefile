@@ -40,6 +40,9 @@ all: build $(LIB)/$(MLX)/$(MLX.A) $(LIB)/$(LIBFT)/$(LIB)/$(LIBFT.A) $(TARGETDIR)
 #Remake
 re: fclean all
 
+debug: CFLAGS += -DDEBUG
+debug: fclean $(NAME)
+
 #Make the Directories
 build:
 	@mkdir -p $(TARGETDIR)
