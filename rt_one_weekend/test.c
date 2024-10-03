@@ -32,12 +32,40 @@ double	*OperatorSet(t_vec3* vec3, int i, double value)
 	return (&vec3->e[i]);
 }
 
+t_vec3* VectorAddition(t_vec3	*vec3, t_vec3	*nvec)
+{
+	vec3->e[0] += nvec->e[0];
+	vec3->e[1] += nvec->e[1];
+	vec3->e[2] += nvec->e[2];
+	return (vec3);
+}
+
+t_vec3* VectorMultiplication(t_vec3	*vec3, double t)
+{
+	vec3->e[0] *= t;
+	vec3->e[1] *= t;
+	vec3->e[2] *= t;
+	return (vec3);
+}
+
+void vec_class_init(t_vec3 *vec3)
+{
+	vec3->def_const = &DefaultConstructor;
+	vec3->par_const = &ParamConstructor;
+	vec3->minus = &OperatorMinus;
+	vec3->get = &OperatorGet;
+	vec3->set = &OperatorSet;
+	vec3->vadd = &VectorAddition;
+	vec3->vmul = &VectorMultiplication;
+}
+
 int main ()
 {
 	t_vec3 vec3;
+	t_vec3 nvec3;
 
-	vec3.def_const = &DefaultConstructor;
-	vec3.par_const = &ParamConstructor;
+	vec_class_init(&vec3);
+	vec_class_init(&nvec3);
 	vec3.def_const(&vec3);
 	printf("e0: %f e1: %f e2: %f\n", vec3.e[0], vec3.e[1], vec3.e[2]);
 	vec3.par_const(&vec3, 1.533, 2, 3);
@@ -46,15 +74,16 @@ int main ()
 	vec3.y = &vec3.e[1];
 	vec3.z = &vec3.e[2];
 	printf("x: %f y: %f z: %f\n", *vec3.x, *vec3.y, *vec3.z);
-	vec3.minus = &OperatorMinus;
 	vec3.minus(&vec3);
 	printf("x: %f y: %f z: %f\n", *vec3.x, *vec3.y, *vec3.z);
-	vec3.minus = &OperatorMinus;
-	vec3.minus(&vec3);
-	vec3.get = &OperatorGet;
 	printf("0 %f \n", vec3.get(&vec3, 0));
-	vec3.set = &OperatorSet;
 	printf("0 %f \n", *vec3.set(&vec3, 0, 10));
+	printf("x: %f y: %f z: %f\n", *vec3.x, *vec3.y, *vec3.z);
+	nvec3.par_const(&nvec3, 10, 10, 10);
+	vec3.vadd(&vec3, &nvec3);
+	printf("x: %f y: %f z: %f\n", *vec3.x, *vec3.y, *vec3.z);
+	vec3.vmul(&vec3, 2);
+	printf("x: %f y: %f z: %f\n", *vec3.x, *vec3.y, *vec3.z);
 	// int image_width = 256;
 	// int image_height = 256;
 	// double r;
