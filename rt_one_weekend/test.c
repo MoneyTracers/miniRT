@@ -48,6 +48,12 @@ t_vec3* VectorMultiplication(t_vec3	*vec3, double t)
 	return (vec3);
 }
 
+t_vec3* VectorDivide(t_vec3	*vec3, double t)
+{
+	vec3->vmul(vec3, 1/t);
+	return (vec3);
+}
+
 void vec_class_init(t_vec3 *vec3)
 {
 	vec3->def_const = &DefaultConstructor;
@@ -57,6 +63,7 @@ void vec_class_init(t_vec3 *vec3)
 	vec3->set = &OperatorSet;
 	vec3->vadd = &VectorAddition;
 	vec3->vmul = &VectorMultiplication;
+	vec3->vdiv = &VectorDivide;
 }
 
 int main ()
@@ -83,6 +90,8 @@ int main ()
 	vec3.vadd(&vec3, &nvec3);
 	printf("x: %f y: %f z: %f\n", *vec3.x, *vec3.y, *vec3.z);
 	vec3.vmul(&vec3, 2);
+	printf("x: %f y: %f z: %f\n", *vec3.x, *vec3.y, *vec3.z);
+	vec3.vdiv(&vec3, 3);
 	printf("x: %f y: %f z: %f\n", *vec3.x, *vec3.y, *vec3.z);
 	// int image_width = 256;
 	// int image_height = 256;
