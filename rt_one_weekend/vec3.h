@@ -19,6 +19,7 @@ typedef   t_vec3* (*Vmul)(t_vec3	*vec3, double t);
 typedef   t_vec3* (*Vdiv)(t_vec3	*vec3, double t);
 typedef   double (*LenSqr)(t_vec3	*vec3);
 typedef   double (*Len)(t_vec3	*vec3);
+typedef   void (*VecCopy)(t_vec3	*dest, t_vec3	*src);
 
 typedef struct s_vec3
 {
@@ -36,6 +37,7 @@ typedef struct s_vec3
 	Vdiv vdiv;
 	LenSqr lensqr;
 	Len len;
+	VecCopy copy;
 }t_vec3;
 
 

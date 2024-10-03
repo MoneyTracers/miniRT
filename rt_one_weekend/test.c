@@ -72,6 +72,13 @@ double VectorLength(t_vec3	*vec3)
 	return (sqrt(vec3->lensqr(vec3)));
 }
 
+void VectorCopy(t_vec3	*dest, t_vec3	*src)
+{
+	dest->e[0] = src->e[0];
+	dest->e[1] = src->e[1];
+	dest->e[2] = src->e[2];
+}
+
 void vec_class_init(t_vec3 *vec3)
 {
 	vec3->def_const = &DefaultVectorConstructor;
@@ -84,6 +91,7 @@ void vec_class_init(t_vec3 *vec3)
 	vec3->vdiv = &VectorDivide;
 	vec3->lensqr = &VectorLengthSquared;
 	vec3->len = &VectorLength;
+	vec3->copy = &VectorCopy;
 }
 
 void test()
@@ -124,9 +132,9 @@ void DefaultRayConstructor(t_ray *ray)
 	t_vec3 orig;
 
 	dir.def_const(&dir);
-	ray->dir = dir;
+	ray->dir = &dir;
 	orig.def_const(&orig);
-	ray->orig = orig;
+	ray->orig = &orig;
 }
 
 void DefaultRayConstructor(t_ray *ray)
@@ -154,6 +162,15 @@ const t_vec3* RayOrigin(t_ray *ray)
 const t_vec3* RayDirection(t_ray *ray)
 {
 	return((const t_vec3*)ray->dir);
+}
+
+t_vec3 RayAt(t_ray *ray, double t)
+{
+	t_vec3 vec;
+	vec.copy(&vec, ray->dir);
+	vec.vmul(&vec, t);
+	vec.vadd(&vec, ray->orig);
+	return (vec);
 }
 
 void ray_class_init(t_ray *ray)
