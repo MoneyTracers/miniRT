@@ -40,6 +40,8 @@ int main ()
 	vec3.minus = &OperatorMinus;
 	vec3.minus(&vec3);
 	printf("x: %f y: %f z: %f\n", *vec3.x, *vec3.y, *vec3.z);
+	vec3.minus = &OperatorMinus;
+	vec3.minus(&vec3);
 	// int image_width = 256;
 	// int image_height = 256;
 	// double r;
