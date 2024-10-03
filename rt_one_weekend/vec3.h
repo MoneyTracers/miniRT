@@ -2,6 +2,8 @@
 #define VEC3_H
 
 # include <math.h>
+# include <stdio.h>
+# include <stdarg.h>
 
 // REFERENCE: https://raytracing.github.io/books/RayTracingInOneWeekend.html#outputanimage/addingaprogressindicator
 typedef struct s_vec3 t_vec3;

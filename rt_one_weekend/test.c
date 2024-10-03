@@ -1,6 +1,5 @@
-#include <stdio.h>
-#include <stdarg.h>
 #include "vec3.h"
+#include "color.h"
 
 void	DefaultConstructor(t_vec3* vec3)
 {
@@ -86,7 +85,7 @@ void vec_class_init(t_vec3 *vec3)
 	vec3->len = &VectorLength;
 }
 
-int main ()
+void test ()
 {
 	t_vec3 vec3;
 	t_vec3 nvec3;
@@ -115,32 +114,28 @@ int main ()
 	printf("x: %f y: %f z: %f\n", *vec3.x, *vec3.y, *vec3.z);
 	printf("lensqr %f \n", vec3.lensqr(&vec3));
 	printf("len %f \n", vec3.len(&vec3));
-	// int image_width = 256;
-	// int image_height = 256;
-	// double r;
-	// double g;
-	// double b = 0.0;
-	// int ir;
-	// int ig;
-	// int ib;
+}
 
-	// printf("P3\n");
-	// printf("%d ", image_width);
-	// printf("%d", image_height);
-	// printf("\n255\n");
+int main ()
+{
+	t_vec3	vec3;
+	int		image_width = 256;
+	int		image_height = 256;
 
-	// for (int j = 0; j < image_height; j++)
-	// {
-	// 	dprintf(2, "lines remaining %d\n", (image_height - j));
-	// 	for (int i = 0; i < image_width; i++)
-	// 	{
-	// 		r = (double)i / (image_width - 1);
-	// 		g = (double)j / (image_height - 1);
-
-	// 		ir = 255.99 * r;
-	// 		ig = 255.99 * g;
-	// 		ib = 255.99 * b;
-	// 		printf("%d %d %d\n", ir, ig, ib);
-	// 	}
-	// }
+	printf("P3\n");
+	printf("%d ", image_width);
+	printf("%d", image_height);
+	printf("\n255\n");
+	vec_class_init(&vec3);
+	vec3.def_const(&vec3);
+	for (int j = 0; j < image_height; j++)
+	{
+		dprintf(2, "lines remaining %d\n", (image_height - j));
+		for (int i = 0; i < image_width; i++)
+		{
+			vec3.par_const(&vec3, (double)i / (image_width - 1), (double)j / (image_height - 1), 0);
+			write_color(&vec3);
+		}
+	}
+	dprintf(2, "done\n");
 }
