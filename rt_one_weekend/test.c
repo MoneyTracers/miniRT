@@ -1,14 +1,15 @@
 #include "vec3.h"
 #include "color.h"
+#include "ray.h"
 
-void	DefaultConstructor(t_vec3* vec3)
+void	DefaultVectorConstructor(t_vec3* vec3)
 {
 	vec3->e[0]= 0;
 	vec3->e[1]= 0;
 	vec3->e[2]= 0;
 }
 
-void	ParamConstructor(t_vec3* vec3, double e0, double e1, double e2)
+void	ParamVectorConstructor(t_vec3* vec3, double e0, double e1, double e2)
 {
 	vec3->e[0]= e0;
 	vec3->e[1]= e1;
@@ -73,8 +74,8 @@ double VectorLength(t_vec3	*vec3)
 
 void vec_class_init(t_vec3 *vec3)
 {
-	vec3->def_const = &DefaultConstructor;
-	vec3->par_const = &ParamConstructor;
+	vec3->def_const = &DefaultVectorConstructor;
+	vec3->par_const = &ParamVectorConstructor;
 	vec3->minus = &OperatorMinus;
 	vec3->get = &OperatorGet;
 	vec3->set = &OperatorSet;
@@ -85,7 +86,7 @@ void vec_class_init(t_vec3 *vec3)
 	vec3->len = &VectorLength;
 }
 
-void test ()
+void test()
 {
 	t_vec3 vec3;
 	t_vec3 nvec3;
@@ -116,6 +117,54 @@ void test ()
 	printf("len %f \n", vec3.len(&vec3));
 }
 
+
+void DefaultRayConstructor(t_ray *ray)
+{
+	t_vec3 dir;
+	t_vec3 orig;
+
+	dir.def_const(&dir);
+	ray->dir = dir;
+	orig.def_const(&orig);
+	ray->orig = orig;
+}
+
+void DefaultRayConstructor(t_ray *ray)
+{
+	t_vec3 *dir;
+	t_vec3 *orig;
+
+	dir->def_const(&dir);
+	ray->dir = dir;
+	orig->def_const(&orig);
+	ray->orig = orig;
+}
+
+void ParamRayConstructor(t_ray *ray, t_vec3 *orig, t_vec3 *dir)
+{
+	ray->dir = dir;
+	ray->orig = orig;
+}
+
+const t_vec3* RayOrigin(t_ray *ray)
+{
+	return((const t_vec3*)ray->orig);
+}
+
+const t_vec3* RayDirection(t_ray *ray)
+{
+	return((const t_vec3*)ray->dir);
+}
+
+void ray_class_init(t_ray *ray)
+{
+	ray->def_const = &DefaultRayConstructor;
+	ray->par_const = &ParamRayConstructor;
+	ray->ray_orig = &RayOrigin;
+	ray->ray_dir = &RayDirection;
+}
+
+
 int main ()
 {
 	t_vec3	vec3;
@@ -127,6 +176,7 @@ int main ()
 	printf("%d", image_height);
 	printf("\n255\n");
 	vec_class_init(&vec3);
+	
 	vec3.def_const(&vec3);
 	for (int j = 0; j < image_height; j++)
 	{
