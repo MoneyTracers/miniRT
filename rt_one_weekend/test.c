@@ -54,6 +54,24 @@ t_vec3* VectorDivide(t_vec3	*vec3, double t)
 	return (vec3);
 }
 
+double VectorLengthSquared(t_vec3	*vec3)
+{
+	double e0;
+	double e1;
+	double e2;
+	
+	e0 = vec3->e[0];
+	e1 = vec3->e[1];
+	e2 = vec3->e[2];
+
+	return (e0*e0+e1*e1+e2*e2);
+}
+
+double VectorLength(t_vec3	*vec3)
+{
+	return (sqrt(vec3->lensqr(vec3)));
+}
+
 void vec_class_init(t_vec3 *vec3)
 {
 	vec3->def_const = &DefaultConstructor;
@@ -64,6 +82,8 @@ void vec_class_init(t_vec3 *vec3)
 	vec3->vadd = &VectorAddition;
 	vec3->vmul = &VectorMultiplication;
 	vec3->vdiv = &VectorDivide;
+	vec3->lensqr = &VectorLengthSquared;
+	vec3->len = &VectorLength;
 }
 
 int main ()
@@ -93,6 +113,8 @@ int main ()
 	printf("x: %f y: %f z: %f\n", *vec3.x, *vec3.y, *vec3.z);
 	vec3.vdiv(&vec3, 3);
 	printf("x: %f y: %f z: %f\n", *vec3.x, *vec3.y, *vec3.z);
+	printf("lensqr %f \n", vec3.lensqr(&vec3));
+	printf("len %f \n", vec3.len(&vec3));
 	// int image_width = 256;
 	// int image_height = 256;
 	// double r;
