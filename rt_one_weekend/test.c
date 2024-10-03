@@ -2,25 +2,34 @@
 #include <stdarg.h>
 #include "vec3.h"
 
-void DefaultConstructor(t_vec3* vec3)
+void	DefaultConstructor(t_vec3* vec3)
 {
 	vec3->e[0]= 0;
 	vec3->e[1]= 0;
 	vec3->e[2]= 0;
 }
 
-void ParamConstructor(t_vec3* vec3, double e0, double e1, double e2)
+void	ParamConstructor(t_vec3* vec3, double e0, double e1, double e2)
 {
 	vec3->e[0]= e0;
 	vec3->e[1]= e1;
 	vec3->e[2]= e2;
 }
 
-void OperatorMinus(t_vec3* vec3)
+void	OperatorMinus(t_vec3* vec3)
 {
 	vec3->e[0]= vec3->e[0] * -1;
 	vec3->e[1]= vec3->e[1] * -1;
 	vec3->e[2]= vec3->e[2] * -1;
+}
+double	OperatorGet(t_vec3* vec3, int i)
+{
+	return (vec3->e[i]);
+}
+double	*OperatorSet(t_vec3* vec3, int i, double value)
+{
+	vec3->e[i] = value;
+	return (&vec3->e[i]);
 }
 
 int main ()
@@ -42,6 +51,10 @@ int main ()
 	printf("x: %f y: %f z: %f\n", *vec3.x, *vec3.y, *vec3.z);
 	vec3.minus = &OperatorMinus;
 	vec3.minus(&vec3);
+	vec3.get = &OperatorGet;
+	printf("0 %f \n", vec3.get(&vec3, 0));
+	vec3.set = &OperatorSet;
+	printf("0 %f \n", *vec3.set(&vec3, 0, 10));
 	// int image_width = 256;
 	// int image_height = 256;
 	// double r;
