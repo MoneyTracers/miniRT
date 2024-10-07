@@ -1,6 +1,6 @@
+#include "ray.h"
 #include "vec3.h"
 #include "color.h"
-#include "ray.h"
 
 void	DefaultVectorConstructor(t_vec3* vec3)
 {
@@ -92,9 +92,86 @@ void vec_class_init(t_vec3 *vec3)
 	vec3->lensqr = &VectorLengthSquared;
 	vec3->len = &VectorLength;
 	vec3->copy = &VectorCopy;
+
 }
 
-void test()
+
+
+void DefaultRayConstructor(t_ray *ray)
+{
+	t_vec3 *dir;
+	t_vec3 *orig;
+
+	dir = malloc(sizeof(t_vec3));
+	orig = malloc(sizeof(t_vec3));
+	vec_class_init(dir);
+	vec_class_init(orig);
+	dir->def_const(dir);
+	ray->dir = dir;
+	orig->def_const(orig);
+	ray->org = orig;
+}
+
+void ParamRayConstructor(t_ray *ray, t_vec3 *org, t_vec3 *dir)
+{
+	ray->dir = dir;
+	ray->org = org;
+}
+
+const t_vec3* RayOrigin(t_ray *ray)
+{
+	return((const t_vec3*)ray->org);
+}
+
+const t_vec3* RayDirection(t_ray *ray)
+{
+	return((const t_vec3*)ray->dir);
+}
+
+t_vec3 RayAt(t_ray *ray, double t)
+{
+	t_vec3 vec;
+	vec_class_init(&vec);
+	vec.copy(&vec, ray->dir);
+	vec.vmul(&vec, t);
+	vec.vadd(&vec, ray->org);
+	return (vec);
+}
+
+void ray_class_init(t_ray *ray)
+{
+	ray->def_const = &DefaultRayConstructor;
+	ray->par_const = &ParamRayConstructor;
+	ray->ray_orig = &RayOrigin;
+	ray->ray_dir = &RayDirection;
+	ray->at = &RayAt;
+}
+
+void print_image()
+{
+	t_vec3	vec3;
+	int		image_width = 256;
+	int		image_height = 256;
+
+	printf("P3\n");
+	printf("%d ", image_width);
+	printf("%d", image_height);
+	printf("\n255\n");
+	vec_class_init(&vec3);
+	vec3.def_const(&vec3);
+	for (int j = 0; j < image_height; j++)
+	{
+		dprintf(2, "lines remaining %d\n", (image_height - j));
+		for (int i = 0; i < image_width; i++)
+		{
+			vec3.par_const(&vec3, (double)i / (image_width - 1), (double)j / (image_height - 1), 0);
+			write_color(&vec3);
+		}
+	}
+	dprintf(2, "done\n");
+}
+
+void vec3_test()
 {
 	t_vec3 vec3;
 	t_vec3 nvec3;
@@ -124,85 +201,41 @@ void test()
 	printf("lensqr %f \n", vec3.lensqr(&vec3));
 	printf("len %f \n", vec3.len(&vec3));
 }
-
-
-void DefaultRayConstructor(t_ray *ray)
+void ray_test()
 {
-	t_vec3 dir;
-	t_vec3 orig;
+	t_ray	ray;
+	t_vec3	*vec_org;
+	t_vec3	*vec_dir;
+	const t_vec3	*const_org;
+	const t_vec3	*const_dir;
+	t_vec3	ray_at;
 
-	dir.def_const(&dir);
-	ray->dir = &dir;
-	orig.def_const(&orig);
-	ray->orig = &orig;
+	ray_class_init(&ray);
+	ray.def_const(&ray);
+	printf("def ray vec %f\n", ray.dir->e[0]);
+	vec_dir = malloc(sizeof(t_vec3));
+	vec_org = malloc(sizeof(t_vec3));
+	vec_class_init(vec_org);
+	vec_class_init(vec_dir);
+	vec_org->par_const(vec_org, 10, 100, 15);
+	vec_dir->par_const(vec_dir, 20, 200, 30);
+	ray.par_const(&ray, vec_org, vec_dir);
+	printf("par ray vec org %f\n", ray.org->e[0]);
+	printf("par ray vec dir %f\n", ray.dir->e[0]);
+	const_org = ray.ray_orig(&ray);
+	printf("ray ray_org %f\n", const_org->e[0]);
+	const_dir = ray.ray_dir(&ray);
+	printf("ray dir_org %f\n", const_dir->e[0]);
+	printf("ray vec org e[0]: %f e[1]: %f e[2]: %f\n", ray.org->e[0], ray.org->e[1], ray.org->e[2]);
+	printf("ray vec dir e[0]: %f e[1]: %f e[2]: %f\n", ray.dir->e[0], ray.dir->e[1], ray.dir->e[2]);
+	ray_at = ray.at(&ray, 2);
+	printf("ray at e[0] %f e[1] %f e[2] %f\n", ray_at.e[0],ray_at.e[1], ray_at.e[2]);
 }
-
-void DefaultRayConstructor(t_ray *ray)
-{
-	t_vec3 *dir;
-	t_vec3 *orig;
-
-	dir->def_const(&dir);
-	ray->dir = dir;
-	orig->def_const(&orig);
-	ray->orig = orig;
-}
-
-void ParamRayConstructor(t_ray *ray, t_vec3 *orig, t_vec3 *dir)
-{
-	ray->dir = dir;
-	ray->orig = orig;
-}
-
-const t_vec3* RayOrigin(t_ray *ray)
-{
-	return((const t_vec3*)ray->orig);
-}
-
-const t_vec3* RayDirection(t_ray *ray)
-{
-	return((const t_vec3*)ray->dir);
-}
-
-t_vec3 RayAt(t_ray *ray, double t)
-{
-	t_vec3 vec;
-	vec.copy(&vec, ray->dir);
-	vec.vmul(&vec, t);
-	vec.vadd(&vec, ray->orig);
-	return (vec);
-}
-
-void ray_class_init(t_ray *ray)
-{
-	ray->def_const = &DefaultRayConstructor;
-	ray->par_const = &ParamRayConstructor;
-	ray->ray_orig = &RayOrigin;
-	ray->ray_dir = &RayDirection;
-}
-
 
 int main ()
 {
-	t_vec3	vec3;
-	int		image_width = 256;
-	int		image_height = 256;
-
-	printf("P3\n");
-	printf("%d ", image_width);
-	printf("%d", image_height);
-	printf("\n255\n");
-	vec_class_init(&vec3);
-	
-	vec3.def_const(&vec3);
-	for (int j = 0; j < image_height; j++)
-	{
-		dprintf(2, "lines remaining %d\n", (image_height - j));
-		for (int i = 0; i < image_width; i++)
-		{
-			vec3.par_const(&vec3, (double)i / (image_width - 1), (double)j / (image_height - 1), 0);
-			write_color(&vec3);
-		}
-	}
-	dprintf(2, "done\n");
+	ray_test();
+	// vec3_test();
+	// print_image();
+	return (0);
 }
