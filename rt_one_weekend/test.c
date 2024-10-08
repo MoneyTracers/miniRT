@@ -76,7 +76,7 @@ double VectorLengthSquared(t_vec3	*vec3)
 	e1 = vec3->e[1];
 	e2 = vec3->e[2];
 
-	return (e0*e0+e1*e1+e2*e2);
+	return ((e0*e0)+(e1*e1)+(e2*e2));
 }
 
 double VectorLength(t_vec3	*vec3)
@@ -264,33 +264,34 @@ t_vec3 ray_color(t_ray *ray)
 {
 	t_vec3	unit_direction;
 	t_vec3	color;
-	t_vec3	color1;
-	float	a;
-	float	a_mod;
+	t_vec3	second_color;
+	double	a;
+	double	a_mod;
 
 	vec_class_init(&unit_direction);
 	vec_class_init(&color);
-	vec_class_init(&color1);
+	vec_class_init(&second_color);
 	unit_direction = UnitVector(ray->dir);
-	a = 0.5*(unit_direction.e[1] + 1.0);
+	a = (unit_direction.e[1] + 1.0);
+	a = a * 0.5;
 	// printf("unit_direction.e[1]: %f a : %f\n", unit_direction.e[1], a);
 	color.par_const(&color, 1.0, 1.0, 1.0);
-	color1.par_const(&color, 0.5, 0.7, 1.0);
+	second_color.par_const(&second_color, 0.5, 0.7, 1.0);
 	a_mod = 1.0 - a;
 	color.vmul(&color, a_mod);
-	color1.vmul(&color1, a);
-	color.vadd(&color, &color1);
+	second_color.vmul(&second_color, a);
+	color.vadd(&color, &second_color);
 	return (color);
 }
 
 void render_basic_image()
 {
-	float	aspect_ratio;
+	double	aspect_ratio;
 	int		image_width;
 	int		image_height;
-	float	viewport_height;
-	float	viewport_width;
-	float	focal_length;
+	double	viewport_height;
+	double	viewport_width;
+	double	focal_length;
 	t_vec3	camera_center;
 	t_vec3	viewport_u;
 	t_vec3	viewport_v;
@@ -344,8 +345,8 @@ void render_basic_image()
 	vec_class_init(&pixel00_loc);
 	vec_class_init(&pixel_delta_half);
 	vec_class_init(&upper_left_focal);
-	upper_left_focal.par_const(&upper_left_focal, 0, 0, focal_length);
 	viewport_upper_left.copy(&viewport_upper_left, &camera_center);
+	upper_left_focal.par_const(&upper_left_focal, 0, 0, focal_length);
 	viewport_u_half.copy(&viewport_u_half, &viewport_u);
 	viewport_v_half.copy(&viewport_v_half, &viewport_v);
 	viewport_u_half.vdiv(&viewport_u_half, 2);
@@ -353,7 +354,6 @@ void render_basic_image()
 	viewport_upper_left.vded(&viewport_upper_left, &upper_left_focal);
 	viewport_upper_left.vded(&viewport_upper_left, &viewport_u_half);
 	viewport_upper_left.vded(&viewport_upper_left, &viewport_v_half);
-	pixel00_loc.copy(&pixel00_loc, &viewport_upper_left);
 	pixel_delta_half.copy(&pixel_delta_half, &pixel_delta_u);
 	pixel_delta_half.vadd(&pixel_delta_half, &pixel_delta_v);
 	pixel_delta_half.vmul(&pixel_delta_half, 0.5);
