@@ -259,18 +259,51 @@ void ray_test()
 	ray_at = ray.at(&ray, 2);
 	printf("ray at e[0] %f e[1] %f e[2] %f\n", ray_at.e[0],ray_at.e[1], ray_at.e[2]);
 }
+double dot(const t_vec3 *u, const t_vec3 *v)
+{
+	return ((u->e[0] * v->e[0]) +(u->e[1] * v->e[1])+(u->e[2] * v->e[2]));
+}
+
+int hit_sphere(t_vec3 *center, double radius, const t_ray *ray)
+{
+	t_vec3 oc;
+	double a;
+	double b;
+	double c;
+	double discriminant;
+
+	vec_class_init(&oc);
+	oc.copy(&oc, center);
+	oc.vded(&oc, ray->org);
+	a = dot(ray->dir, ray->dir);
+	b = -2.0 * dot(ray->dir, &oc);
+	c = dot(&oc, &oc) - (radius*radius);
+	discriminant = (b * b) - (4 *a *c);
+	if (discriminant >= 0)
+		return (1);
+	else
+		return (0);
+}
 
 t_vec3 ray_color(t_ray *ray)
 {
 	t_vec3	unit_direction;
 	t_vec3	color;
 	t_vec3	second_color;
+	t_vec3	center;
 	double	a;
 	double	a_mod;
 
 	vec_class_init(&unit_direction);
 	vec_class_init(&color);
+	vec_class_init(&center);
 	vec_class_init(&second_color);
+	center.par_const(&center, 0, 0, -1);
+	if (hit_sphere(&center, 0.5, ray))
+	{
+		color.par_const(&color, 1, 0, 0);
+		return(color);
+	}
 	unit_direction = UnitVector(ray->dir);
 	a = (unit_direction.e[1] + 1.0);
 	a = a * 0.5;
@@ -283,6 +316,7 @@ t_vec3 ray_color(t_ray *ray)
 	color.vadd(&color, &second_color);
 	return (color);
 }
+
 
 void render_basic_image()
 {
