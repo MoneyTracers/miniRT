@@ -264,7 +264,7 @@ double dot(const t_vec3 *u, const t_vec3 *v)
 	return ((u->e[0] * v->e[0]) +(u->e[1] * v->e[1])+(u->e[2] * v->e[2]));
 }
 
-int hit_sphere(t_vec3 *center, double radius, const t_ray *ray)
+double hit_sphere(t_vec3 *center, double radius, const t_ray *ray)
 {
 	t_vec3 oc;
 	double a;
@@ -279,10 +279,12 @@ int hit_sphere(t_vec3 *center, double radius, const t_ray *ray)
 	b = -2.0 * dot(ray->dir, &oc);
 	c = dot(&oc, &oc) - (radius*radius);
 	discriminant = (b * b) - (4 *a *c);
-	if (discriminant >= 0)
-		return (1);
+	if (discriminant < 0)
+		return (-1.0);
 	else
-		return (0);
+	{
+		return (((b * -1) - sqrt(discriminant)) / (2.0 *a));
+	}
 }
 
 t_vec3 ray_color(t_ray *ray)
@@ -291,17 +293,33 @@ t_vec3 ray_color(t_ray *ray)
 	t_vec3	color;
 	t_vec3	second_color;
 	t_vec3	center;
+	t_vec3	N;
+	t_vec3	N_cal;
 	double	a;
 	double	a_mod;
+	double	t;
 
 	vec_class_init(&unit_direction);
 	vec_class_init(&color);
 	vec_class_init(&center);
 	vec_class_init(&second_color);
+	vec_class_init(&N);
+	vec_class_init(&N_cal);
 	center.par_const(&center, 0, 0, -1);
-	if (hit_sphere(&center, 0.5, ray))
+	t = hit_sphere(&center, 0.5, ray);
+	if (t > 0.0)
 	{
-		color.par_const(&color, 1, 0, 0);
+		N_cal = ray->at(ray, t);
+		// printf("N_cal e[0] %f N_cal e[1] %f N_cal e[2] %f\n", N_cal.e[0],N_cal.e[1],N_cal.e[2]);
+		// printf("center e[0] %f center e[1] %f center e[2] %f\n", center.e[0],center.e[1],center.e[2]);
+		N_cal.vded(&N_cal, &center);
+		// printf("N_cal e[0] %f N_cal e[1] %f N_cal e[2] %f\n", N_cal.e[0],N_cal.e[1],N_cal.e[2]);
+		N = UnitVector(&N_cal);
+		// printf("N e[0] %f N e[1] %f N e[2] %f\n", N.e[0],N.e[1],N.e[2]);
+		color.par_const(&color, (N.e[0]+1), (N.e[1]+1), (N.e[2]+1));
+		// printf("color e[0] %f color e[1] %f color e[2] %f\n", color.e[0],color.e[1],color.e[2]);
+		color.vmul(&color, 0.5);
+		// printf("color e[0] %f color e[1] %f color e[2] %f\n", color.e[0],color.e[1],color.e[2]);
 		return(color);
 	}
 	unit_direction = UnitVector(ray->dir);
