@@ -268,22 +268,22 @@ double hit_sphere(t_vec3 *center, double radius, const t_ray *ray)
 {
 	t_vec3 oc;
 	double a;
-	double b;
+	double h;
 	double c;
 	double discriminant;
 
 	vec_class_init(&oc);
 	oc.copy(&oc, center);
 	oc.vded(&oc, ray->org);
-	a = dot(ray->dir, ray->dir);
-	b = -2.0 * dot(ray->dir, &oc);
-	c = dot(&oc, &oc) - (radius*radius);
-	discriminant = (b * b) - (4 *a *c);
+	a = ray->dir->lensqr(ray->dir);
+	h = dot(ray->dir, &oc);
+	c = oc.lensqr(&oc) - (radius*radius);
+	discriminant = (h * h) - (a *c);
 	if (discriminant < 0)
 		return (-1.0);
 	else
 	{
-		return (((b * -1) - sqrt(discriminant)) / (2.0 *a));
+		return ((h - sqrt(discriminant)) / a);
 	}
 }
 
