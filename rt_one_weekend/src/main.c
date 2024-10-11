@@ -252,21 +252,14 @@ void render_basic_image()
 		dprintf(2, "lines remaining %d\n", (image_height - j));
 		for (int i = 0; i < image_width; i++)
 		{
-			// printf("pixelloc_00 e[0] %f e[1] %f e[2] %f\n", pixel00_loc.e[0], pixel00_loc.e[1], pixel00_loc.e[2]);
 			pixel_center.copy(&pixel_center, &pixel00_loc);
 			pixe_add.copy(&pixe_add, &pixel_delta_u);
-			// printf("pixe_add e[0] %f e[1] %f e[2] %f\n", pixe_add.e[0], pixe_add.e[1], pixe_add.e[2]);
 			pixe_add.vmul(&pixe_add, i);
-			// printf("pixe_add e[0] %f e[1] %f e[2] %f\n", pixe_add.e[0], pixe_add.e[1], pixe_add.e[2]);
 			pixel_center.vadd(&pixel_center, &pixe_add);
 			pixe_add.copy(&pixe_add, &pixel_delta_v);
-			// printf("pixe_delta_v e[0] %f e[1] %f e[2] %f\n", pixel_delta_v.e[0], pixel_delta_v.e[1], pixe_add.e[2]);
-			// printf("pixe_add e[0] %f e[1] %f e[2] %f\n", pixe_add.e[0], pixe_add.e[1], pixe_add.e[2]);
 			pixe_add.vmul(&pixe_add, j);
 			pixel_center.vadd(&pixel_center, &pixe_add);
-			// printf("pixel_Center e[0] %f e[1] %f e[2] %f\n", pixel_center.e[0], pixel_center.e[1], pixel_center.e[2]);
 			ray_direction.copy(&ray_direction, &pixel_center);
-			// printf("ray_direction e[0] %f e[1] %f e[2] %f\n", ray_direction.e[0], ray_direction.e[1], ray_direction.e[2]);
 			ray_direction.vded(&ray_direction, &camera_center);
 			ray.par_const(&ray, &camera_center, &ray_direction);
 			color = ray_color(&ray);
