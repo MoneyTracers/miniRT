@@ -1,4 +1,4 @@
-#include "ray.h"
+#include <ray.h>
 
 void DefaultRayConstructor(t_ray *ray)
 {

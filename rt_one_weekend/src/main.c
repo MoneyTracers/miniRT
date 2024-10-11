@@ -1,6 +1,6 @@
-#include "ray.h"
-#include "vec3.h"
-#include "color.h"
+#include <ray.h>
+#include <vec3.h>
+#include <color.h>
 
 void print_image()
 {

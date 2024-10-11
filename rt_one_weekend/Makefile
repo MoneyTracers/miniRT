@@ -5,7 +5,7 @@ CC          := cc
 TARGET      := rt
 
 #The Directories, Source, Includes, Objects, Binary and Resources
-SRCDIR      := .
+SRCDIR      := ./src
 INCDIR      := .
 OBJDIR      := ./build/obj
 TARGETDIR   := .
@@ -15,7 +15,7 @@ SRCEXT      := c
 OBJEXT      := o
 
 #Flags, Libraries and Includes
-CFLAGS      := -I. -Wall -Werror -Wextra 
+CFLAGS      := -I./inc -Wall -Werror -Wextra 
 MFLAGS      := -lm 
 
 DEBUG_FLAGS := -g3 -fsanitize=thread
@@ -24,7 +24,7 @@ DEBUG_FLAGS := -g3 -fsanitize=thread
 #---------------------------------------------------------------------------------
 #DO NOT EDIT BELOW THIS LINE
 #---------------------------------------------------------------------------------
-SOURCES     := ./main.c ./color.c ./hit.c ./ray.c ./vec3.c
+SOURCES     := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS     := $(patsubst $(SRCDIR)/%,$(OBJDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
 
 #Default Make
