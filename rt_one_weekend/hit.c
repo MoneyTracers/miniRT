@@ -1,6 +1,6 @@
 #include "hittable.h"
 
-void set_face_normal(t_hitrecord *rec, const t_ray *ray, const t_vec3 *outward_normal)
+void set_face_normal(t_hitrecord *rec, const t_ray *ray, t_vec3 *outward_normal)
 {
 	rec->front_face = dot(ray->dir, outward_normal) < 0;
 	if (rec->front_face)
@@ -11,7 +11,7 @@ void set_face_normal(t_hitrecord *rec, const t_ray *ray, const t_vec3 *outward_n
 		rec->normal.minus(&rec->normal);
 	}
 }
-int hit(const t_vec3 *center, const t_ray *ray, double radius, double ray_tmin, double ray_tmax, t_hitrecord*rec)
+int hit(t_vec3 *center, t_ray *ray, double radius, double ray_tmin, double ray_tmax, t_hitrecord*rec)
 {
 	t_vec3 oc;
 	t_vec3 outward_normal;
@@ -41,13 +41,13 @@ int hit(const t_vec3 *center, const t_ray *ray, double radius, double ray_tmin, 
 			return (0);
 	}
 	rec->t = root;
-	rec->p = ray->at(&ray, rec->t);
+	rec->p = ray->at(ray, rec->t);
 	outward_normal.copy(&outward_normal, &rec->p);
 	outward_normal.vded(&outward_normal, center);
 	outward_normal.vdiv(&outward_normal, radius);
 	set_face_normal(rec, ray, &outward_normal);
 	rec->normal.copy(&rec->normal, &rec->p);
 	rec->normal.vded(&rec->normal, center);
-	rec->normal.vdiv(&rec, radius);
+	rec->normal.vdiv(&rec->normal, radius);
 	return (1);
 }
