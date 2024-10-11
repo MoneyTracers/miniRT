@@ -23,5 +23,7 @@ typedef struct s_ray
 	At at;
 }t_ray;
 
+void ray_class_init(t_ray *ray);
+
 #endif
 

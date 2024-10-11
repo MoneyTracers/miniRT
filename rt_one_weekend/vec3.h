@@ -25,7 +25,7 @@ typedef   void (*VecCopy)(t_vec3	*dest, t_vec3	*src);
 typedef   t_vec3 (*UniVector)(t_vec3	*vec3);
 double dot(const t_vec3 *u, const t_vec3 *v);
 void vec_class_init(t_vec3 *vec3);
-
+t_vec3 UnitVector(t_vec3	*vec3);
 typedef struct s_vec3
 {
 	double e[3];
