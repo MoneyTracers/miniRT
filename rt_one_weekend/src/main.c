@@ -1,6 +1,4 @@
-#include <ray.h>
-#include <vec3.h>
-#include <color.h>
+#include <rt.h>
 
 void print_image()
 {

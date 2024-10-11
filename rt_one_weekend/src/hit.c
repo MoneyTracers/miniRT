@@ -1,4 +1,4 @@
-#include <hittable.h>
+#include <rt.h>
 
 void set_face_normal(t_hitrecord *rec, const t_ray *ray, t_vec3 *outward_normal)
 {

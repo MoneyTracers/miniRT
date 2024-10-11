@@ -1,5 +1,4 @@
-#include <vec3.h>
-#include <color.h>
+#include <rt.h>
 
 void write_color(t_vec3 *vec3)
 {

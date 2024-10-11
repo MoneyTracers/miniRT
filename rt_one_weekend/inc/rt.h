@@ -5,6 +5,11 @@
 
 double degrees_to_radians(double degrees);
 
+#include "color.h"
+#include "hittable.h"
+#include "ray.h"
+#include "vec3.h"
+
 #endif
 
 
