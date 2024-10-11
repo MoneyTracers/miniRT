@@ -23,6 +23,7 @@ typedef   double (*LenSqr)(t_vec3	*vec3);
 typedef   double (*Len)(t_vec3	*vec3);
 typedef   void (*VecCopy)(t_vec3	*dest, t_vec3	*src);
 typedef   t_vec3 (*UniVector)(t_vec3	*vec3);
+double dot(const t_vec3 *u, const t_vec3 *v);
 
 typedef struct s_vec3
 {
