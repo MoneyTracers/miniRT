@@ -24,7 +24,7 @@ DEBUG_FLAGS := -g3 -fsanitize=thread
 #---------------------------------------------------------------------------------
 #DO NOT EDIT BELOW THIS LINE
 #---------------------------------------------------------------------------------
-SOURCES     := ./test.c ./color.c
+SOURCES     := ./main.c ./color.c ./hit.c
 OBJECTS     := $(patsubst $(SRCDIR)/%,$(OBJDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
 
 #Default Make
