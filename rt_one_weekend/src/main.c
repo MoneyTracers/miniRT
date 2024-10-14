@@ -269,11 +269,21 @@ void render_basic_image()
 
 }
 
+void render_image_hittable()
+{
+	t_hittable world;
+
+	
+// 	clear list function
+// 	add to list __fortify_functionfunciton in hittable list that check 
+// 	if there is a hit
+}
+
 int main ()
 {
 	// ray_test();
 	// vec3_test();
 	// print_image();
-	render_basic_image();
+	// render_basic_image();
 	return (0);
 }
