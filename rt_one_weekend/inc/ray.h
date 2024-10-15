@@ -23,6 +23,12 @@ typedef struct s_ray
 	At at;
 }t_ray;
 
+void DefaultRayConstructor(t_ray *ray);
+
+void ParamRayConstructor(t_ray *ray, t_vec3 *org, t_vec3 *dir);
+const t_vec3* RayOrigin(t_ray *ray);
+const t_vec3* RayDirection(t_ray *ray);
+t_vec3 RayAt(t_ray *ray, double t);
 void ray_class_init(t_ray *ray);
 
 #endif

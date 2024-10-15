@@ -47,5 +47,19 @@ typedef struct s_vec3
 	UniVector univ;
 }t_vec3;
 
+void	DefaultVectorConstructor(t_vec3* vec3);
+void	ParamVectorConstructor(t_vec3* vec3, double e0, double e1, double e2);
+void	OperatorMinus(t_vec3* vec3);
+double	OperatorGet(t_vec3* vec3, int i);
+double	*OperatorSet(t_vec3* vec3, int i, double value);
+t_vec3* VectorAddition(t_vec3	*vec3, t_vec3	*nvec);
+t_vec3* VectorDeduction(t_vec3	*vec3, t_vec3	*nvec);
+t_vec3* VectorMultiplication(t_vec3	*vec3, double t);
+t_vec3* VectorDivide(t_vec3	*vec3, double t);
+double VectorLengthSquared(t_vec3	*vec3);
+double VectorLength(t_vec3	*vec3);
+void VectorCopy(t_vec3	*dest, t_vec3	*src);
+t_vec3 UnitVector(t_vec3	*vec3);
+
 
 #endif

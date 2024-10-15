@@ -99,12 +99,11 @@ double hit_sphere(t_vec3 *center, double radius, const t_ray *ray)
 	double c;
 	double discriminant;
 
-	vec_class_init(&oc);
-	oc.copy(&oc, center);
-	oc.vded(&oc, ray->org);
-	a = ray->dir->lensqr(ray->dir);
+	VectorCopy(&oc, center);
+	VectorDeduction(&oc, ray->org);
+	a = VectorLengthSquared(ray->dir);
 	h = dot(ray->dir, &oc);
-	c = oc.lensqr(&oc) - (radius*radius);
+	c = VectorLengthSquared(&oc) - (radius*radius);
 	discriminant = (h * h) - (a *c);
 	if (discriminant < 0)
 		return (-1.0);
@@ -126,32 +125,26 @@ t_vec3 ray_color(t_ray *ray)
 	double	a_mod;
 	double	t;
 
-	vec_class_init(&unit_direction);
-	vec_class_init(&color);
-	vec_class_init(&center);
-	vec_class_init(&second_color);
-	vec_class_init(&N);
-	vec_class_init(&N_cal);
-	center.par_const(&center, 0, 0, -1);
+	ParamVectorConstructor(&center, 0, 0, -1);
 	t = hit_sphere(&center, 0.5, ray);
 	if (t > 0.0)
 	{
-		N_cal = ray->at(ray, t);
-		N_cal.vded(&N_cal, &center);
+		N_cal = RayAt(ray, t);
+		VectorDeduction(&N_cal, &center);
 		N = UnitVector(&N_cal);
-		color.par_const(&color, (N.e[0]+1), (N.e[1]+1), (N.e[2]+1));
-		color.vmul(&color, 0.5);
+		ParamVectorConstructor(&color, (N.e[0]+1), (N.e[1]+1), (N.e[2]+1));
+		VectorMultiplication(&color, 0.5);
 		return(color);
 	}
 	unit_direction = UnitVector(ray->dir);
 	a = (unit_direction.e[1] + 1.0);
 	a = a * 0.5;
-	color.par_const(&color, 1.0, 1.0, 1.0);
-	second_color.par_const(&second_color, 0.5, 0.7, 1.0);
+	ParamVectorConstructor(&color, 1.0, 1.0, 1.0);
+	ParamVectorConstructor(&second_color, 0.5, 0.7, 1.0);
 	a_mod = 1.0 - a;
-	color.vmul(&color, a_mod);
-	second_color.vmul(&second_color, a);
-	color.vadd(&color, &second_color);
+	VectorMultiplication(&color, a_mod);
+	VectorMultiplication(&second_color, a);
+	VectorAddition(&color, &second_color);
 	return (color);
 }
 
@@ -192,54 +185,37 @@ void render_basic_image()
 	focal_length = 1.0;
 	viewport_height = 2.0;
 	viewport_width = viewport_height * ((double)image_width/image_height);
-	vec_class_init(&camera_center);
-	camera_center.def_const(&camera_center);
+	DefaultVectorConstructor(&camera_center);
 
 	// calculate vectors accross the horizontal and vertical viewport edges
-	vec_class_init(&viewport_u);
-	vec_class_init(&viewport_v);
-	viewport_u.par_const(&viewport_u, viewport_width, 0, 0);
-	viewport_v.par_const(&viewport_v, 0, viewport_height, 0);
+	ParamVectorConstructor(&viewport_u, viewport_width, 0, 0);
+	ParamVectorConstructor(&viewport_v, 0, viewport_height, 0);
 	viewport_v.e[1] = viewport_v.e[1] * -1;
 	
 	// calculate horizontal and vertical dela vectors from pixel to pixel
-	vec_class_init(&pixel_delta_u);
-	vec_class_init(&pixel_delta_v);
-	pixel_delta_u.copy(&pixel_delta_u, &viewport_u);
-	pixel_delta_u.vdiv(&pixel_delta_u, image_width);
-	pixel_delta_v.copy(&pixel_delta_v, &viewport_v);
-	pixel_delta_v.vdiv(&pixel_delta_v, image_height);
+	VectorCopy(&pixel_delta_u, &viewport_u);
+	VectorDivide(&pixel_delta_u, image_width);
+	VectorCopy(&pixel_delta_v, &viewport_v);
+	VectorDivide(&pixel_delta_v, image_height);
 
 	//calculate upper left location
-	vec_class_init(&viewport_upper_left);
-	vec_class_init(&viewport_u_half);
-	vec_class_init(&viewport_v_half);
-	vec_class_init(&pixel00_loc);
-	vec_class_init(&pixel_delta_half);
-	vec_class_init(&upper_left_focal);
-	viewport_upper_left.copy(&viewport_upper_left, &camera_center);
-	upper_left_focal.par_const(&upper_left_focal, 0, 0, focal_length);
-	viewport_u_half.copy(&viewport_u_half, &viewport_u);
-	viewport_v_half.copy(&viewport_v_half, &viewport_v);
-	viewport_u_half.vdiv(&viewport_u_half, 2);
-	viewport_v_half.vdiv(&viewport_v_half, 2);
-	viewport_upper_left.vded(&viewport_upper_left, &upper_left_focal);
-	viewport_upper_left.vded(&viewport_upper_left, &viewport_u_half);
-	viewport_upper_left.vded(&viewport_upper_left, &viewport_v_half);
-	pixel_delta_half.copy(&pixel_delta_half, &pixel_delta_u);
-	pixel_delta_half.vadd(&pixel_delta_half, &pixel_delta_v);
-	pixel_delta_half.vmul(&pixel_delta_half, 0.5);
-	pixel00_loc.copy(&pixel00_loc, &viewport_upper_left);
-	pixel00_loc.vadd(&pixel00_loc, &pixel_delta_half);
+	VectorCopy(&viewport_upper_left, &camera_center);
+	ParamVectorConstructor(&upper_left_focal, 0, 0, focal_length);
+	VectorCopy(&viewport_u_half, &viewport_u);
+	VectorCopy(&viewport_v_half, &viewport_v);
+	VectorDivide(&viewport_u_half, 2);
+	VectorDivide(&viewport_v_half, 2);
+	VectorDeduction(&viewport_upper_left, &upper_left_focal);
+	VectorDeduction(&viewport_upper_left, &viewport_u_half);
+	VectorDeduction(&viewport_upper_left, &viewport_v_half);
+	VectorCopy(&pixel_delta_half, &pixel_delta_u);
+	VectorAddition(&pixel_delta_half, &pixel_delta_v);
+	VectorMultiplication(&pixel_delta_half, 0.5);
+	VectorCopy(&pixel00_loc, &viewport_upper_left);
+	VectorAddition(&pixel00_loc, &pixel_delta_half);
 
 
 	//render 
-	vec_class_init(&pixel_center);
-	vec_class_init(&pixe_add);
-	vec_class_init(&ray_direction);
-	vec_class_init(&color);
-	ray_class_init(&ray);
-
 	printf("P3\n");
 	printf("%d ", image_width);
 	printf("%d", image_height);
@@ -250,16 +226,16 @@ void render_basic_image()
 		dprintf(2, "lines remaining %d\n", (image_height - j));
 		for (int i = 0; i < image_width; i++)
 		{
-			pixel_center.copy(&pixel_center, &pixel00_loc);
-			pixe_add.copy(&pixe_add, &pixel_delta_u);
-			pixe_add.vmul(&pixe_add, i);
-			pixel_center.vadd(&pixel_center, &pixe_add);
-			pixe_add.copy(&pixe_add, &pixel_delta_v);
-			pixe_add.vmul(&pixe_add, j);
-			pixel_center.vadd(&pixel_center, &pixe_add);
-			ray_direction.copy(&ray_direction, &pixel_center);
-			ray_direction.vded(&ray_direction, &camera_center);
-			ray.par_const(&ray, &camera_center, &ray_direction);
+			VectorCopy(&pixel_center, &pixel00_loc);
+			VectorCopy(&pixe_add, &pixel_delta_u);
+			VectorMultiplication(&pixe_add, i);
+			VectorAddition(&pixel_center, &pixe_add);
+			VectorCopy(&pixe_add, &pixel_delta_v);
+			VectorMultiplication(&pixe_add, j);
+			VectorAddition(&pixel_center, &pixe_add);
+			VectorCopy(&ray_direction, &pixel_center);
+			VectorDeduction(&ray_direction, &camera_center);
+			ParamRayConstructor(&ray, &camera_center, &ray_direction);
 			color = ray_color(&ray);
 			write_color(&color);
 		}
@@ -272,35 +248,133 @@ void render_basic_image()
 
 t_vec3 ray_color_hittable(t_ray *ray, t_hittable *world)
 {
-	t_hitrecord rec;
+	t_hitrecord *rec;
 	t_vec3		hit_vec;
 	t_vec3		unit_direction;
 	t_vec3		color;
 	t_vec3		color_mul;
 	double		a;
+
+	rec = calloc(1, sizeof(t_hitrecord));
 	if (hit_check(world, ray, 0, INFINITY, &rec))
 	{
-		vec_class_init(&hit_vec);
-		hit_vec.par_const(&hit_vec, 1, 1, 1);
-		rec.normal.vadd(&rec.normal, &hit_vec);
-		rec.normal.vmul(&rec, 0.5);
-		return (rec.normal);
+		ParamVectorConstructor(&hit_vec, 1, 1 ,1);
+		VectorAddition(&rec->normal, &hit_vec);
+		VectorMultiplication(&rec->normal, 0.5);
+		return (rec->normal);
 	}
 	unit_direction = UnitVector(ray->dir);
 	a = (0.5*(unit_direction.e[1] + 1.0));
-	vec_class_init(&color);
-	vec_class_init(&color_mul);
-	color.par_const(&color, 1.0, 1.0, 1.0);
-	color.vmul(&color, (1.0 - a));
-	color_mul.par_const(&color_mul, 0.5, 0.7, 1.0);
-	color_mul.vmul(&color, a);
-	color.vadd(&color, &color_mul);
+	ParamVectorConstructor(&color, 1.0, 1.0, 1.0);
+	VectorMultiplication(&color, (1.0 - a));
+	ParamVectorConstructor(&color_mul, 0.5, 0.7, 1.0);
+	VectorMultiplication(&color, a);
+	VectorAddition(&color, &color_mul);
 	return (color);
 }
 
 void render_image_hittable()
 {
-	t_hittable world;
+	t_hittable *world;
+	double	aspect_ratio;
+	int		image_width;
+	int		image_height;
+	double	viewport_height;
+	double	viewport_width;
+	double	focal_length;
+	t_vec3	center;
+	t_vec3	camera_center;
+	t_vec3	viewport_u;
+	t_vec3	viewport_v;
+	t_vec3	pixel_delta_u;
+	t_vec3	pixel_delta_v;
+	t_vec3	viewport_u_half;
+	t_vec3	viewport_v_half;
+	t_vec3	upper_left_focal;
+	t_vec3	viewport_upper_left;
+	t_vec3	pixel_delta_half;
+	t_vec3	pixel00_loc;
+	t_vec3	pixel_center;
+	t_vec3	pixe_add;
+	t_vec3	ray_direction;
+	t_ray	ray;
+	t_vec3	color;
+
+	// calculate image height
+	aspect_ratio = 16.0 / 9.0;
+	image_width = 400;
+	image_height = image_width / aspect_ratio;
+	if (image_height < 1)
+		image_height = 1;
+
+
+	//world 
+	ParamVectorConstructor(&center, 0, -100.5, -1);
+	world = lstnew(sphere, &center, 100);
+	ParamVectorConstructor(&center, 0, 0, -1);
+	lstadd(&world, lstnew(sphere, &center, 0.5));
+
+	//camera
+	focal_length = 1.0;
+	viewport_height = 2.0;
+	viewport_width = viewport_height * ((double)image_width/image_height);
+	DefaultVectorConstructor(&camera_center);
+
+	// calculate vectors accross the horizontal and vertical viewport edges
+	ParamVectorConstructor(&viewport_u, viewport_width, 0, 0);
+	ParamVectorConstructor(&viewport_v, 0, viewport_height, 0);
+	viewport_v.e[1] = viewport_v.e[1] * -1;
+	
+	// calculate horizontal and vertical dela vectors from pixel to pixel
+	VectorCopy(&pixel_delta_u, &viewport_u);
+	VectorDivide(&pixel_delta_u, image_width);
+	VectorCopy(&pixel_delta_v, &viewport_v);
+	VectorDivide(&pixel_delta_v, image_height);
+
+	//calculate upper left location
+	VectorCopy(&viewport_upper_left, &camera_center);
+	ParamVectorConstructor(&upper_left_focal, 0, 0, focal_length);
+	VectorCopy(&viewport_u_half, &viewport_u);
+	VectorCopy(&viewport_v_half, &viewport_v);
+	VectorDivide(&viewport_u_half, 2);
+	VectorDivide(&viewport_v_half, 2);
+	VectorDeduction(&viewport_upper_left, &upper_left_focal);
+	VectorDeduction(&viewport_upper_left, &viewport_u_half);
+	VectorDeduction(&viewport_upper_left, &viewport_v_half);
+	VectorCopy(&pixel_delta_half, &pixel_delta_u);
+	VectorAddition(&pixel_delta_half, &pixel_delta_v);
+	VectorMultiplication(&pixel_delta_half, 0.5);
+	VectorCopy(&pixel00_loc, &viewport_upper_left);
+	VectorAddition(&pixel00_loc, &pixel_delta_half);
+
+
+	//render 
+	printf("P3\n");
+	printf("%d ", image_width);
+	printf("%d", image_height);
+	printf("\n255\n");
+
+	for (int j = 0; j < image_height; j++)
+	{
+		dprintf(2, "lines remaining %d\n", (image_height - j));
+		for (int i = 0; i < image_width; i++)
+		{
+			VectorCopy(&pixel_center, &pixel00_loc);
+			VectorCopy(&pixe_add, &pixel_delta_u);
+			VectorMultiplication(&pixe_add, i);
+			VectorAddition(&pixel_center, &pixe_add);
+			VectorCopy(&pixe_add, &pixel_delta_v);
+			VectorMultiplication(&pixe_add, j);
+			VectorAddition(&pixel_center, &pixe_add);
+			VectorCopy(&ray_direction, &pixel_center);
+			VectorDeduction(&ray_direction, &camera_center);
+			ParamRayConstructor(&ray, &camera_center, &ray_direction);
+			color = ray_color_hittable(&ray, world);
+			write_color(&color);
+		}
+	}
+	dprintf(2, "done\n");
+
 
 	
 // 	clear list function
@@ -314,5 +388,6 @@ int main ()
 	// vec3_test();
 	// print_image();
 	// render_basic_image();
+	render_image_hittable();
 	return (0);
 }

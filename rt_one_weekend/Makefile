@@ -49,7 +49,7 @@ fclean: clean
 
 #Link
 $(TARGETDIR)/$(TARGET) : $(OBJECTS)
-	$(CC) $(OBJECTS) -o  $(TARGETDIR)/$(TARGET) $(MFLAGS)
+	$(CC) $(OBJECTS) -o  $(TARGETDIR)/$(TARGET) $(MFLAGS) -g
 
 #Compile
 $(OBJDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)

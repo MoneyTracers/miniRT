@@ -56,7 +56,7 @@ t_vec3* VectorMultiplication(t_vec3	*vec3, double t)
 
 t_vec3* VectorDivide(t_vec3	*vec3, double t)
 {
-	vec3->vmul(vec3, 1/t);
+	VectorMultiplication(vec3, 1/t);
 	return (vec3);
 }
 
@@ -76,8 +76,8 @@ double VectorLengthSquared(t_vec3	*vec3)
 double VectorLength(t_vec3	*vec3)
 {
 	double len;
-	len = sqrt(vec3->lensqr(vec3));
-	return (sqrt(vec3->lensqr(vec3)));
+	len = sqrt(VectorLengthSquared(vec3));
+	return (sqrt(VectorLengthSquared(vec3)));
 }
 
 void VectorCopy(t_vec3	*dest, t_vec3	*src)
@@ -107,10 +107,9 @@ t_vec3 UnitVector(t_vec3	*vec3)
 {
 	float len;
 	t_vec3 univec;
-	vec_class_init(&univec);
-	len = vec3->len(vec3);
-	vec3->copy(&univec, vec3);
-	vec3->vdiv(&univec, len);
+	len = VectorLength(vec3);
+	VectorCopy(&univec, vec3);
+	VectorDivide(&univec, len);
 	return (univec);
 }
 

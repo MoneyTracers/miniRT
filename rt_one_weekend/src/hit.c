@@ -1,17 +1,23 @@
 #include <rt.h>
+#include <strings.h>
 
-void set_face_normal(t_hitrecord *rec, const t_ray *ray, t_vec3 *outward_normal)
+void set_face_normal(t_hitrecord **rec, const t_ray *ray, t_vec3 *outward_normal)
 {
-	rec->front_face = dot(ray->dir, outward_normal) < 0;
-	if (rec->front_face)
-		rec->normal.copy(&rec->normal, outward_normal);
+	t_hitrecord *temp;
+
+	temp = *rec;
+	temp->front_face = dot(ray->dir, outward_normal) < 0;
+	if (temp->front_face)
+	{
+		VectorCopy(&temp->normal, outward_normal);
+	}
 	else
 	{
-		rec->normal.copy(&rec->normal, outward_normal);
-		rec->normal.minus(&rec->normal);
+		VectorCopy(&temp->normal, outward_normal);
+		OperatorMinus(&temp->normal);
 	}
 }
-int hit_check(t_hittable *world, t_ray *ray, double ray_tmin, double ray_tmax, t_hitrecord*rec)
+int hit_check(t_hittable *world, t_ray *ray, double ray_tmin, double ray_tmax, t_hitrecord**rec)
 {
 	t_hitrecord *temp_rec;
 	int			hit_anything;
@@ -19,14 +25,15 @@ int hit_check(t_hittable *world, t_ray *ray, double ray_tmin, double ray_tmax, t
 
 	hit_anything = 0;
 	closest_so_far = ray_tmax;
-	temp_rec = calloc(1, sizeof(t_hitrecord*));
-	while (world->next != NULL)
+	temp_rec = calloc(1, sizeof(t_hitrecord));
+	while (world)
 	{
-		if (hit(world->center, ray, world->radius, ray_tmin, ray_tmax, temp_rec))
+		if (hit(&world->center, ray, world->radius, ray_tmin, ray_tmax, temp_rec))
 		{
 			hit_anything = 1;
 			closest_so_far = temp_rec->t;
-			rec = temp_rec;
+			free(*rec);
+			*rec = temp_rec;
 		}
 		world = world->next;
 	}
@@ -35,7 +42,7 @@ int hit_check(t_hittable *world, t_ray *ray, double ray_tmin, double ray_tmax, t
 
 
 
-int hit(t_vec3 *center, t_ray *ray, double radius, double ray_tmin, double ray_tmax, t_hitrecord*rec)
+int hit(t_vec3 *center, t_ray *ray, double radius, double ray_tmin, double ray_tmax, t_hitrecord *rec)
 {
 	t_vec3 oc;
 	t_vec3 outward_normal;
@@ -46,13 +53,11 @@ int hit(t_vec3 *center, t_ray *ray, double radius, double ray_tmin, double ray_t
 	double sqrtd;
 	double root;
 
-	vec_class_init(&oc);
-	vec_class_init(&outward_normal);
-	oc.copy(&oc, center);
-	oc.vded(&oc, ray->org);
-	a = ray->dir->lensqr(ray->dir);
+	VectorCopy(&oc, center);
+	VectorDeduction(&oc, ray->org);
+	a = VectorLengthSquared(ray->dir);
 	h = dot(ray->dir, &oc);
-	c = oc.lensqr(&oc) - (radius*radius);
+	c = VectorLengthSquared(&oc) - (radius*radius);
 	discriminant = (h * h) - (a *c);
 	if (discriminant < 0)
 		return (0);
@@ -65,13 +70,13 @@ int hit(t_vec3 *center, t_ray *ray, double radius, double ray_tmin, double ray_t
 			return (0);
 	}
 	rec->t = root;
-	rec->p = ray->at(ray, rec->t);
-	outward_normal.copy(&outward_normal, &rec->p);
-	outward_normal.vded(&outward_normal, center);
-	outward_normal.vdiv(&outward_normal, radius);
-	set_face_normal(rec, ray, &outward_normal);
-	rec->normal.copy(&rec->normal, &rec->p);
-	rec->normal.vded(&rec->normal, center);
-	rec->normal.vdiv(&rec->normal, radius);
+	rec->p = RayAt(ray, rec->t);
+	VectorCopy(&outward_normal, &rec->p);
+	VectorDeduction(&outward_normal, center);
+	VectorDivide(&outward_normal, radius);
+	set_face_normal(&rec, ray, &outward_normal);
+	VectorCopy(&rec->normal, &rec->p);
+	VectorDeduction(&rec->normal, center);
+	VectorDivide(&rec->normal, radius);
 	return (1);
 }
