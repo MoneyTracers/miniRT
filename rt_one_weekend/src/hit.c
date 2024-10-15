@@ -11,6 +11,30 @@ void set_face_normal(t_hitrecord *rec, const t_ray *ray, t_vec3 *outward_normal)
 		rec->normal.minus(&rec->normal);
 	}
 }
+int hit_check(t_hittable *world, t_ray *ray, double ray_tmin, double ray_tmax, t_hitrecord*rec)
+{
+	t_hitrecord *temp_rec;
+	int			hit_anything;
+	double		closest_so_far;
+
+	hit_anything = 0;
+	closest_so_far = 0;
+	temp_rec = calloc(1, sizeof(t_hitrecord*));
+	while (world->next != NULL)
+	{
+		if (hit(world->center, ray, world->radius, ray_tmin, ray_tmax, temp_rec))
+		{
+			hit_anything = 1;
+			closest_so_far = temp_rec->t;
+			rec = temp_rec;
+		}
+		world = world->next;
+	}
+	return (hit_anything);
+}
+
+
+
 int hit(t_vec3 *center, t_ray *ray, double radius, double ray_tmin, double ray_tmax, t_hitrecord*rec)
 {
 	t_vec3 oc;
