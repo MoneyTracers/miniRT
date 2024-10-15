@@ -269,6 +269,35 @@ void render_basic_image()
 
 }
 
+
+t_vec3 ray_color_hittable(t_ray *ray, t_hittable *world)
+{
+	t_hitrecord rec;
+	t_vec3		hit_vec;
+	t_vec3		unit_direction;
+	t_vec3		color;
+	t_vec3		color_mul;
+	double		a;
+	if (hit_check(world, ray, 0, INFINITY, &rec))
+	{
+		vec_class_init(&hit_vec);
+		hit_vec.par_const(&hit_vec, 1, 1, 1);
+		rec.normal.vadd(&rec.normal, &hit_vec);
+		rec.normal.vmul(&rec, 0.5);
+		return (rec.normal);
+	}
+	unit_direction = UnitVector(ray->dir);
+	a = (0.5*(unit_direction.e[1] + 1.0));
+	vec_class_init(&color);
+	vec_class_init(&color_mul);
+	color.par_const(&color, 1.0, 1.0, 1.0);
+	color.vmul(&color, (1.0 - a));
+	color_mul.par_const(&color_mul, 0.5, 0.7, 1.0);
+	color_mul.vmul(&color, a);
+	color.vadd(&color, &color_mul);
+	return (color);
+}
+
 void render_image_hittable()
 {
 	t_hittable world;

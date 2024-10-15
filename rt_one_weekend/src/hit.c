@@ -18,7 +18,7 @@ int hit_check(t_hittable *world, t_ray *ray, double ray_tmin, double ray_tmax, t
 	double		closest_so_far;
 
 	hit_anything = 0;
-	closest_so_far = 0;
+	closest_so_far = ray_tmax;
 	temp_rec = calloc(1, sizeof(t_hitrecord*));
 	while (world->next != NULL)
 	{
