@@ -9,6 +9,7 @@ double degrees_to_radians(double degrees);
 #include "hittable.h"
 #include "ray.h"
 #include "vec3.h"
+#include "interval.h"
 
 #endif
 
