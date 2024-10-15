@@ -35,22 +35,13 @@ void vec3_test()
 	printf("e0: %f e1: %f e2: %f\n", vec3.e[0], vec3.e[1], vec3.e[2]);
 	vec3.par_const(&vec3, 1.533, 2, 3);
 	printf("e0: %f e1: %f e2: %f\n", vec3.e[0], vec3.e[1], vec3.e[2]);
-	vec3.x = &vec3.e[0];
-	vec3.y = &vec3.e[1];
-	vec3.z = &vec3.e[2];
-	printf("x: %f y: %f z: %f\n", *vec3.x, *vec3.y, *vec3.z);
 	vec3.minus(&vec3);
-	printf("x: %f y: %f z: %f\n", *vec3.x, *vec3.y, *vec3.z);
 	printf("0 %f \n", vec3.get(&vec3, 0));
 	printf("0 %f \n", *vec3.set(&vec3, 0, 10));
-	printf("x: %f y: %f z: %f\n", *vec3.x, *vec3.y, *vec3.z);
 	nvec3.par_const(&nvec3, 10, 10, 10);
 	vec3.vadd(&vec3, &nvec3);
-	printf("x: %f y: %f z: %f\n", *vec3.x, *vec3.y, *vec3.z);
 	vec3.vmul(&vec3, 2);
-	printf("x: %f y: %f z: %f\n", *vec3.x, *vec3.y, *vec3.z);
 	vec3.vdiv(&vec3, 3);
-	printf("x: %f y: %f z: %f\n", *vec3.x, *vec3.y, *vec3.z);
 	printf("lensqr %f \n", vec3.lensqr(&vec3));
 	printf("len %f \n", vec3.len(&vec3));
 }
@@ -256,7 +247,7 @@ t_vec3 ray_color_hittable(t_ray *ray, t_hittable *world)
 	double		a;
 
 	rec = calloc(1, sizeof(t_hitrecord));
-	if (hit_check(world, ray, 0, INFINITY, &rec))
+	if (hit_check(world, ray, inv(0, INFINITY), &rec))
 	{
 		ParamVectorConstructor(&hit_vec, 1, 1 ,1);
 		VectorAddition(&rec->normal, &hit_vec);

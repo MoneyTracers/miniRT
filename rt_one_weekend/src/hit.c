@@ -17,18 +17,18 @@ void set_face_normal(t_hitrecord **rec, const t_ray *ray, t_vec3 *outward_normal
 		OperatorMinus(&temp->normal);
 	}
 }
-int hit_check(t_hittable *world, t_ray *ray, double ray_tmin, double ray_tmax, t_hitrecord**rec)
+int hit_check(t_hittable *world, t_ray *ray, t_interval ray_i, t_hitrecord**rec)
 {
 	t_hitrecord *temp_rec;
 	int			hit_anything;
 	double		closest_so_far;
 
 	hit_anything = 0;
-	closest_so_far = ray_tmax;
+	closest_so_far = ray_i.max;
 	temp_rec = calloc(1, sizeof(t_hitrecord));
 	while (world)
 	{
-		if (hit(&world->center, ray, world->radius, ray_tmin, ray_tmax, temp_rec))
+		if (hit(&world->center, ray, world->radius, inv(ray_i.min, closest_so_far), temp_rec))
 		{
 			hit_anything = 1;
 			closest_so_far = temp_rec->t;
@@ -42,7 +42,7 @@ int hit_check(t_hittable *world, t_ray *ray, double ray_tmin, double ray_tmax, t
 
 
 
-int hit(t_vec3 *center, t_ray *ray, double radius, double ray_tmin, double ray_tmax, t_hitrecord *rec)
+int hit(t_vec3 *center, t_ray *ray, double radius, t_interval ray_i, t_hitrecord *rec)
 {
 	t_vec3 oc;
 	t_vec3 outward_normal;
@@ -63,10 +63,10 @@ int hit(t_vec3 *center, t_ray *ray, double radius, double ray_tmin, double ray_t
 		return (0);
 	sqrtd = sqrt(discriminant);
 	root = (h - sqrtd) / a;
-	if (root <= ray_tmin || ray_tmax <= root)
+	if (!surround(ray_i, root))
 	{
 		root = (h + sqrtd) / a;
-		if (root <= ray_tmin || ray_tmax <= root)
+		if (!surround(ray_i, root))
 			return (0);
 	}
 	rec->t = root;

@@ -19,7 +19,7 @@ int surround(t_interval inv, double x)
 	return (0);
 }
 
-t_interval dinv(double min, double max)
+t_interval dinv(void)
 {
 	t_interval new;
 
