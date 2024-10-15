@@ -60,6 +60,41 @@ t_vec3* VectorDivide(t_vec3	*vec3, double t)
 	return (vec3);
 }
 
+
+t_vec3 vec_mul(t_vec3	vec3, double t)
+{
+	t_vec3 new;
+
+	new.e[0] =vec3.e[0]* t;
+	new.e[1] =vec3.e[1]* t;
+	new.e[2] =vec3.e[2]* t;
+	return (new);
+}
+
+t_vec3 vec_div(t_vec3	vec3, double t)
+{
+	t_vec3 new;
+	new = vec_mul(vec3, 1/t);
+	return (new);
+}
+
+t_vec3 vec_sub(t_vec3	minu, t_vec3	s)
+{
+	t_vec3 new;
+	new.e[0] = minu.e[0] - s.e[0];
+	new.e[1] = minu.e[1] - s.e[1];
+	new.e[2] = minu.e[2] - s.e[2];
+	return (new);
+}
+t_vec3 vec_add(t_vec3	add, t_vec3	ends)
+{
+	t_vec3 new;
+	new.e[0] = add.e[0] + ends.e[0];
+	new.e[1] = add.e[1] + ends.e[1];
+	new.e[2] = add.e[2] + ends.e[2];
+	return (new);
+}
+
 double VectorLengthSquared(t_vec3	*vec3)
 {
 	double e0;

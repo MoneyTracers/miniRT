@@ -59,5 +59,9 @@ void VectorCopy(t_vec3	*dest, t_vec3	*src);
 t_vec3 UnitVector(t_vec3	*vec3);
 t_vec3 vec(double x, double y, double z);
 t_vec3 dvec(void);
+t_vec3 vec_mul(t_vec3	vec3, double t);
+t_vec3 vec_div(t_vec3	vec3, double t);
+t_vec3 vec_sub(t_vec3	minu, t_vec3	s);
+t_vec3 vec_add(t_vec3	add, t_vec3	ends);
 
 #endif

@@ -365,12 +365,28 @@ void render_image_hittable()
 		}
 	}
 	dprintf(2, "done\n");
+}
 
 
-	
-// 	clear list function
-// 	add to list __fortify_functionfunciton in hittable list that check 
-// 	if there is a hit
+void render_image_hittable_camera()
+{
+	t_hittable *world;
+	t_camera	cam;
+	t_vec3		center;
+
+	// calculate image height
+	cam.aspect_ratio = 16.0 / 9.0;
+	cam.image_width = 400;
+
+	//world 
+	//TODO: make lst new able to do without malloced vec
+	ParamVectorConstructor(&center, 0, -100.5, -1);
+	world = lstnew(sphere, &center, 100);
+	ParamVectorConstructor(&center, 0, 0, -1);
+	lstadd(&world, lstnew(sphere, &center, 0.5));
+
+	render(&cam, world);
+
 }
 
 int main ()
@@ -380,5 +396,6 @@ int main ()
 	// print_image();
 	// render_basic_image();
 	render_image_hittable();
+	render_image_hittable_camera();
 	return (0);
 }
