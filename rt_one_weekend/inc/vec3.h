@@ -31,9 +31,6 @@ typedef struct s_vec3
 	double e[3];
 	VecDconst def_const;
 	VecPconst par_const;
-	double *x;
-	double *y;
-	double *z;
 	Ominus minus;
 	Oget get;
 	Oset set;
@@ -60,6 +57,7 @@ double VectorLengthSquared(t_vec3	*vec3);
 double VectorLength(t_vec3	*vec3);
 void VectorCopy(t_vec3	*dest, t_vec3	*src);
 t_vec3 UnitVector(t_vec3	*vec3);
-
+t_vec3 vec(double x, double y, double z);
+t_vec3 dvec(void);
 
 #endif

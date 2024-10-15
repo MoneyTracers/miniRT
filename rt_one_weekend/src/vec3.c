@@ -113,3 +113,21 @@ t_vec3 UnitVector(t_vec3	*vec3)
 	return (univec);
 }
 
+t_vec3 vec(double x, double y, double z)
+{
+	t_vec3 new;
+
+	new.e[0] = x;
+	new.e[1] = y;
+	new.e[2] = z;
+	return (new);
+}
+t_vec3 dvec(void)
+{
+	t_vec3 new;
+
+	new.e[0] = 0;
+	new.e[1] = 0;
+	new.e[2] = 0;
+	return (new);
+}
