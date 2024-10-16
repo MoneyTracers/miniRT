@@ -1,10 +1,8 @@
 #include <rt.h>
 
-//TODO: reduce amount of variables and funtion calls here
-t_vec3 ray_color_camera(t_ray *ray, t_hittable *world)
+t_vec3 ray_color(t_ray *ray, t_hittable *world)
 {
 	t_hitrecord *rec;
-	t_vec3		hit_vec;
 	t_vec3		unit_direction;
 	t_vec3		color;
 	t_vec3		color_mul;
@@ -13,8 +11,7 @@ t_vec3 ray_color_camera(t_ray *ray, t_hittable *world)
 	rec = calloc(1, sizeof(t_hitrecord));
 	if (hit_check(world, ray, inv(0, INFINITY), &rec))
 	{
-		ParamVectorConstructor(&hit_vec, 1, 1 ,1);
-		VectorAddition(&rec->normal, &hit_vec);
+		rec->normal = vec_add(rec->normal, vec(1, 1, 1));
 		VectorMultiplication(&rec->normal, 0.5);
 		return (rec->normal);
 	}
@@ -64,15 +61,12 @@ void init_cam(t_camera *cam)
 	cam->pixel00_loc = vec_add(cam->viewport_upper_left, cam->pixel00_loc);
 }
 
-//TODO: reduce amount of variables and funtion calls here
 void render(t_camera *cam, t_hittable *world)
 {
 	init_cam(cam);
 	t_vec3	color;
-	t_vec3	pixe_add;
 	t_vec3	pixel_center;
 	t_vec3	ray_direction;
-	t_vec3	camera_center;
 	t_ray	ray;
 
 	//render 
@@ -86,17 +80,11 @@ void render(t_camera *cam, t_hittable *world)
 		dprintf(2, "lines remaining %d\n", (cam->image_heigth - j));
 		for (int i = 0; i < cam->image_width; i++)
 		{
-			VectorCopy(&pixel_center, &cam->pixel00_loc);
-			VectorCopy(&pixe_add, &cam->pixel_delta_u);
-			VectorMultiplication(&pixe_add, i);
-			VectorAddition(&pixel_center, &pixe_add);
-			VectorCopy(&pixe_add, &cam->pixel_delta_v);
-			VectorMultiplication(&pixe_add, j);
-			VectorAddition(&pixel_center, &pixe_add);
-			VectorCopy(&ray_direction, &pixel_center);
-			VectorDeduction(&ray_direction, &camera_center);
-			ParamRayConstructor(&ray, &camera_center, &ray_direction);
-			color = ray_color_camera(&ray, world);
+			pixel_center = vec_add(cam->pixel00_loc, vec_mul(cam->pixel_delta_u, i));
+			pixel_center = vec_add(pixel_center, vec_mul(cam->pixel_delta_v, j));
+			ray_direction = vec_sub(pixel_center, cam->center);
+			ParamRayConstructor(&ray, &cam->center, &ray_direction);
+			color = ray_color(&ray, world);
 			write_color(&color);
 		}
 	}
