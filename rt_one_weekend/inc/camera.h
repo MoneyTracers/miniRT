@@ -8,9 +8,12 @@ typedef struct s_camera
 	double	aspect_ratio;
 	int		image_width;
 	int		image_heigth;
+	int		samples_per_pixel;
+	double	pixel_samples_scale;
 	double	focal_length;
 	double	viewport_heigth;
 	double	viewport_width;
+	
 	t_vec3	viewport_u;
 	t_vec3	viewport_v;
 	t_vec3	center;

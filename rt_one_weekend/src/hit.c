@@ -6,15 +6,15 @@ void set_face_normal(t_hitrecord **rec, const t_ray *ray, t_vec3 *outward_normal
 	t_hitrecord *temp;
 
 	temp = *rec;
-	temp->front_face = dot(ray->dir, outward_normal) < 0;
+	temp->front_face = dot(ray->dir, *outward_normal) < 0;
 	if (temp->front_face)
 	{
-		VectorCopy(&temp->normal, outward_normal);
+		temp->normal = *outward_normal;
 	}
 	else
 	{
-		VectorCopy(&temp->normal, outward_normal);
-		OperatorMinus(&temp->normal);
+		temp->normal = *outward_normal;
+		temp->normal = vec_mul(temp->normal, -1);
 	}
 }
 int hit_check(t_hittable *world, t_ray *ray, t_interval ray_i, t_hitrecord**rec)
@@ -53,11 +53,11 @@ int hit(t_vec3 *center, t_ray *ray, double radius, t_interval ray_i, t_hitrecord
 	double sqrtd;
 	double root;
 
-	VectorCopy(&oc, center);
-	VectorDeduction(&oc, ray->org);
-	a = VectorLengthSquared(ray->dir);
-	h = dot(ray->dir, &oc);
-	c = VectorLengthSquared(&oc) - (radius*radius);
+	oc = *center;
+	oc = vec_sub(oc, ray->org);
+	a = vec_len_sqr(ray->dir);
+	h = dot(ray->dir, oc);
+	c = vec_len_sqr(oc) - (radius*radius);
 	discriminant = (h * h) - (a *c);
 	if (discriminant < 0)
 		return (0);
@@ -70,13 +70,8 @@ int hit(t_vec3 *center, t_ray *ray, double radius, t_interval ray_i, t_hitrecord
 			return (0);
 	}
 	rec->t = root;
-	rec->p = RayAt(ray, rec->t);
-	VectorCopy(&outward_normal, &rec->p);
-	VectorDeduction(&outward_normal, center);
-	VectorDivide(&outward_normal, radius);
+	rec->p = ray_at(*ray, rec->t);
+	outward_normal = vec_div(vec_sub(rec->p, *center), radius);
 	set_face_normal(&rec, ray, &outward_normal);
-	VectorCopy(&rec->normal, &rec->p);
-	VectorDeduction(&rec->normal, center);
-	VectorDivide(&rec->normal, radius);
 	return (1);
 }

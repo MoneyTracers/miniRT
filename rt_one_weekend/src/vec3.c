@@ -95,57 +95,29 @@ t_vec3 vec_add(t_vec3	add, t_vec3	ends)
 	return (new);
 }
 
-double VectorLengthSquared(t_vec3	*vec3)
+double vec_len_sqr(t_vec3	vec3)
 {
 	double e0;
 	double e1;
 	double e2;
 	
-	e0 = vec3->e[0];
-	e1 = vec3->e[1];
-	e2 = vec3->e[2];
+	e0 = vec3.e[0];
+	e1 = vec3.e[1];
+	e2 = vec3.e[2];
 
 	return ((e0*e0)+(e1*e1)+(e2*e2));
 }
 
-double VectorLength(t_vec3	*vec3)
+double vec_len(t_vec3	vec3)
 {
 	double len;
-	len = sqrt(VectorLengthSquared(vec3));
-	return (sqrt(VectorLengthSquared(vec3)));
+	len = sqrt(vec_len_sqr(vec3));
+	return (sqrt(vec_len_sqr(vec3)));
 }
 
-void VectorCopy(t_vec3	*dest, t_vec3	*src)
+t_vec3 unit_vec(t_vec3	vec3)
 {
-	dest->e[0] = src->e[0];
-	dest->e[1] = src->e[1];
-	dest->e[2] = src->e[2];
-}
-
-void vec_class_init(t_vec3 *vec3)
-{
-	vec3->def_const = &DefaultVectorConstructor;
-	vec3->par_const = &ParamVectorConstructor;
-	vec3->minus = &OperatorMinus;
-	vec3->get = &OperatorGet;
-	vec3->set = &OperatorSet;
-	vec3->vadd = &VectorAddition;
-	vec3->vded = &VectorDeduction;
-	vec3->vmul = &VectorMultiplication;
-	vec3->vdiv = &VectorDivide;
-	vec3->lensqr = &VectorLengthSquared;
-	vec3->len = &VectorLength;
-	vec3->copy = &VectorCopy;
-}
-
-t_vec3 UnitVector(t_vec3	*vec3)
-{
-	float len;
-	t_vec3 univec;
-	len = VectorLength(vec3);
-	VectorCopy(&univec, vec3);
-	VectorDivide(&univec, len);
-	return (univec);
+	return (vec_div(vec3, vec_len(vec3)));
 }
 
 t_vec3 vec(double x, double y, double z)
@@ -167,7 +139,13 @@ t_vec3 dvec(void)
 	return (new);
 }
 
-double dot(const t_vec3 *u, const t_vec3 *v)
+t_vec3	sample_square()
 {
-	return ((u->e[0] * v->e[0]) +(u->e[1] * v->e[1])+(u->e[2] * v->e[2]));
+	return (vec(random_double() -0.5, random_double() -0.5, 0));
+}
+
+
+double dot(const t_vec3 u, const t_vec3 v)
+{
+	return ((u.e[0] * v.e[0]) +(u.e[1] * v.e[1])+(u.e[2] * v.e[2]));
 }

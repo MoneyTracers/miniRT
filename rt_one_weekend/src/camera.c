@@ -4,25 +4,17 @@ t_vec3 ray_color(t_ray *ray, t_hittable *world)
 {
 	t_hitrecord *rec;
 	t_vec3		unit_direction;
-	t_vec3		color;
-	t_vec3		color_mul;
 	double		a;
 
 	rec = calloc(1, sizeof(t_hitrecord));
 	if (hit_check(world, ray, inv(0, INFINITY), &rec))
 	{
-		rec->normal = vec_add(rec->normal, vec(1, 1, 1));
-		VectorMultiplication(&rec->normal, 0.5);
+		rec->normal = vec_mul(vec_add(rec->normal, vec(1, 1, 1)), 0.5);
 		return (rec->normal);
 	}
-	unit_direction = UnitVector(ray->dir);
+	unit_direction = unit_vec(ray->dir);
 	a = (0.5*(unit_direction.e[1] + 1.0));
-	ParamVectorConstructor(&color, 1.0, 1.0, 1.0);
-	VectorMultiplication(&color, (1.0 - a));
-	ParamVectorConstructor(&color_mul, 0.5, 0.7, 1.0);
-	VectorMultiplication(&color, a);
-	VectorAddition(&color, &color_mul);
-	return (color);
+	return (vec_add(vec_mul(vec(1, 1, 1), 1.0 - a), vec_mul(vec(0.5, 0.7, 1.0), a)));
 }
 
 void init_cam(t_camera *cam)
@@ -33,6 +25,8 @@ void init_cam(t_camera *cam)
 	cam->image_heigth = cam->image_width / cam->aspect_ratio;
 	if (cam->image_heigth < 1)
 		cam->image_heigth = 1;
+	cam->samples_per_pixel = 10;
+	cam->pixel_samples_scale = 1.0 / cam->samples_per_pixel;
 
 	//determine viewport dimension
 	cam->focal_length = 1.0;
@@ -49,25 +43,39 @@ void init_cam(t_camera *cam)
 
 	//calculate the location of upper left pixel
 	cam->viewport_upper_left = vec_sub(cam->center, vec(0, 0, cam->focal_length));
-	VectorCopy(&viewport_u_half, &cam->viewport_u);
-	viewport_u_half = vec_div(viewport_u_half, 2);
-	VectorCopy(&viewport_v_half, &cam->viewport_v);
-	viewport_v_half = vec_div(viewport_v_half, 2);
+	viewport_u_half = vec_div(cam->viewport_u, 2);
+	viewport_v_half = vec_div(cam->viewport_v, 2);
 	cam->viewport_upper_left = vec_sub(cam->viewport_upper_left, viewport_u_half);
 	cam->viewport_upper_left = vec_sub(cam->viewport_upper_left, viewport_v_half);
 	cam->pixel00_loc = vec_add(cam->pixel_delta_u, cam->pixel_delta_u);
 	cam->pixel00_loc = vec_add(cam->pixel_delta_u, cam->pixel_delta_u);
-	VectorDivide(&cam->pixel00_loc, 2);
+	cam->pixel00_loc = vec_div(cam->pixel00_loc, 2);
 	cam->pixel00_loc = vec_add(cam->viewport_upper_left, cam->pixel00_loc);
+}
+
+t_ray get_ray(t_camera *cam, int i, int j)
+{
+	t_vec3 offset;
+	t_vec3 pixel_sample;
+	t_vec3 ray_direction;
+	t_ray  ray;
+
+	offset = sample_square();
+	pixel_sample = vec_add(cam->pixel00_loc, vec_mul(cam->pixel_delta_u, i+offset.e[0]));
+	pixel_sample = vec_add(pixel_sample, vec_mul(cam->pixel_delta_v, j+offset.e[1]));
+	ray_direction = vec_sub(pixel_sample, cam->center);
+
+	ray.org = cam->center;
+	ray.dir = ray_direction;
+	return (ray);
 }
 
 void render(t_camera *cam, t_hittable *world)
 {
 	init_cam(cam);
 	t_vec3	color;
-	t_vec3	pixel_center;
-	t_vec3	ray_direction;
 	t_ray	ray;
+	t_vec3 	pixel_color;
 
 	//render 
 	printf("P3\n");
@@ -75,17 +83,20 @@ void render(t_camera *cam, t_hittable *world)
 	printf("%d", cam->image_heigth);
 	printf("\n255\n");
 
+	pixel_color = dvec();
 	for (int j = 0; j < cam->image_heigth; j++)
 	{
 		dprintf(2, "lines remaining %d\n", (cam->image_heigth - j));
 		for (int i = 0; i < cam->image_width; i++)
 		{
-			pixel_center = vec_add(cam->pixel00_loc, vec_mul(cam->pixel_delta_u, i));
-			pixel_center = vec_add(pixel_center, vec_mul(cam->pixel_delta_v, j));
-			ray_direction = vec_sub(pixel_center, cam->center);
-			ParamRayConstructor(&ray, &cam->center, &ray_direction);
-			color = ray_color(&ray, world);
-			write_color(&color);
+			color = dvec();
+			for (int sample = 0; sample < cam->samples_per_pixel; sample++)
+			{
+				ray = get_ray(cam, i, j);
+				pixel_color = vec_add(pixel_color, ray_color(&ray, world));
+			}
+			printf("pixel color e[0]%f e[1]%f e[2]%f\n", pixel_color.e[0], pixel_color.e[1], pixel_color.e[2]);
+			write_color(vec_mul(pixel_color, cam->pixel_samples_scale));
 		}
 	}
 	dprintf(2, "done\n");

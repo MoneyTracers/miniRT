@@ -19,6 +19,16 @@ int surround(t_interval inv, double x)
 	return (0);
 }
 
+double clamp(t_interval inv, double x)
+{
+	if (inv.min > x)
+		return (inv.min);
+	if (inv.max < x)
+		return (inv.max);
+	return (x);
+}
+
+
 t_interval dinv(void)
 {
 	t_interval new;
