@@ -39,6 +39,6 @@ void	lstclear(t_hittable	**lst);
 void	lstdelone(t_hittable	*lst);
 t_hittable	*lstlast(t_hittable	*lst);
 void	lstprint(t_hittable *lst);
-t_hittable	*lstnew(int type, t_vec3 *center, double radius);
+t_hittable	*lstnew(int type, t_vec3 center, double radius);
 
 #endif

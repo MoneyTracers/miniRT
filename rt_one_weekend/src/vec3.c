@@ -166,3 +166,8 @@ t_vec3 dvec(void)
 	new.e[2] = 0;
 	return (new);
 }
+
+double dot(const t_vec3 *u, const t_vec3 *v)
+{
+	return ((u->e[0] * v->e[0]) +(u->e[1] * v->e[1])+(u->e[2] * v->e[2]));
+}
