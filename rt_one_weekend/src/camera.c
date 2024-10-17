@@ -12,7 +12,7 @@ t_vec3 ray_color(t_ray ray, int depth, t_hittable *world)
 	rec = calloc(1, sizeof(t_hitrecord));
 	if (hit_check(world, ray, inv(0.001, INFINITY), &rec))
 	{
-		direction = random_on_hemisphere(rec->normal);
+		direction = vec_add(rec->normal, random_unit_vec(rec->normal));
 		return (vec_mul(ray_color(par_ray(rec->p, direction), depth - 1, world), 0.5));
 	}
 	unit_direction = unit_vec(ray.dir);
