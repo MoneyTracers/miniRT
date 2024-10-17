@@ -1,17 +1,19 @@
 #include <rt.h>
 
-t_vec3 ray_color(t_ray ray, t_hittable *world)
+t_vec3 ray_color(t_ray ray, int depth, t_hittable *world)
 {
 	t_hitrecord *rec;
 	t_vec3 direction;
 	t_vec3 unit_direction;
 	double a;
 
+	if (depth <= 0)
+		return (dvec());
 	rec = calloc(1, sizeof(t_hitrecord));
 	if (hit_check(world, ray, inv(0, INFINITY), &rec))
 	{
 		direction = random_on_hemisphere(rec->normal);
-		return (vec_mul(ray_color(par_ray(rec->p, direction), world), 0.5));
+		return (vec_mul(ray_color(par_ray(rec->p, direction), depth - 1, world), 0.5));
 	}
 	unit_direction = unit_vec(ray.dir);
 	a = (0.5 * (unit_direction.e[1] + 1.0));
@@ -28,6 +30,7 @@ void init_cam(t_camera *cam)
 		cam->image_heigth = 1;
 	cam->samples_per_pixel = 100;
 	cam->pixel_samples_scale = 1.0 / cam->samples_per_pixel;
+	cam->max_depth = 50;
 
 	// determine viewport dimension
 	cam->focal_length = 1.0;
@@ -93,7 +96,7 @@ void render(t_camera *cam, t_hittable *world)
 			for (int sample = 0; sample < cam->samples_per_pixel; sample++)
 			{
 				ray = get_ray(cam, i, j);
-				pixel_color = vec_add(pixel_color, ray_color(ray, world));
+				pixel_color = vec_add(pixel_color, ray_color(ray, cam->max_depth, world));
 			}
 			write_color(vec_mul(pixel_color, cam->pixel_samples_scale));
 		}

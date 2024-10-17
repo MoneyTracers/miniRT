@@ -9,6 +9,7 @@ typedef struct s_camera
 	int		image_width;
 	int		image_heigth;
 	int		samples_per_pixel;
+	int		max_depth;
 	double	pixel_samples_scale;
 	double	focal_length;
 	double	viewport_heigth;
