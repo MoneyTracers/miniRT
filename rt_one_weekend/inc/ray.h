@@ -12,8 +12,8 @@ typedef struct s_ray
 	t_vec3 dir;
 }t_ray;
 
-void def_ray(t_ray *ray);
-void par_ray(t_ray *ray, t_vec3 org, t_vec3 dir);
+t_ray def_ray(void);
+t_ray par_ray(t_vec3 org, t_vec3 dir);
 t_vec3 ray_at(t_ray ray, double t);
 
 #endif

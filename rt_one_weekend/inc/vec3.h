@@ -25,5 +25,9 @@ double vec_len_sqr(t_vec3	vec3);
 double vec_len(t_vec3	vec3);
 t_vec3	sample_square();
 double dot(const t_vec3 u, const t_vec3 v);
+t_vec3 vec_ran(void);
+t_vec3 vec_ran_par(double min, double max);
+t_vec3 random_unit_vec();
+t_vec3 random_on_hemisphere(t_vec3 normal);
 
 #endif

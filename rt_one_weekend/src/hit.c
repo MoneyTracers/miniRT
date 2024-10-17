@@ -17,7 +17,7 @@ void set_face_normal(t_hitrecord **rec, const t_ray *ray, t_vec3 *outward_normal
 		temp->normal = vec_mul(temp->normal, -1);
 	}
 }
-int hit_check(t_hittable *world, t_ray *ray, t_interval ray_i, t_hitrecord**rec)
+int hit_check(t_hittable *world, t_ray ray, t_interval ray_i, t_hitrecord**rec)
 {
 	t_hitrecord *temp_rec;
 	int			hit_anything;
@@ -42,7 +42,7 @@ int hit_check(t_hittable *world, t_ray *ray, t_interval ray_i, t_hitrecord**rec)
 
 
 
-int hit(t_vec3 *center, t_ray *ray, double radius, t_interval ray_i, t_hitrecord *rec)
+int hit(t_vec3 *center, t_ray ray, double radius, t_interval ray_i, t_hitrecord *rec)
 {
 	t_vec3 oc;
 	t_vec3 outward_normal;
@@ -54,9 +54,9 @@ int hit(t_vec3 *center, t_ray *ray, double radius, t_interval ray_i, t_hitrecord
 	double root;
 
 	oc = *center;
-	oc = vec_sub(oc, ray->org);
-	a = vec_len_sqr(ray->dir);
-	h = dot(ray->dir, oc);
+	oc = vec_sub(oc, ray.org);
+	a = vec_len_sqr(ray.dir);
+	h = dot(ray.dir, oc);
 	c = vec_len_sqr(oc) - (radius*radius);
 	discriminant = (h * h) - (a *c);
 	if (discriminant < 0)
@@ -70,8 +70,8 @@ int hit(t_vec3 *center, t_ray *ray, double radius, t_interval ray_i, t_hitrecord
 			return (0);
 	}
 	rec->t = root;
-	rec->p = ray_at(*ray, rec->t);
+	rec->p = ray_at(ray, rec->t);
 	outward_normal = vec_div(vec_sub(rec->p, *center), radius);
-	set_face_normal(&rec, ray, &outward_normal);
+	set_face_normal(&rec, &ray, &outward_normal);
 	return (1);
 }

@@ -1,18 +1,19 @@
 #include <rt.h>
 
-t_vec3 ray_color(t_ray *ray, t_hittable *world)
+t_vec3 ray_color(t_ray ray, t_hittable *world)
 {
 	t_hitrecord *rec;
+	t_vec3 direction;
 	t_vec3 unit_direction;
 	double a;
 
 	rec = calloc(1, sizeof(t_hitrecord));
 	if (hit_check(world, ray, inv(0, INFINITY), &rec))
 	{
-		rec->normal = vec_mul(vec_add(rec->normal, vec(1, 1, 1)), 0.5);
-		return (rec->normal);
+		direction = random_on_hemisphere(rec->normal);
+		return (vec_mul(ray_color(par_ray(rec->p, direction), world), 0.5));
 	}
-	unit_direction = unit_vec(ray->dir);
+	unit_direction = unit_vec(ray.dir);
 	a = (0.5 * (unit_direction.e[1] + 1.0));
 	return (vec_add(vec_mul(vec(1, 1, 1), 1.0 - a), vec_mul(vec(0.5, 0.7, 1.0), a)));
 }
@@ -92,7 +93,7 @@ void render(t_camera *cam, t_hittable *world)
 			for (int sample = 0; sample < cam->samples_per_pixel; sample++)
 			{
 				ray = get_ray(cam, i, j);
-				pixel_color = vec_add(pixel_color, ray_color(&ray, world));
+				pixel_color = vec_add(pixel_color, ray_color(ray, world));
 			}
 			write_color(vec_mul(pixel_color, cam->pixel_samples_scale));
 		}

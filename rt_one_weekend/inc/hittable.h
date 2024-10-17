@@ -28,8 +28,8 @@ typedef struct s_hittable
 	t_hittable *next;
 }t_hittable;
 
-int hit(t_vec3 *center, t_ray *ray, double radius, t_interval ray_i, t_hitrecord *rec);
-int hit_check(t_hittable *world, t_ray *ray, t_interval ray_i, t_hitrecord**rec);
+int hit(t_vec3 *center, t_ray ray, double radius, t_interval ray_i, t_hitrecord *rec);
+int hit_check(t_hittable *world, t_ray ray, t_interval ray_i, t_hitrecord**rec);
 void set_face_normal(t_hitrecord **rec, const t_ray *ray, t_vec3 *outward_normal);
 int	lstsize(t_hittable *lst);
 void	lstadd_back(t_hittable	**lst, t_hittable	*new);

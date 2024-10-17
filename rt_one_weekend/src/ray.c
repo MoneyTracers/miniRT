@@ -1,15 +1,21 @@
 #include <rt.h>
 
-void def_ray(t_ray *ray)
+t_ray def_ray(void)
 {
-	ray->dir = dvec();
-	ray->org = dvec();
+	t_ray ray;
+
+	ray.dir = dvec();
+	ray.org = dvec();
+	return (ray);
 }
 
-void par_ray(t_ray *ray, t_vec3 org, t_vec3 dir)
+t_ray par_ray( t_vec3 org, t_vec3 dir)
 {
-	ray->dir = dir;
-	ray->org = org;
+	t_ray ray;
+
+	ray.dir = dir;
+	ray.org = org;
+	return (ray);
 }
 
 t_vec3 ray_at(t_ray ray, double t)

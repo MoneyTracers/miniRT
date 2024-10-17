@@ -149,3 +149,38 @@ double dot(const t_vec3 u, const t_vec3 v)
 {
 	return ((u.e[0] * v.e[0]) +(u.e[1] * v.e[1])+(u.e[2] * v.e[2]));
 }
+
+t_vec3 vec_ran(void)
+{
+	return (vec(random_double(), random_double(), random_double()));
+}
+
+t_vec3 vec_ran_par(double min, double max)
+{
+	return (vec(random_double_between(min, max), random_double_between(min, max), random_double_between(min, max)));
+}
+
+t_vec3 random_unit_vec()
+{
+	t_vec3 p;
+	double lensq;
+
+	while (1)
+	{
+		p = vec_ran_par(-1, 1);
+		lensq = vec_len_sqr(p);
+		if (1e-160 < lensq && lensq <= 1)
+			return (vec_div(p, sqrt(lensq)));
+	}
+}
+
+t_vec3 random_on_hemisphere(t_vec3 normal)
+{
+	t_vec3 on_unit_sphere;
+	
+	on_unit_sphere = random_unit_vec();
+	if (dot(on_unit_sphere, normal) > 0.0)
+		return (on_unit_sphere);
+	else
+		return (vec_mul(on_unit_sphere, -1));
+}

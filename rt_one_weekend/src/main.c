@@ -10,8 +10,8 @@ int main ()
 	cam.image_width = 400;
 
 	//world 
-	world = lstnew(sphere, vec(0, -100.5, -1), 100);
-	lstadd(&world, lstnew(sphere, vec(0, 0, -1), 0.5));
+	world = lstnew(sphere, vec(0, 0, -1), 0.5);
+	lstadd(&world, lstnew(sphere, vec(0, -100.5, -1), 100));
 
 	render(&cam, world);
 	return (0);
