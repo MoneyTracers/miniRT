@@ -25,7 +25,7 @@ void init_cam(t_camera *cam)
 	cam->image_heigth = cam->image_width / cam->aspect_ratio;
 	if (cam->image_heigth < 1)
 		cam->image_heigth = 1;
-	cam->samples_per_pixel = 10;
+	cam->samples_per_pixel = 100;
 	cam->pixel_samples_scale = 1.0 / cam->samples_per_pixel;
 
 	// determine viewport dimension
