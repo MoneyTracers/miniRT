@@ -1,7 +1,7 @@
 #ifndef RAY_H
 #define RAY_H
 
-#include "vec3.h"
+#include <rt.h>
 
 typedef struct s_vec3 t_vec3;
 typedef struct s_ray t_ray;

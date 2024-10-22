@@ -29,5 +29,8 @@ t_vec3 vec_ran(void);
 t_vec3 vec_ran_par(double min, double max);
 t_vec3 random_unit_vec();
 t_vec3 random_on_hemisphere(t_vec3 normal);
+int near_zero(t_vec3 vec);
+t_vec3 reflect(t_vec3 v, t_vec3 n);
+t_vec3 vec_vec_mul(t_vec3	vec3, t_vec3 other);
 
 #endif

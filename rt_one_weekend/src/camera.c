@@ -3,7 +3,8 @@
 t_vec3 ray_color(t_ray ray, int depth, t_hittable *world)
 {
 	t_hitrecord *rec;
-	t_vec3 direction;
+	t_ray scattered;
+	t_vec3 attentuation;
 	t_vec3 unit_direction;
 	double a;
 
@@ -12,8 +13,9 @@ t_vec3 ray_color(t_ray ray, int depth, t_hittable *world)
 	rec = calloc(1, sizeof(t_hitrecord));
 	if (hit_check(world, ray, inv(0.001, INFINITY), &rec))
 	{
-		direction = vec_add(rec->normal, random_unit_vec(rec->normal));
-		return (vec_mul(ray_color(par_ray(rec->p, direction), depth - 1, world), 0.5));
+		if(rec->mat.scat(world->mat, ray, *rec, &attentuation, &scattered))
+			return (vec_vec_mul(attentuation, ray_color(scattered, depth - 1, world)));
+		return (vec(0,0,0));
 	}
 	unit_direction = unit_vec(ray.dir);
 	a = (0.5 * (unit_direction.e[1] + 1.0));

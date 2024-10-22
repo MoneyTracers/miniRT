@@ -3,6 +3,9 @@
 
 #include <rt.h>
 
+typedef struct s_hittable t_hittable;
+
+
 typedef struct s_camera
 {
 	double	aspect_ratio;

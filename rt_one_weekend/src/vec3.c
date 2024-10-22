@@ -71,6 +71,16 @@ t_vec3 vec_mul(t_vec3	vec3, double t)
 	return (new);
 }
 
+t_vec3 vec_vec_mul(t_vec3	vec3, t_vec3 other)
+{
+	t_vec3 new;
+
+	new.e[0] =vec3.e[0]* other.e[0];
+	new.e[1] =vec3.e[1]* other.e[1];
+	new.e[2] =vec3.e[2]* other.e[2];
+	return (new);
+}
+
 t_vec3 vec_div(t_vec3	vec3, double t)
 {
 	t_vec3 new;
@@ -183,4 +193,19 @@ t_vec3 random_on_hemisphere(t_vec3 normal)
 		return (on_unit_sphere);
 	else
 		return (vec_mul(on_unit_sphere, -1));
+}
+
+int near_zero(t_vec3 vec)
+{
+	double s;
+
+	s= 1e-8;
+	if ((fabs(vec.e[0])) < s && (fabs(vec.e[1])) < s && (fabs(vec.e[2]) < s))
+		return (1);
+	return (0);
+}
+
+t_vec3 reflect(t_vec3 v, t_vec3 n)
+{
+	return (vec_sub(v, vec_mul(n, 2*dot(v, n))));
 }
