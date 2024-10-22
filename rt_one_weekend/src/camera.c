@@ -25,30 +25,45 @@ void init_cam(t_camera *cam)
 {
 	t_vec3 viewport_u_half;
 	t_vec3 viewport_v_half;
+	t_vec3 w;
+	t_vec3 u;
+	t_vec3 v;
 
 	cam->image_heigth = cam->image_width / cam->aspect_ratio;
 	if (cam->image_heigth < 1)
 		cam->image_heigth = 1;
-	cam->samples_per_pixel = 100;
+	cam->samples_per_pixel = 50;
 	cam->pixel_samples_scale = 1.0 / cam->samples_per_pixel;
 	cam->max_depth = 50;
-	cam->vfov = 90;
+	cam->vfov = 50;
+	cam->lookfrom = vec(-2,2,1);
+	cam->lookat = vec(0,0,-1);
+	cam->vup = vec(0,1,0);
+
+	cam->center = cam->lookfrom;
 
 	// determine viewport dimension
-	cam->focal_length = 1.0;
+	cam->focal_length = vec_len(vec_sub(cam->lookfrom ,cam->lookat));
 	cam->viewport_heigth = 2.0 * tan(degrees_to_radians(cam->vfov) / 2)*cam->focal_length;
 	cam->viewport_width = cam->viewport_heigth * ((double)cam->image_width / cam->image_heigth);
 
+	w = unit_vec(vec_sub(cam->lookfrom, cam->lookat));
+	// t_vec3 test;
+	// test = cross(vec(1, 3, 4), vec(2, 7, -5));
+	// printf("cross e[0]%f e[1]%f e[2]%f\n", test.e[0], test.e[1], test.e[2]);
+	// exit(0);
+	u = unit_vec(cross(cam->vup, w));
+	v = cross(w, u);
 	// calculate the vectors across horizontal and vertical viewport edges
-	cam->viewport_u = vec(cam->viewport_width, 0, 0);
-	cam->viewport_v = vec(0, cam->viewport_heigth * -1, 0);
+	cam->viewport_u = vec_mul(u, cam->viewport_width);
+	cam->viewport_v = vec_mul(vec_mul(v, -1), cam->viewport_heigth);
 
 	// calculate the horizontal and vertical delta vectors from pixel to pixel
 	cam->pixel_delta_u = vec_div(cam->viewport_u, cam->image_width);
 	cam->pixel_delta_v = vec_div(cam->viewport_v, cam->image_heigth);
 
 	// calculate the location of upper left pixel
-	cam->viewport_upper_left = vec_sub(cam->center, vec(0, 0, cam->focal_length));
+	cam->viewport_upper_left = vec_sub(cam->center, vec_mul(w, cam->focal_length));
 	viewport_u_half = vec_div(cam->viewport_u, 2);
 	viewport_v_half = vec_div(cam->viewport_v, 2);
 	cam->viewport_upper_left = vec_sub(cam->viewport_upper_left, viewport_u_half);

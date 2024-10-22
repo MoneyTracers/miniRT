@@ -229,3 +229,17 @@ double reflectance(double cosine, double refraction_index)
 	r0 = r0 * r0;
 	return (r0 + (1-r0) * pow((1- cosine), 5));
 }
+
+t_vec3 cross(t_vec3 a, t_vec3 b)
+{
+	float i;
+	float j;
+	float k;
+
+	i = (a.e[1]*b.e[2]) - (a.e[2] * b.e[1]);
+	j = (a.e[0]*b.e[2]) - (a.e[2] * b.e[0]);
+	if (j < 0)
+		j *= -1;
+	k = (a.e[0]*b.e[1]) - (a.e[1] * b.e[0]);
+	return (vec(i, j, k));
+}

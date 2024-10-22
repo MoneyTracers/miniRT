@@ -34,5 +34,6 @@ t_vec3 reflect(t_vec3 v, t_vec3 n);
 t_vec3 vec_vec_mul(t_vec3	vec3, t_vec3 other);
 t_vec3 refract(t_vec3 uv, t_vec3 n, double etai_over_etat);
 double reflectance(double cosine, double refraction_index);
+t_vec3 cross(t_vec3 a, t_vec3 b);
 
 #endif
