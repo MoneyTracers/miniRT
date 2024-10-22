@@ -32,10 +32,11 @@ void init_cam(t_camera *cam)
 	cam->samples_per_pixel = 100;
 	cam->pixel_samples_scale = 1.0 / cam->samples_per_pixel;
 	cam->max_depth = 50;
+	cam->vfov = 90;
 
 	// determine viewport dimension
 	cam->focal_length = 1.0;
-	cam->viewport_heigth = 2.0;
+	cam->viewport_heigth = 2.0 * tan(degrees_to_radians(cam->vfov) / 2)*cam->focal_length;
 	cam->viewport_width = cam->viewport_heigth * ((double)cam->image_width / cam->image_heigth);
 
 	// calculate the vectors across horizontal and vertical viewport edges

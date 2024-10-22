@@ -17,7 +17,7 @@ typedef struct s_camera
 	double	focal_length;
 	double	viewport_heigth;
 	double	viewport_width;
-	
+	double	vfov;
 	t_vec3	viewport_u;
 	t_vec3	viewport_v;
 	t_vec3	center;
