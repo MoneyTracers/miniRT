@@ -2,18 +2,17 @@
 
 t_vec3 ray_color(t_ray ray, int depth, t_hittable *world)
 {
-	t_hitrecord *rec;
+	t_hitrecord rec;
 	t_ray scattered;
 	t_vec3 attentuation;
 	t_vec3 unit_direction;
 	double a;
 
 	if (depth <= 0)
-		return (dvec());
-	rec = calloc(1, sizeof(t_hitrecord));
+		return (vec(0,0,0));
 	if (hit_check(world, ray, inv(0.001, INFINITY), &rec))
 	{
-		if(rec->mat.scat(world->mat, ray, *rec, &attentuation, &scattered))
+		if(rec.mat.scat(rec.mat, ray, rec, &attentuation, &scattered))
 			return (vec_vec_mul(attentuation, ray_color(scattered, depth - 1, world)));
 		return (vec(0,0,0));
 	}

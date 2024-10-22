@@ -32,7 +32,7 @@ typedef struct s_hittable
 }t_hittable;
 
 int hit(t_hittable *world, t_ray ray, t_interval ray_i, t_hitrecord *rec);
-int hit_check(t_hittable *world, t_ray ray, t_interval ray_i, t_hitrecord**rec);
+int hit_check(t_hittable *world, t_ray ray, t_interval ray_i, t_hitrecord*rec);
 void set_face_normal(t_hitrecord **rec, const t_ray *ray, t_vec3 *outward_normal);
 int	lstsize(t_hittable *lst);
 void	lstadd_back(t_hittable	**lst, t_hittable	*new);
@@ -42,6 +42,6 @@ void	lstclear(t_hittable	**lst);
 void	lstdelone(t_hittable	*lst);
 t_hittable	*lstlast(t_hittable	*lst);
 void	lstprint(t_hittable *lst);
-t_hittable	*lstnew(int type, t_vec3 center, double radius, int mat, t_vec3 color);
+t_hittable	*lstnew(int type, t_vec3 center, double radius, t_material mat);
 
 #endif
