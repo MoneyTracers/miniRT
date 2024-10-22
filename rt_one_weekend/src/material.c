@@ -40,7 +40,7 @@ int scatter_die(t_material mat, t_ray r_in, t_hitrecord rec, t_vec3 *attenuation
 	cos_theta = fmin(dot(vec_mul(unit_direction, -1), rec.normal), 1);
 	sin_theta = sqrt(1.0 - cos_theta*cos_theta);
 
-	if (ri * sin_theta > 1.0)
+	if (ri * sin_theta > 1.0 || reflectance(cos_theta, ri) > random_double())
 		direction = reflect(unit_direction, rec.normal);
 	else
 		direction = refract(unit_direction, rec.normal, ri);
