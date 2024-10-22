@@ -12,16 +12,10 @@ int main ()
 
 	//world 
 	world = lstnew(sphere, vec(1, 0, -1), 0.5, init_mat(metal, vec(0.8, 0.6, 0.2), 0.3, 0));
-	lstadd(&world, lstnew(sphere, vec(-1.0, -0, -1), 0.5, init_mat(dielectric, vec(0, 0, 0), 0, 1.5)));
+	lstadd(&world, lstnew(sphere, vec(-1.0, -0, -1), 0.5, init_mat(dielectric, vec(0, 0, 0), 0, 1.00/1.33)));
 	lstadd(&world, lstnew(sphere, vec(0, 0, -1.2), 0.5, init_mat(lambertian, vec(0.1, 0.2, 0.5), 0, 0)));
 	lstadd(&world, lstnew(sphere, vec(0, -100.5, -1), 100, init_mat(lambertian, vec(0.8, 0.8, 0.0), 0, 0)));
 	temp = world;
-	// while(temp)
-	// {
-	// 	printf("list color %f %f %f\n", temp->mat.color.e[0], temp->mat.color.e[1], temp->mat.color.e[2]);
-	// 	temp = temp->next;
-	// }
-	// exit(0);
 	render(&cam, world);
 	return (0);
 }
