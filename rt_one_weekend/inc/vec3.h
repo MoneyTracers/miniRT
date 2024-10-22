@@ -32,5 +32,6 @@ t_vec3 random_on_hemisphere(t_vec3 normal);
 int near_zero(t_vec3 vec);
 t_vec3 reflect(t_vec3 v, t_vec3 n);
 t_vec3 vec_vec_mul(t_vec3	vec3, t_vec3 other);
+t_vec3 refract(t_vec3 uv, t_vec3 n, double etai_over_etat);
 
 #endif

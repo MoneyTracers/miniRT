@@ -209,3 +209,14 @@ t_vec3 reflect(t_vec3 v, t_vec3 n)
 {
 	return (vec_sub(v, vec_mul(n, 2*dot(v, n))));
 }
+t_vec3 refract(t_vec3 uv, t_vec3 n, double etai_over_etat)
+{
+	double cos_theta;
+	t_vec3	r_out_perp;
+	t_vec3	r_out_parallel;
+
+	cos_theta = fmin(dot(vec_mul(uv, -1), n), 1);
+	r_out_perp = vec_mul(vec_add(uv, vec_mul(n, cos_theta)), etai_over_etat);
+	r_out_parallel = vec_mul(vec_mul(n, sqrt(fabs(1.0 - vec_len_sqr(r_out_perp)))), -1);
+	return (vec_add(r_out_perp, r_out_parallel));
+}
