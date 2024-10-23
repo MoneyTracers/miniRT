@@ -14,6 +14,9 @@ int main ()
 	lstadd(&world, lstnew(sphere, vec(-1, 0, -1), 0.5, init_mat(dielectric, vec(0, 0, 0), 0, 1.5)));
 	lstadd(&world, lstnew(sphere, vec(-1, 0, -1), 0.4, init_mat(dielectric, vec(0, 0, 0), 0, 1/1.5)));
 	lstadd(&world, lstnew(sphere, vec(1, 0, -1), 0.5, init_mat(metal, vec(0.8, 0.6, 0.2), 1, 0)));
+	//TODO:create bvh binary tree
+	//TODO:pass binary tree struct instead of hittable struct
 	render(&cam, world);
+	// change hit function to bvh hit function 
 	return (0);
 }

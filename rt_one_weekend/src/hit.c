@@ -17,6 +17,8 @@ void set_face_normal(t_hitrecord **rec, const t_ray *ray, t_vec3 *outward_normal
 		temp->normal = vec_mul(temp->normal, -1);
 	}
 }
+
+//change hit function to bvh hit function
 int hit_check(t_hittable *world, t_ray ray, t_interval ray_i, t_hitrecord*rec)
 {
 	t_hittable *temp;

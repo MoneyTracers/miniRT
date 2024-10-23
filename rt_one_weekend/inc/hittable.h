@@ -28,6 +28,7 @@ typedef struct s_hittable
 	t_vec3	center;
 	double	radius;
 	t_material mat;
+	t_aabb bbox;
 	t_hittable *next;
 }t_hittable;
 
