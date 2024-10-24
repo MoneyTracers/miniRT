@@ -13,6 +13,7 @@
 # include <stdarg.h>
 # include <stdlib.h>
 # include <aabb.h>
+# include <bvh.h>
 
 #define pi 3.1415926535897932385
 

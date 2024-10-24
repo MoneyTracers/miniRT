@@ -3,6 +3,7 @@
 
 #include <rt.h>
 #include "material.h"
+#include "aabb.h"
 
 enum e_hittypes
 {

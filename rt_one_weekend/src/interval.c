@@ -45,3 +45,18 @@ t_interval inv(double min, double max)
 	new.max = max;
 	return (new);
 }
+
+t_interval inv_inv(t_interval a, t_interval b)
+{
+	t_interval new;
+
+	if (a.min <= b.min)
+		new.min = a.min;
+	else 
+		new.min = b.min;
+	if (a.max >= b.max)
+		new.max = a.max;
+	else
+		new.max = b.max;
+	return (new);
+}
