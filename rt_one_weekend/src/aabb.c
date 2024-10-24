@@ -1,4 +1,4 @@
-#include <aabb.h>
+#include <rt.h>
 
 t_aabb aabb(t_interval x, t_interval y, t_interval z)
 {
@@ -83,30 +83,4 @@ int aabb_hit(t_aabb aabb, t_ray r, t_interval ray_t)
 		axis++;
 	}
 	return (1);
-}
-
-int bvh_hit(t_bvh *node, t_ray r, t_interval ray_t, t_hitrecord *rec)
-{
-	int hit_left;
-	int hit_right;
-	if (!aabb_hit(node->bbox, r, ray_t))
-		return (0);
-	if (node->left->object)
-	{
-		hit_left = hit(node->left->object, r, ray_t, rec);
-		if (hit_left)
-			hit_right = hit(node->right->object, r, inv(ray_t.min, rec->t), rec);
-		else
-			hit_right = hit(node->right->object, r, inv(ray_t.min, ray_t.max), rec);	
-		return (hit_left || hit_right);
-	}
-	else
-	{
-		hit_left = bvh_hit(node->left, r, ray_t, rec);
-		if (hit_left)
-			hit_right = bvh_hit(node->right, r, inv(ray_t.min, rec->t), rec);
-		else
-			hit_right = bvh_hit(node->right, r, inv(ray_t.min, ray_t.max), rec);
-		return (hit_left || hit_right);
-	}
 }

@@ -45,5 +45,7 @@ void	lstdelone(t_hittable	*lst);
 t_hittable	*lstlast(t_hittable	*lst);
 void	lstprint(t_hittable *lst);
 t_hittable	*lstnew(int type, t_vec3 center, double radius, t_material mat);
+t_hittable	**arraynew(int type, t_vec3 center, double radius, t_material mat);
+t_hittable **array_add(t_hittable **arr, int type, t_vec3 center, double radius, t_material mat);
 
 #endif

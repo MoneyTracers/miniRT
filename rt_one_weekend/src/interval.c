@@ -1,4 +1,4 @@
-#include <interval.h>
+#include <rt.h>
 
 double size(t_interval inv)
 {
