@@ -23,13 +23,11 @@ t_hittable **array_add(t_hittable **arr, int type, t_vec3 center, double radius,
 		len++;
 	}
 	len += 1;
-	printf("len %lu\n", len);
 	new_arr = calloc(1, len * sizeof(t_hittable));
 	if (new_arr == NULL)
 		return (NULL);
 	while (index < (int)len - 1)
 	{
-		printf("index in loop %d\n", index);
 		new_arr[index] = arr[index];
 		index++;
 	}
@@ -46,10 +44,6 @@ t_hittable **array_add(t_hittable **arr, int type, t_vec3 center, double radius,
 	new_arr[index] = new_node;
 	new_arr[len] = NULL;
 	free(arr);
-	for (int i = 0; i <= index; i++)
-	{
-		printf("new arr %f\n", new_arr[i]->radius);
-	}
 	return (new_arr);
 }
 
