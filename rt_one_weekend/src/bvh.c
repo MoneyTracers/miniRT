@@ -6,7 +6,7 @@
 /*   By: mynodeus <mynodeus@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/23 13:51:45 by spenning      #+#    #+#                 */
-/*   Updated: 2024/10/25 16:21:02 by spenning      ########   odam.nl         */
+/*   Updated: 2024/10/25 17:18:27 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,25 @@ void sort(t_hittable ** world, int start, int end, int (*comp) (t_hittable* a, t
 	return;
 }
 
+
+int longest_axis(t_aabb bbox)
+{
+	if (size(bbox.x) > size(bbox.y))
+	{
+		if (size(bbox.x) > size(bbox.z))
+			return (0);
+		else
+			return (2);
+	}
+	else 
+	{
+		if (size(bbox.y) > size(bbox.z))
+			return (1);
+		else 
+			return (2);
+	}
+}
+
 t_bvh	*bvh_node(t_hittable **world, size_t start, size_t end)
 {
 	int axis;
@@ -95,8 +114,16 @@ t_bvh	*bvh_node(t_hittable **world, size_t start, size_t end)
 	size_t object_span;
 	size_t mid;
 	int (*comparator) (t_hittable* a, t_hittable* b);
-	
-	axis = random_int(0, 2);
+
+
+	node = calloc(1, sizeof(t_bvh));
+	node->left = calloc(1, sizeof(t_bvh));
+	node->right = calloc(1, sizeof(t_bvh));
+	for (size_t i = start; i < end; i++)
+	{
+		node->bbox = aabb_aabb(node->bbox, world[i]->bbox);
+	}
+	axis = longest_axis(node->bbox);
 	if (axis == 0)
 		comparator = &box_x_compare;
 	else if (axis == 1)
@@ -105,9 +132,6 @@ t_bvh	*bvh_node(t_hittable **world, size_t start, size_t end)
 		comparator = &box_z_compare;
 	object_span = end - start;
 	// printf("object_span %lu\n", object_span);
-	node = calloc(1, sizeof(t_bvh));
-	node->left = calloc(1, sizeof(t_bvh));
-	node->right = calloc(1, sizeof(t_bvh));
 	if (object_span == 1)
 	{
 		node->left->object = world[start];
@@ -150,7 +174,6 @@ t_bvh	*bvh_node(t_hittable **world, size_t start, size_t end)
 		node->left = bvh_node(world, start, mid);
 		node->right = bvh_node(world, mid, end);
 	}
-	node->bbox = aabb_aabb(node->left->bbox, node->right->bbox);
 	// printf("node bbox x.min: %f x.max: %f\n\
 	// bbox y.min: %f y.max: %f\n, \
 	// bbox z.min: %f z.max: %f\n", \
