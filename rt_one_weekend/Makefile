@@ -29,8 +29,10 @@ OBJECTS     := $(patsubst $(SRCDIR)/%,$(OBJDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT
 
 #Default Make
 
+
 all: build $(TARGETDIR)/$(TARGET) 
 
+debug: CFLAGS += -g3
 #Remake
 re: fclean all
 
@@ -49,12 +51,12 @@ fclean: clean
 
 #Link
 $(TARGETDIR)/$(TARGET) : $(OBJECTS)
-	$(CC) $(OBJECTS) -o  $(TARGETDIR)/$(TARGET) $(MFLAGS) -g
+	$(CC) $(OBJECTS) -o  $(TARGETDIR)/$(TARGET) $(MFLAGS) 
 
 #Compile
 $(OBJDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c -o $@ $^
+	$(CC) $(CFLAGS) -c -o $@ $^ -g
 
 #Non-File Targets
 .PHONY: all re clean fclean
