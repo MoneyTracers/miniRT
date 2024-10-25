@@ -3,6 +3,7 @@
 
 #include <rt.h>
 
+typedef struct s_bvh t_bvh;
 typedef struct s_hittable t_hittable;
 
 
@@ -30,6 +31,6 @@ typedef struct s_camera
 	t_vec3	pixel00_loc;
 }t_camera;
 
-void render(t_camera *cam, t_hittable *world);
+void render(t_camera *cam, t_bvh *world);
 
 #endif

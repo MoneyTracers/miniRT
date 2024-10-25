@@ -1,6 +1,6 @@
 #include <rt.h>
 
-t_vec3 ray_color(t_ray ray, int depth, t_hittable *world)
+t_vec3 ray_color(t_ray ray, int depth, t_bvh *world)
 {
 	t_hitrecord rec;
 	t_ray scattered;
@@ -10,7 +10,7 @@ t_vec3 ray_color(t_ray ray, int depth, t_hittable *world)
 
 	if (depth <= 0)
 		return (vec(0,0,0));
-	if (hit_check(world, ray, inv(0.001, INFINITY), &rec))
+	if (hit_check(world, ray, inv(0.001, 100), &rec))
 	{
 		if(rec.mat.scat(rec.mat, ray, rec, &attentuation, &scattered))
 			return (vec_vec_mul(attentuation, ray_color(scattered, depth - 1, world)));
@@ -32,14 +32,13 @@ void init_cam(t_camera *cam)
 	cam->image_heigth = cam->image_width / cam->aspect_ratio;
 	if (cam->image_heigth < 1)
 		cam->image_heigth = 1;
-	cam->samples_per_pixel = 50;
+	cam->samples_per_pixel = 100;
 	cam->pixel_samples_scale = 1.0 / cam->samples_per_pixel;
 	cam->max_depth = 50;
 	cam->vfov = 50;
 	cam->lookfrom = vec(-2,2,1);
 	cam->lookat = vec(0,0,-1);
 	cam->vup = vec(0,1,0);
-
 	cam->center = cam->lookfrom;
 
 	// determine viewport dimension
@@ -91,7 +90,7 @@ t_ray get_ray(t_camera *cam, int i, int j)
 	return (ray);
 }
 
-void render(t_camera *cam, t_hittable *world)
+void render(t_camera *cam, t_bvh *world)
 {
 	init_cam(cam);
 	t_ray ray;

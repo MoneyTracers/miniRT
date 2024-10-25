@@ -6,7 +6,7 @@
 /*   By: mynodeus <mynodeus@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/23 13:51:45 by spenning      #+#    #+#                 */
-/*   Updated: 2024/10/25 14:51:13 by spenning      ########   odam.nl         */
+/*   Updated: 2024/10/25 16:21:02 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	box_compare(t_hittable *a, t_hittable *b, int axis_index)
 
 	a_axis_interval = axis_interval(a->bbox, axis_index);
 	b_axis_interval = axis_interval(b->bbox, axis_index);
-	printf("radius %f a min: %f b min: %f\n", a->radius, a_axis_interval.min, b_axis_interval.min);
+	// printf("radius %f a min: %f b min: %f\n", a->radius, a_axis_interval.min, b_axis_interval.min);
 	return(a_axis_interval.min < b_axis_interval.min);
 }
 
@@ -96,8 +96,7 @@ t_bvh	*bvh_node(t_hittable **world, size_t start, size_t end)
 	size_t mid;
 	int (*comparator) (t_hittable* a, t_hittable* b);
 	
-	// axis = random_int(0, 2);
-	axis = 0;
+	axis = random_int(0, 2);
 	if (axis == 0)
 		comparator = &box_x_compare;
 	else if (axis == 1)
@@ -113,11 +112,29 @@ t_bvh	*bvh_node(t_hittable **world, size_t start, size_t end)
 	{
 		node->left->object = world[start];
 		node->right->object = world[start];
+		node->bbox = world[start]->bbox;
+		node->left->bbox = world[start]->bbox;
+		node->right->bbox = world[start]->bbox;
+	// 	printf("object 1 span bbox x.min: %f x.max: %f\n\
+	// bbox y.min: %f y.max: %f\n, \
+	// bbox z.min: %f z.max: %f\n", \
+	//  node->bbox.x.min, node->bbox.x.max,
+	//  node->bbox.y.min, node->bbox.y.max,
+	//  node->bbox.z.min, node->bbox.z.max);
 	}
 	else if (object_span == 2)
 	{
 		node->left->object = world[start];
 		node->right->object = world[start+1];
+		node->left->bbox = world[start]->bbox;
+		node->right->bbox = world[start+1]->bbox;
+		node->bbox = aabb_aabb(world[start]->bbox, world[start + 1]->bbox);
+	// 	printf("object 2 span bbox x.min: %f x.max: %f\n\
+	// bbox y.min: %f y.max: %f\n, \
+	// bbox z.min: %f z.max: %f\n", \
+	//  node->bbox.x.min, node->bbox.x.max,
+	//  node->bbox.y.min, node->bbox.y.max,
+	//  node->bbox.z.min, node->bbox.z.max);
 	}
 	else
 	{
@@ -134,6 +151,12 @@ t_bvh	*bvh_node(t_hittable **world, size_t start, size_t end)
 		node->right = bvh_node(world, mid, end);
 	}
 	node->bbox = aabb_aabb(node->left->bbox, node->right->bbox);
+	// printf("node bbox x.min: %f x.max: %f\n\
+	// bbox y.min: %f y.max: %f\n, \
+	// bbox z.min: %f z.max: %f\n", \
+	//  node->bbox.x.min, node->bbox.x.max,
+	//  node->bbox.y.min, node->bbox.y.max,
+	//  node->bbox.z.min, node->bbox.z.max);
 	return (node);
 }
 

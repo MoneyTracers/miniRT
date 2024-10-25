@@ -19,25 +19,19 @@ void set_face_normal(t_hitrecord **rec, const t_ray *ray, t_vec3 *outward_normal
 }
 
 //change hit function to bvh hit function
-int hit_check(t_hittable *world, t_ray ray, t_interval ray_i, t_hitrecord*rec)
+int hit_check(t_bvh *world, t_ray ray, t_interval ray_i, t_hitrecord*rec)
 {
-	t_hittable *temp;
 	t_hitrecord temp_rec;
 	int			hit_anything;
 	double		closest_so_far;
 
 	hit_anything = 0;
 	closest_so_far = ray_i.max;
-	temp = world;
-	while (temp)
+	if (bvh_hit(world, ray, inv(ray_i.min, closest_so_far), &temp_rec))
 	{
-		if (hit(temp, ray, inv(ray_i.min, closest_so_far), &temp_rec))
-		{
-			hit_anything = 1;
-			closest_so_far = temp_rec.t;
-			*rec = temp_rec;
-		}
-		temp = temp->next;
+		hit_anything = 1;
+		closest_so_far = temp_rec.t;
+		*rec = temp_rec;
 	}
 	return (hit_anything);
 }
