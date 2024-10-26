@@ -42,6 +42,7 @@ int hit(t_hittable *world ,t_ray ray, t_interval ray_i, t_hitrecord *rec)
 {
 	t_vec3 oc;
 	t_vec3 outward_normal;
+	t_vec3 current_center;
 	double a;
 	double h;
 	double c;
@@ -49,8 +50,8 @@ int hit(t_hittable *world ,t_ray ray, t_interval ray_i, t_hitrecord *rec)
 	double sqrtd;
 	double root;
 
-	oc = world->center;
-	oc = vec_sub(oc, ray.org);
+	current_center = ray_at(world->center, world->center.time);
+	oc = vec_sub(current_center, ray.org);
 	a = vec_len_sqr(ray.dir);
 	h = dot(ray.dir, oc);
 	c = vec_len_sqr(oc) - (world->radius*world->radius);
@@ -67,7 +68,7 @@ int hit(t_hittable *world ,t_ray ray, t_interval ray_i, t_hitrecord *rec)
 	}
 	rec->t = root;
 	rec->p = ray_at(ray, rec->t);
-	outward_normal = vec_div(vec_sub(rec->p, world->center), world->radius);
+	outward_normal = vec_div(vec_sub(rec->p, current_center), world->radius);
 	set_face_normal(&rec, &ray, &outward_normal);
 	rec->mat = world->mat;
 	return (1);

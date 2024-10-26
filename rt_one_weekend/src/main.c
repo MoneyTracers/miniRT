@@ -17,11 +17,11 @@ int main ()
 	// lstadd(&world, lstnew(sphere, vec(-1, 0, -1), 0.4, init_mat(dielectric, vec(0, 0, 0), 0, 1/1.5)));
 	// lstadd(&world, lstnew(sphere, vec(1, 0, -1), 0.5, init_mat(metal, vec(0.8, 0.6, 0.2), 1, 0)));
 	//TODO: make world array
-	world = arraynew(sphere, vec(0, -100.5, 0), 100, init_mat(lambertian, vec(0.8, 0.8, 0), 0, 0));
-	world = array_add(world, sphere, vec(0, 0, -1.2), 0.5, init_mat(lambertian, vec(0.1, 0.2, 0.5), 0, 0));
-	world = array_add(world, sphere, vec(-1, 0, -1), 0.5, init_mat(dielectric, vec(0, 0, 0), 0, 1.5));
-	world = array_add(world, sphere, vec(-1, 0, -1), 0.4, init_mat(dielectric, vec(0, 0, 0), 0, 1/1.5));
-	world = array_add(world, sphere, vec(1, 0, -1), 0.5, init_mat(metal, vec(0.8, 0.6, 0.2), 1, 0));
+	world = arraynew(sphere, par_ray(vec(0, -100.5, 0), vec(0,0,0)), 100, init_mat(lambertian, vec(0.8, 0.8, 0), 0, 0));
+	world = array_add(world, sphere, par_ray(vec(0, 0, -1.2), vec(0,0,0)), 0.5, init_mat(lambertian, vec(0.1, 0.2, 0.5), 0, 0));
+	world = array_add(world, sphere, par_ray(vec(-1, 0, -1), vec(0,0,0)), 0.5, init_mat(dielectric, vec(0, 0, 0), 0, 1.5));
+	world = array_add(world, sphere, par_ray(vec(-1, 0, -1), vec(0,0,0)), 0.4, init_mat(dielectric, vec(0, 0, 0), 0, 1/1.5));
+	world = array_add(world, sphere, par_ray(vec(1, 0, -1), vec(0,0,0)), 0.5, init_mat(metal, vec(0.8, 0.6, 0.2), 1, 0));
 
 	len = 0;
 	for (unsigned long i = 0; world[i]; i++)

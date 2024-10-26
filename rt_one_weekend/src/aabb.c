@@ -10,6 +10,28 @@ t_aabb aabb(t_interval x, t_interval y, t_interval z)
 	return (new);
 }
 
+t_interval expand(t_interval axis_inter, double delta)
+{
+	double padding;
+
+	padding = delta / 2;
+	return (inv(axis_inter.min - padding, axis_inter.max + padding));
+}
+
+t_aabb pad_to_minimus(t_aabb bbox)
+{
+	double delta;
+
+	delta = 0.0001;
+	if (size(bbox.x) < delta)
+		bbox.x = expand(bbox.x, delta);
+	if (size(bbox.y) < delta)
+		bbox.y = expand(bbox.y, delta);
+	if (size(bbox.z) < delta)
+		bbox.z = expand(bbox.z, delta);
+	return (bbox);
+}
+
 t_aabb aabb_vec(t_vec3 a, t_vec3 b)
 {
 	t_aabb new;
@@ -26,7 +48,7 @@ t_aabb aabb_vec(t_vec3 a, t_vec3 b)
 		new.z = inv(a.e[2], b.e[2]);
 	else
 		new.z = inv(b.e[2], a.e[2]);
-	return (new);
+	return (pad_to_minimus(new));
 }
 
 t_aabb aabb_aabb(t_aabb a, t_aabb b)

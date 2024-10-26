@@ -32,7 +32,7 @@ void init_cam(t_camera *cam)
 	cam->image_heigth = cam->image_width / cam->aspect_ratio;
 	if (cam->image_heigth < 1)
 		cam->image_heigth = 1;
-	cam->samples_per_pixel = 100;
+	cam->samples_per_pixel = 50;
 	cam->pixel_samples_scale = 1.0 / cam->samples_per_pixel;
 	cam->max_depth = 50;
 	cam->vfov = 50;
@@ -87,6 +87,7 @@ t_ray get_ray(t_camera *cam, int i, int j)
 
 	ray.org = cam->center;
 	ray.dir = ray_direction;
+	ray.time = random_double();
 	return (ray);
 }
 

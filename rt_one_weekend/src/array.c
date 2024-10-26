@@ -9,7 +9,7 @@ t_aabb sphere_bbox(t_vec3 center, double radius)
 }
 
 
-t_hittable **array_add(t_hittable **arr, int type, t_vec3 center, double radius, t_material mat)
+t_hittable **array_add(t_hittable **arr, int type, t_ray center, double radius, t_material mat)
 {
 	t_hittable **new_arr;
 	t_hittable *new_node;
@@ -35,7 +35,7 @@ t_hittable **array_add(t_hittable **arr, int type, t_vec3 center, double radius,
 	if (new_node == NULL)
 		return (NULL);
 	if (type == sphere)
-		new_node->bbox = sphere_bbox(center, radius);
+		new_node->bbox = sphere_bbox(center.org, radius);
 	new_node->type = type;
 	new_node->center = center;
 	new_node->radius = radius;
@@ -47,7 +47,7 @@ t_hittable **array_add(t_hittable **arr, int type, t_vec3 center, double radius,
 	return (new_arr);
 }
 
-t_hittable	**arraynew(int type, t_vec3 center, double radius, t_material mat)
+t_hittable	**arraynew(int type, t_ray center, double radius, t_material mat)
 {
 	t_hittable	**new_arr;
 	t_hittable	*new_node;
@@ -57,7 +57,7 @@ t_hittable	**arraynew(int type, t_vec3 center, double radius, t_material mat)
 	if (new_node == NULL)
 		return (NULL);
 	if (type == sphere)
-		new_node->bbox = sphere_bbox(center, radius);
+		new_node->bbox = sphere_bbox(center.org, radius);
 	new_node->type = type;
 	new_node->center = center;
 	new_node->radius = radius;

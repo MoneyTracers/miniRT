@@ -8,7 +8,7 @@ int scatter_lamb(t_material mat, t_ray r_in, t_hitrecord rec, t_vec3 *attenuatio
 	scatter_direction = vec_add(rec.normal, random_unit_vec());
 	if (near_zero(scatter_direction))
 		scatter_direction = rec.normal;
-	*scattered = par_ray(rec.p, scatter_direction);
+	*scattered = par_ray_time(rec.p, scatter_direction, r_in.time);
 	*attenuation = mat.color;
 	return (1);
 }
@@ -18,7 +18,7 @@ int scatter_met(t_material mat, t_ray r_in, t_hitrecord rec, t_vec3 *attenuation
 	t_vec3 reflected;
 	reflected = reflect(r_in.dir, rec.normal);
 	reflected = vec_add(unit_vec(reflected), vec_mul(random_unit_vec(), mat.fuzz));
-	*scattered = par_ray(rec.p, reflected);
+	*scattered = par_ray_time(rec.p, reflected, r_in.time);
 	*attenuation = mat.color; 
 	return (1);
 }
@@ -44,7 +44,7 @@ int scatter_die(t_material mat, t_ray r_in, t_hitrecord rec, t_vec3 *attenuation
 		direction = reflect(unit_direction, rec.normal);
 	else
 		direction = refract(unit_direction, rec.normal, ri);
-	*scattered = par_ray(rec.p, direction);
+	*scattered = par_ray_time(rec.p, direction, r_in.time);
 	return (1);
 }
 
