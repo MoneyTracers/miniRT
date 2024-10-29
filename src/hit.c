@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   hit.c                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/23 12:37:18 by marieke           #+#    #+#             */
-/*   Updated: 2024/10/28 13:42:42 by marieke          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   hit.c                                              :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: marieke <marieke@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/10/23 12:37:18 by marieke       #+#    #+#                 */
+/*   Updated: 2024/10/29 15:02:42 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tuples.h"
+#include <tuples.h>
 
 t_intersection	*get_hit(t_intersection *intersections)
 {

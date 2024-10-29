@@ -1,34 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   hooks.c                                            :+:    :+:            */
+/*   parsing.h                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/05/07 18:22:50 by spenning      #+#    #+#                 */
-/*   Updated: 2024/10/29 15:02:42 by spenning      ########   odam.nl         */
+/*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
+/*   Updated: 2024/10/29 15:09:20 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <tuples.h>
+#ifndef PARSE_H
+# define PARSE_H
 
-int	keypress(int keycode, t_data *data)
-{
-	if (keycode == 65307)
-	{
-		mlx_loop_end(data->mlx);
-	}
-	return (0);
-}
+void parse(void);
 
-int	destroy(t_data *data)
-{
-	mlx_loop_end(data->mlx);
-	return (0);
-}
+#endif
 
-void	hooks(t_data *data)
-{
-	mlx_hook(data->window, 2, 1L << 0, keypress, data);
-	mlx_hook(data->window, 17, 0L, destroy, data);
-}

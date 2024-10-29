@@ -1,31 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   point.c                                            :+:    :+:            */
+/*   parse.c                                            :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
+/*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/10/01 13:17:37 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/10/29 15:02:42 by spenning      ########   odam.nl         */
+/*   Created: 2024/10/29 14:57:19 by spenning      #+#    #+#                 */
+/*   Updated: 2024/10/29 15:22:31 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <tuples.h>
+#include <rt.h>
 
-bool	is_point(t_tuple tuple)
+void parse(void)
 {
-	if (tuple.w == 1.0)
-		return (true);
-	return (false);
-}
-
-t_tuple	create_point(float x, float y, float z)
-{
-	t_tuple	new;
-
-	new.x = x;
-	new.y = y;
-	new.z = z;
-	new.w = 1.0;
-	return (new);
+	exit(0);
 }

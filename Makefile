@@ -42,7 +42,7 @@ OBJECTS     := $(patsubst $(SRCDIR)/%,$(OBJDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT
 
 #Default Make
 
-all: submodule build $(LIB)/$(MLX)/$(MLX.A) $(LIB)/$(LIBFT)/$(LIBFT.A) $(TARGETDIR)/$(TARGET) 
+all: submodule build $(LIB)/$(MLX)/$(MLX.A) $(LIB)/$(LIBFT)/$(LIB)/$(LIBFT.A) $(TARGETDIR)/$(TARGET) 
 
 #Remake
 re: fclean all
@@ -72,7 +72,7 @@ fclean: clean
 	@$(MAKE) -C $(LIB)/$(MLX) clean
 
 #libft
-$(LIB)/$(LIBFT)/$(LIBFT.A):
+$(LIB)/$(LIBFT)/$(LIB)/$(LIBFT.A):
 	@$(MAKE) -C $(LIB)/$(LIBFT) all
 
 #configure mlx
@@ -81,12 +81,13 @@ $(LIB)/$(MLX)/$(MLX.A):
 
 #Link
 $(TARGETDIR)/$(TARGET) : $(OBJECTS)
-	$(CC) $(OBJECTS) $(MLX_L_FLAGS) $(LIB)/$(LIBFT)/$(LIBFT.A) -o $(TARGETDIR)/$(TARGET) 
+	$(CC) $(OBJECTS) $(MLX_L_FLAGS) $(LIB)/$(LIBFT)/$(LIB)/$(LIBFT.A) -o $(TARGETDIR)/$(TARGET)  -g
 
 #Compile
 $(OBJDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
-	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(MLX_C_FLAGS) -c -o $@ $^
+	@echo "Creating directory $(@D)"
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) $(MLX_C_FLAGS) -c -o $@ $^ -g
 
 
 #Non-File Targets

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   computation.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/21 16:53:11 by marieke           #+#    #+#             */
-/*   Updated: 2024/10/23 14:28:35 by marieke          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   computation.c                                      :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: marieke <marieke@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/10/21 16:53:11 by marieke       #+#    #+#                 */
+/*   Updated: 2024/10/29 15:02:42 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tuples.h"
+#include <tuples.h>
 
 t_comps	*prepare_computations(t_intersection *intersection, t_ray ray)
 {
