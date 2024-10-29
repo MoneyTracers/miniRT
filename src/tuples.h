@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 17:07:14 by maraasve          #+#    #+#             */
-/*   Updated: 2024/10/29 13:55:33 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/10/29 14:06:23 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,8 @@ typedef	struct s_point_light
 typedef struct s_world
 {
 	t_point_light	light;
-	t
+	t_color			ambient;
+	float			ambientf;
 	t_intersection	*intersections;
 	t_intersection	*shadow_intersections;
 	t_object		*shapes;

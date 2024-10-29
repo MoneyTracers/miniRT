@@ -1,23 +1,23 @@
-SOURCES = src/colors/opposite_color.c \
-src/colors/shade.c \
-src/colors/trgb.c \
-src/events/event_handler.c \
-src/free/free_all.c \
-src/init/data_init.c \
-src/init/map_init.c \
-src/init/map_init_coordinates.c \
+SOURCES = src/colors.c \
+src/computations.c \
+src/free.c \
+src/hit.c \
+src/hooks.c \
+src/image.c \
+src/init.c \
+src/intersection.c \
+src/invert_matrix.c \
+src/light.c \
+src/list.c \
 src/main.c \
-src/parse/parse.c \
-src/parse/parse_colom.c \
-src/parse/parse_coordinate.c \
-src/parse/parse_coordinate_color.c \
-src/parse/parse_row.c \
-src/render/color.c \
-src/render/draw.c \
-src/render/pixel.c \
-src/render/slope.c \
-src/render/view.c \
-src/utils/abs.c \
-src/utils/hstoi.c \
-src/free/free_all_success.c \
-src/utils/debug.c
+src/matrix.c \
+src/normal.c \
+src/point.c \
+src/rays.c \
+src/rotation.c \
+src/shadow.c \
+src/sphere.c \
+src/transformation.c \
+src/tuples.c \
+src/utils.c \
+src/vector.c 

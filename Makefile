@@ -17,16 +17,23 @@ SRCEXT      := c
 OBJEXT      := o
 
 #Flags, Libraries and Includes
-CFLAGS      := -Wall -Werror -Wextra -I./inc
+CFLAGS      := -Wall -Werror -Wextra -I./inc -g
 LIB         := lib
 LIBFT       := libft
 LIBFT.A     := libft.a
 MLX         := mlx_linux
 MLX.A       := libmlx.a
-MLX_L_FLAGS := -Llib/mlx_linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
-MLX_C_FLAGS := -I/usr/include -Ilib/mlx_linux -Ilib/libft -O3
+#MLX_L_FLAGS := -Llib/mlx_linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
+#MLX_C_FLAGS := -I/usr/include -Ilib/mlx_linux -Ilib/libft -O3
 DEBUG_FLAGS := -fsanitize=address -g
 
+ifeq ($(shell uname), Darwin)
+	MLX_L_FLAGS = -Llib/mlx_linux -lmlx -L/usr/X11/lib -lXext -lX11 -framework OpenGL -framework AppKit -lm
+	MLX_C_FLAGS = -I/opt/X11/include -Ilib/mlx_linux 
+else
+	MLX_L_FLAGS = -Llib/mlx_linux -lmlx -L/usr/lib/X11 -lXext -lX11 -lm
+	MLX_C_FLAGS = -I/usr/include -Ilib/mlx_linux 
+endif
 
 #---------------------------------------------------------------------------------
 #DO NOT EDIT BELOW THIS LINE
@@ -35,7 +42,7 @@ OBJECTS     := $(patsubst $(SRCDIR)/%,$(OBJDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT
 
 #Default Make
 
-all: submodule build $(LIB)/$(MLX)/$(MLX.A) $(LIB)/$(LIBFT)/$(LIB)/$(LIBFT.A) $(TARGETDIR)/$(TARGET) 
+all: submodule build $(LIB)/$(MLX)/$(MLX.A) $(LIB)/$(LIBFT)/$(LIBFT.A) $(TARGETDIR)/$(TARGET) 
 
 #Remake
 re: fclean all
@@ -65,7 +72,7 @@ fclean: clean
 	@$(MAKE) -C $(LIB)/$(MLX) clean
 
 #libft
-$(LIB)/$(LIBFT)/$(LIB)/$(LIBFT.A):
+$(LIB)/$(LIBFT)/$(LIBFT.A):
 	@$(MAKE) -C $(LIB)/$(LIBFT) all
 
 #configure mlx
@@ -74,7 +81,7 @@ $(LIB)/$(MLX)/$(MLX.A):
 
 #Link
 $(TARGETDIR)/$(TARGET) : $(OBJECTS)
-	$(CC) $(OBJECTS) $(MLX_L_FLAGS) $(LIB)/$(LIBFT)/$(LIB)/$(LIBFT.A) -o  $(TARGETDIR)/$(TARGET) 
+	$(CC) $(OBJECTS) $(MLX_L_FLAGS) $(LIB)/$(LIBFT)/$(LIBFT.A) -o $(TARGETDIR)/$(TARGET) 
 
 #Compile
 $(OBJDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
