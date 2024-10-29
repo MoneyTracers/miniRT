@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:19:39 by marieke           #+#    #+#             */
-/*   Updated: 2024/10/29 16:20:04 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/10/29 17:14:47 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ t_material	default_material(void)
 	material.diffuse = 0.9;
 	material.specular = 0.9;
 	material.shininess = 200.0;
+	material.reflective = 0;
 	return (material);
 }
 

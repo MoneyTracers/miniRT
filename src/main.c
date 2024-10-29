@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 17:06:00 by maraasve          #+#    #+#             */
-/*   Updated: 2024/10/29 16:24:24 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:33:33 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,9 @@ int main(void)
 	add_shape_to_list(&world.shapes, cylinder);
 	
 	world.lights = NULL;
-	add_light_to_list(&world.lights, new_light(create_point(-10, 70, -50), new_color(1, 1, 1)));
-	add_light_to_list(&world.lights, new_light(create_point(0, 20, 0), new_color(1, 1, 1)));
+	add_light_to_list(&world.lights, new_light(create_point(-20, 40, -100), new_color(0.8, 0.8, 0.8)));
+	add_light_to_list(&world.lights, new_light(create_point(0, 100, 0), new_color(0.5, 0.5, 0.5)));
+	add_light_to_list(&world.lights, new_light(create_point(60, 5, -100), new_color(0.5, 0.5, 0.5)));
 	world.ambient = new_color(0.5, 0.6, 0.4);
 	world.ambientf = 0.4;
 

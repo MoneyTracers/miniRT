@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 17:09:43 by maraasve          #+#    #+#             */
-/*   Updated: 2024/10/29 16:16:38 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/10/29 17:43:03 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ bool	is_shadowed(t_world *world, t_light light, t_tuple point)
 	t_tuple	vector;
 	t_ray	shadow_ray;
 	t_intersection *hit;
+	t_intersection *list;
 
 	vector = subtract_tuple(light.pos, point);
 	distance = get_magnitude(vector);

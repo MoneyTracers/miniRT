@@ -14,6 +14,7 @@ src/matrix.c \
 src/normal.c \
 src/point.c \
 src/rays.c \
+src/reflection.c \
 src/rotation.c \
 src/shadow.c \
 src/sphere.c \
