@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/10/29 15:10:12 by spenning      ########   odam.nl         */
+/*   Updated: 2024/10/29 15:44:20 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	render(t_data *data, t_world *world)
 }
 
 
-int main(void)
+int main(int argc, char **argv)
 {
 	t_data				data;
 	t_world				world;
@@ -64,7 +64,7 @@ int main(void)
 	t_ray				ray;
 
 
-	parse();
+	parse(argc, argv);
 	transformation.scale = scale_matrix(0.9, 0.9, 0.9);
 	transformation.translation = translation_matrix(-1, -0.6, 5);
 	transformation.rotate = create_identity_matrix();

@@ -1,30 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   parse.h                                            :+:    :+:            */
+/*   exit.c                                             :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
+/*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/10/29 16:59:32 by spenning      ########   odam.nl         */
+/*   Created: 2024/10/29 16:20:17 by spenning      #+#    #+#                 */
+/*   Updated: 2024/10/29 16:21:07 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_H
-# define PARSE_H
-
-enum identifiers
+void exit_err(char *err, int ec)
 {
-	ambient,
-	camera,
-	light,
-	sphere,
-	plane,
-	cyl,
-	unidentified
-};
-
-void parse(int argc, char **argv);
-
-#endif
-
+	
+}
