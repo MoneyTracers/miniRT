@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/04 13:09:32 by spenning      #+#    #+#                 */
-/*   Updated: 2024/09/30 16:14:35 by spenning      ########   odam.nl         */
+/*   Updated: 2024/10/29 15:21:53 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -352,16 +352,6 @@ void	free_all_mlx_success(t_data *data);
 //Function returns nothing
 //[Error]
 // No error value
-void	parse(char **argv, t_data *img);
-//[Description]
-//This function parses the first line of the map, to get
-// the count of columns in the map
-//[Parameters]
-//char *path (to map)
-//[Return]
-//the count of coloms or an error value
-//[Error]
-// -1 
 int		parse_colom(char *path);
 //[Description]
 //This function parses all the rows in the map, 

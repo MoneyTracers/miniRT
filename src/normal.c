@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   normal.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/23 12:24:15 by marieke           #+#    #+#             */
-/*   Updated: 2024/10/25 14:39:04 by maraasve         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   normal.c                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/10/23 12:24:15 by marieke       #+#    #+#                 */
+/*   Updated: 2024/10/29 15:02:42 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tuples.h"
+#include <tuples.h>
 
 t_tuple	local_normal_at(t_object *shape, t_tuple local_point)
 {

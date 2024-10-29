@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   colors.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/01 14:47:44 by maraasve          #+#    #+#             */
-/*   Updated: 2024/10/22 15:07:54 by maraasve         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   colors.c                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/10/01 14:47:44 by maraasve      #+#    #+#                 */
+/*   Updated: 2024/10/29 15:02:42 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tuples.h"
+#include <tuples.h>
 
 t_color	new_color(float r, float g, float b)
 {

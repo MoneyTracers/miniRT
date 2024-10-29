@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/30 17:06:00 by maraasve          #+#    #+#             */
-/*   Updated: 2024/10/29 14:12:22 by maraasve         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   main.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
+/*   Updated: 2024/10/29 15:10:12 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tuples.h"
+#include <tuples.h>
+#include "../inc/parse.h"
 
 void	render(t_data *data, t_world *world)
 {
@@ -62,6 +63,8 @@ int main(void)
 	t_object			*plane2;
 	t_ray				ray;
 
+
+	parse();
 	transformation.scale = scale_matrix(0.9, 0.9, 0.9);
 	transformation.translation = translation_matrix(-1, -0.6, 5);
 	transformation.rotate = create_identity_matrix();

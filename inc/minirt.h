@@ -1,37 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   utils.c                                            :+:    :+:            */
+/*   minirt.h                                           :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: marieke <marieke@student.42.fr>              +#+                     */
+/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/10/01 13:16:49 by maraasve      #+#    #+#                 */
+/*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
 /*   Updated: 2024/10/29 15:02:42 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <tuples.h>
+#ifndef MINIRT_H
+# define MINIRT_H
 
-float	ft_abs(float a)
+# include <tuples.h>
+
+typedef struct s_data
 {
-	if (a < 0)
-		return (-a);
-	return (a);
-}
+	int		screen_width;
+	int		screen_height;
+	char	*addr;
+	int		line_length;
+	int		bpp;
+	int		endian;
+	void	*mlx;
+	void	*window;
+	void	*image;
+}t_data;
 
-bool	equal_float(float a, float b)
-{
-	if (ft_abs(a - b) > EPSILON)
-		return (false);
-	return (true);
-}
-
-long long	millitimestamp(void)
-{
-	struct timeval	timeval;
-	long long		microtime;
-
-	gettimeofday(&timeval, NULL);
-	microtime = timeval.tv_sec * 1000LL + timeval.tv_usec / 1000;
-	return (microtime);
-}
+#endif

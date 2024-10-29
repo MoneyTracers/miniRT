@@ -20,4 +20,5 @@ src/sphere.c \
 src/transformation.c \
 src/tuples.c \
 src/utils.c \
-src/vector.c 
+src/vector.c \
+src/parsing/parse.c

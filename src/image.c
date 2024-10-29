@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   image.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/01 17:25:06 by maraasve          #+#    #+#             */
-/*   Updated: 2024/10/22 15:18:22 by maraasve         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   image.c                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/10/01 17:25:06 by maraasve      #+#    #+#                 */
+/*   Updated: 2024/10/29 15:02:42 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tuples.h"
+#include <tuples.h>
 
 // void	pixel_put(t_data *data, int x, int y, int color)
 // {

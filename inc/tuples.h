@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   tuples.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/30 17:07:14 by maraasve          #+#    #+#             */
-/*   Updated: 2024/10/29 14:06:23 by maraasve         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   tuples.h                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/09/30 17:07:14 by maraasve      #+#    #+#                 */
+/*   Updated: 2024/10/29 15:03:37 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define TUPLES_H
 
 # include <math.h>
-# include "minirt.h"
-# include "../lib/mlx_linux/mlx.h"
+# include <minirt.h>
+# include <mlx.h>
 # include <stdbool.h>
 # include <stdlib.h>
 # include <stdio.h>
