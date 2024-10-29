@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 17:07:14 by maraasve          #+#    #+#             */
-/*   Updated: 2024/10/29 14:06:23 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:20:18 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,16 +110,17 @@ typedef struct	s_intersection
 	struct s_intersection	*next;
 }	t_intersection;
 
-typedef	struct s_point_light
+typedef	struct s_light
 {
-	t_color	intensity;
-	t_tuple	pos;
-}	t_point_light;
+	t_color			intensity;
+	t_tuple			pos;
+	struct s_light	*next;
+}	t_light;
 
 
 typedef struct s_world
 {
-	t_point_light	light;
+	t_light			*lights;
 	t_color			ambient;
 	float			ambientf;
 	t_intersection	*intersections;
@@ -179,19 +180,21 @@ float		**allocate_mem_matrix(int size);
 float		determinant(float **grid, int size);
 t_matrix	*invert_matrix(float **matrix, int size);
 
-//light.ct_matrix		rotate_x(float radians);
-t_matrix		rotate_y(float radians);
-t_matrix		rotate_z(float radians);
+//light.c
+t_matrix	rotate_x(float radians);
+t_matrix	rotate_y(float radians);
+t_matrix	rotate_z(float radians);
 t_tuple		light_vector(t_tuple intersection, t_tuple light_src);
 t_tuple		negate_vector(t_tuple vector);
 t_tuple		reflect(t_tuple in, t_tuple normal);
-t_point_light	new_light(t_tuple pos, t_color intensity);
+t_light		*new_light(t_tuple pos, t_color intensity);
 t_material	default_material(void);
-t_color		lighting(t_material m, t_point_light light, t_tuple pos, t_tuple eyev, t_tuple normalv, bool is_shadowed);
+t_color	lighting(t_world *world, t_light light, t_material m, t_tuple pos, t_tuple eyev, t_tuple normalv, bool in_shadow);
 
 //list.c
 t_object_base	*new_object_base(int type, t_matrix transformation);
 void	add_shape_to_list(t_object **head, t_object *new);
+void	add_light_to_list(t_light **head, t_light *new);
 
 //matrix.c
 t_matrix	create_identity_matrix(void);
@@ -215,7 +218,7 @@ t_ray	transform_ray(t_ray ray, t_matrix transformation);
 t_matrix	rotate(float x, float y, float z);
 
 //shadows.c
-bool	is_shadowed(t_world *world, t_tuple point);
+bool	is_shadowed(t_world *world, t_light light, t_tuple point);
 
 //sphere.c
 t_object	*new_object(t_tuple center, float radius, t_material material, t_object_base *base);

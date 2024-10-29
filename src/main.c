@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 17:06:00 by maraasve          #+#    #+#             */
-/*   Updated: 2024/10/29 14:12:22 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:24:24 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	render(t_data *data, t_world *world)
 			target = create_point(world_x, world_y, wall_z);
 			ray.direction = normalize(subtract_tuple(target, ray.origin));
 			color = color_at(world, ray);
-			//color = add_colors(color, colors_multi_scalar(world->ambient, world->ambientf));
 			free_intersection(&world->intersections);
 			free_intersection(&world->shadow_intersections);
 			pixel_put(data, x, y, color);
@@ -110,9 +109,11 @@ int main(void)
 	add_shape_to_list(&world.shapes, plane2);
 	add_shape_to_list(&world.shapes, cylinder);
 	
-	world.light = new_light(create_point(-10, -2, -50), new_color(1, 1, 1));
-	world.ambient = new_color(0.3, 0.1, 0.5);
-	world.ambientf = 0.2;
+	world.lights = NULL;
+	add_light_to_list(&world.lights, new_light(create_point(-10, 70, -50), new_color(1, 1, 1)));
+	add_light_to_list(&world.lights, new_light(create_point(0, 20, 0), new_color(1, 1, 1)));
+	world.ambient = new_color(0.5, 0.6, 0.4);
+	world.ambientf = 0.4;
 
 	world.intersections = NULL;
 	world.shadow_intersections = NULL;

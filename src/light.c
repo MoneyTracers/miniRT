@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:19:39 by marieke           #+#    #+#             */
-/*   Updated: 2024/10/25 17:09:08 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:20:04 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,16 @@ t_tuple	reflect(t_tuple in, t_tuple normal)
 	return(reflection);
 }
 
-t_point_light	new_light(t_tuple pos, t_color intensity)
+t_light	*new_light(t_tuple pos, t_color intensity)
 {
-	t_point_light	new;
+	t_light	*new;
 
-	new.pos = pos;
-	new.intensity = intensity;
+	new = malloc(sizeof(t_light));
+	if (!new)
+		return (NULL);
+	new->pos = pos;
+	new->intensity = intensity;
+	new->next = NULL;
 	return (new);
 }
 
@@ -66,7 +70,7 @@ t_material	default_material(void)
 	return (material);
 }
 
-t_color	lighting(t_material m, t_point_light light, t_tuple pos, t_tuple eyev, t_tuple normalv, bool in_shadow)
+t_color	lighting(t_world *world, t_light light, t_material m, t_tuple pos, t_tuple eyev, t_tuple normalv, bool in_shadow)
 {
 	t_color	result;
 	t_color	ambient;
@@ -81,7 +85,7 @@ t_color	lighting(t_material m, t_point_light light, t_tuple pos, t_tuple eyev, t
 
 	effective_color = colors_multiply(m.color, light.intensity);
 	lightv = normalize(subtract_tuple(light.pos, pos));
-	ambient = colors_multi_scalar(effective_color, m.ambient);
+	ambient = colors_multi_scalar(colors_multiply(world->ambient, m.color), world->ambientf * m.ambient);
 	light_dot_normal = get_dot_product(lightv, normalv);
 	if (light_dot_normal < 0 || in_shadow)
 	{
