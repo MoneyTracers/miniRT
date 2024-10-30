@@ -6,112 +6,52 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:57:19 by spenning      #+#    #+#                 */
-/*   Updated: 2024/10/29 17:23:22 by spenning      ########   odam.nl         */
+/*   Updated: 2024/10/30 14:33:49 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <rt.h>
 #include <parse.h>
 
-void	parse_check_extension(char *file)
+void	parse_lines(int line_count, char *file)
 {
 	int	i;
-	int	len;
-
-	i = 0;
-	len = ft_strlen(file);
-	while (i < len)
-	{
-		if (file[i] == '.')
-			break ;
-		i++;
-	}
-	if (i == len)
-		exit (1);
-	if (ft_strncmp(&file[i], ".rt", 3))
-		exit (1);
-}
-
-int	parse_open_file(char *file)
-{
 	int	fd;
-
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-		exit(1);
-	return (fd);
-}
-
-int	parse_file_identify(char *str)
-{
 	int	type;
-
-	if (ft_strlen(str) < 3)
-		type = unidentified;
-	else if (!ft_strncmp(str, "A ", 2))
-		type = ambient;
-	else if (!ft_strncmp(str, "C ", 2))
-		type = camera;
-	else if (!ft_strncmp(str, "L ", 2))
-		type = light;
-	else if (!ft_strncmp(str, "sp ", 2))
-		type = sphere;
-	else if (!ft_strncmp(str, "pl ", 2))
-		type = plane;
-	else if (!ft_strncmp(str, "cy ", 2))
-		type = cyl;
-	else 
-		type = unidentified;
-	return (type);
-}
-
-int	parse_file_line_count(char *str)
-{
-	int	fd;
-	fd = parse_open_file(str);
-	//TODO: loop with read and count amount of \n
-	close (fd);
-	return (0)
-}
-
-void	parse_file_lines(int line_count, char *file)
-{
-	int	i;
-	int	fd;
 	char *str;
+	t_parse parse;
 
 	i = 0;
+	ft_bzero(&parse, sizeof(t_parse));
 	fd = parse_open_file(str);
 	while (i < line_count)
 	{
 		str = get_next_line(fd, 0);
-		//TODO: identify type
-		//TODO: check if capital identifier has already been
-		//TODO: check correctness of line
+		type = parse_check_identify(str);
+		parse_check_identifier(&parse, type);
+		if (parse_check_correctness(str, type))
+		{
+			perror("incorrect format in file");
+			exit (1);
+		}
 		//TODO: add information to parsing struct
 		i++;
 	}
 	get_next_line(0, 2);
 }
 
-void	parse_file(char *file)
-{
-	int		line_count;
-
-	line_count = parse_file_line_count(file);
-	parse_file_lines(line_count, file);
-}
-
 void	parse(int argc, char **argv)
 {
 	int	fd;
+	int		line_count;
 
 	if (argc < 2 || argc > 2)
+	{
+		perror("wrong arguments");
 		exit(1);
+	}
 	parse_check_extension(argv[1]);
-	fd = parse_open_file(argv[1]);
-	parse_file(fd);
-	if (close(fd) == -1)
-		exit (1);
+	line_count = parse_line_count(argv[1]);
+	parse_lines(line_count, argv[1]);
 	exit(0);
 }
