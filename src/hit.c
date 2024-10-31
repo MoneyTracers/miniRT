@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 12:37:18 by marieke           #+#    #+#             */
-/*   Updated: 2024/10/29 17:53:55 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/10/30 15:35:27 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_intersection	*get_hit(t_intersection *intersections)
 	return (NULL);
 }
 
-static t_color	shade_hit(t_world *world, t_comps comps)
+static t_color	shade_hit(t_world *world, t_comps comps, int *remaining)
 {
 	t_object	*shape;
 	t_light		*cur;
@@ -42,18 +42,22 @@ static t_color	shade_hit(t_world *world, t_comps comps)
 		total_color = add_colors(total_color, lighting(world, *cur, shape->material, comps.over_point, comps.eyev, comps.normalv, shadow));
 		cur = cur->next;
 	}
+	total_color = add_colors(total_color, reflected_color(world, comps, remaining));
 	return (clamp_color(total_color));
 }
 
-t_color	color_at(t_world *world, t_intersection *tmp_intersections, t_ray ray)
+t_color	color_at(t_world *world, t_ray ray, int *remaining)
 {
 	t_comps	comps;
 	t_intersection *hit;
+	t_intersection *list;
 
-	world->intersections = intersect_world(world, ray);
-	hit = get_hit(world->intersections);
+	list = NULL;
+	list = intersect_world(world, ray);
+	hit = get_hit(list);
 	if (!hit)
 		return (clamp_color(new_color(0, 0, 0)));
 	comps = prepare_comps(hit, ray);
-	return (shade_hit(world, comps));
+	free_intersection(&list);
+	return (shade_hit(world, comps, remaining));
 }

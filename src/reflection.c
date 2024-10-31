@@ -6,21 +6,22 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:17:54 by maraasve          #+#    #+#             */
-/*   Updated: 2024/10/29 17:50:44 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/10/30 15:40:58 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tuples.h"
 
-t_color	reflected_color(t_world *world, t_comps comps)
+t_color	reflected_color(t_world *world, t_comps comps, int *remaining)
 {
 	t_ray	reflect_ray;
 	t_color	color;
 
-	if (!comps.object->material.reflective)
+	if (!comps.object->material.reflective || !(*remaining))
 		return (new_color(0, 0, 0));
 	reflect_ray.origin = comps.over_point;
 	reflect_ray.direction = comps.reflectv;
-	color = color_at(); // need to refactor the color_at function so i can use it both here and for the hit;
+	(*remaining)--;
+	color = color_at(world, reflect_ray, remaining);
 	return (colors_multi_scalar(color, comps.object->material.reflective));
 }

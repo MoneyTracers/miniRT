@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersection.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 14:39:19 by marieke           #+#    #+#             */
-/*   Updated: 2024/10/28 13:26:06 by marieke          ###   ########.fr       */
+/*   Updated: 2024/10/30 17:31:18 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,15 @@ int	add_intersection_sorted(t_intersection **head, t_intersection *new)
 
 int	intersect_plane(t_intersection **head, t_ray ray, t_object *plane)
 {
+	t_tuple	plane_pos;
 	float	t;
+	float	denominator;
 
-	if (ft_abs(ray.direction.y) < EPSILON)
+	denominator = get_dot_product(plane->plane_normal, ray.direction);
+	if (ft_abs(denominator) < EPSILON)
 		return (SUCCESS);
-	t = -ray.origin.y / ray.direction.y;
+	plane_pos = multiply_matrix_tuple(plane->base->transformation, create_point(0, 0, 0));
+	t = get_dot_product(plane->plane_normal, subtract_tuple(plane_pos, ray.origin)) / denominator;
 	if (add_intersection_sorted(head, new_intersection(t, (void *)plane)) == ERROR)
 		return (ERROR);
 	return (SUCCESS);

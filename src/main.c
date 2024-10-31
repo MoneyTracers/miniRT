@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 17:06:00 by maraasve          #+#    #+#             */
-/*   Updated: 2024/10/29 16:33:33 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/10/30 17:57:27 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	render(t_data *data, t_world *world)
 	float			world_x;
 	int				x;
 	int				y;
+	int				remaining;
 
 	ray.origin = create_point(0, 0, -5);
 	y = 0;
@@ -39,9 +40,8 @@ void	render(t_data *data, t_world *world)
 			world_x = -half_width + pixel_size * x;
 			target = create_point(world_x, world_y, wall_z);
 			ray.direction = normalize(subtract_tuple(target, ray.origin));
-			color = color_at(world, ray);
-			free_intersection(&world->intersections);
-			free_intersection(&world->shadow_intersections);
+			remaining = 5;
+			color = color_at(world, ray, &remaining);
 			pixel_put(data, x, y, color);
 			x++;
 		}
@@ -57,7 +57,7 @@ int main(void)
 	t_object			*sphere;
 	t_object			*cylinder;
 	t_transformation	transformation;
-	t_object			*plane;
+	// t_object			*plane;
 	t_object			*plane2;
 	t_ray				ray;
 
@@ -68,46 +68,55 @@ int main(void)
 	if (!sphere)
 		return (1);
 
-	free_transformation_matrix(&transformation);
-	transformation.scale = create_identity_matrix();
-	transformation.translation = translation_matrix(0, -1.5, 0);
-	transformation.rotate = create_identity_matrix();
-	plane = new_object(create_point(0,0,0), 0, default_material(), new_object_base(PLANE, transformation_matrix(transformation)));
-	if (!plane)
-		return (2);
+	// free_transformation_matrix(&transformation);
+	// transformation.scale = create_identity_matrix();
+	// transformation.translation = translation_matrix(0, -0.75, 0);
+	// transformation.rotate = create_identity_matrix();
+	// plane = new_object(create_point(0,0,0), 0, default_material(), new_object_base(PLANE, transformation_matrix(transformation)));
+	// if (!plane)
+	// 	return (2);
+	// print_matrix(plane->base->transformation.grid, 4);
+	// printf("\n");
+	// plane->plane_normal = create_vector(0,1,0);
 	
-	free_transformation_matrix(&transformation);
+	// free_transformation_matrix(&transformation);
 	transformation.scale = create_identity_matrix();
-	transformation.translation = translation_matrix(0, 100, 0);
-	transformation.rotate = rotate(M_PI / 2, 0, 0);
+	transformation.translation = translation_matrix(0, 0, -1);
+	transformation.rotate = create_identity_matrix();
 	plane2 = new_object(create_point(0,0,0), 0, default_material(), new_object_base(PLANE, transformation_matrix(transformation)));
 	if (!plane2)
 		return (2);
+	plane2->plane_normal = create_vector(0,0,1);
 
 	free_transformation_matrix(&transformation);
-	transformation.scale = scale_matrix(1, 1, 1);
-	transformation.translation = translation_matrix(1, -2, 8);
-	transformation.rotate = rotate(0, 0, 0);
+	transformation.scale = create_identity_matrix();
+	transformation.translation = translation_matrix(0.5, -2, 8);
+	transformation.rotate = create_identity_matrix();
 	cylinder = new_object(create_point(0,0,0), 0, default_material(), new_object_base(CYLINDER, transformation_matrix(transformation)));
-	if (!plane)
+	if (!cylinder)
 		return (2);
 	free_transformation_matrix(&transformation);
 
 	sphere->material.color = new_color(1.0, 0.6, 0.8);
-	plane->material.color = new_color(0.2, 0.6, 0.6);
+	// plane->material.color = new_color(0.2, 0.6, 0.6);
 	plane2->material.color = new_color(0.2, 0.6, 0.6);
 	cylinder->material.color = new_color(0.3, 0.5, 0.8);
 	cylinder->cyl_max = 3;
 	cylinder->cyl_min = 0;
 	cylinder->cyl_capped = true;
-	plane->material.ambient = 0.6;
-	plane->material.diffuse = 0.3;
-	plane->material.specular = 0.3;
+	// plane->material.ambient = 0.6;
+	// plane->material.diffuse = 0.3;
+	// plane->material.specular = 0.3;
+	//cylinder->material.reflective = 1;
+	// plane->material.reflective = 1;
+	// cylinder->material.reflective = 0.2;
+	// sphere->material.reflective = 0.2;
+	//plane->material.ambient = 0.3;
 	world.shapes = NULL;
 	add_shape_to_list(&world.shapes, sphere);
-	add_shape_to_list(&world.shapes, plane);
-	add_shape_to_list(&world.shapes, plane2);
+	//add_shape_to_list(&world.shapes, plane);
 	add_shape_to_list(&world.shapes, cylinder);
+	add_shape_to_list(&world.shapes, plane2);
 	
 	world.lights = NULL;
 	add_light_to_list(&world.lights, new_light(create_point(-20, 40, -100), new_color(0.8, 0.8, 0.8)));
@@ -115,9 +124,6 @@ int main(void)
 	add_light_to_list(&world.lights, new_light(create_point(60, 5, -100), new_color(0.5, 0.5, 0.5)));
 	world.ambient = new_color(0.5, 0.6, 0.4);
 	world.ambientf = 0.4;
-
-	world.intersections = NULL;
-	world.shadow_intersections = NULL;
 
 	ray.direction = create_vector(0,0,1);
 	ray.origin = create_point(0, 0, -5);

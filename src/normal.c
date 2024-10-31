@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 12:24:15 by marieke           #+#    #+#             */
-/*   Updated: 2024/10/25 14:39:04 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/10/30 15:56:24 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_tuple	local_normal_at(t_object *shape, t_tuple local_point)
 	if (shape->base->type == SPHERE)
 		return (subtract_tuple(local_point, shape->center));
 	else if (shape->base->type == PLANE)
-		return (create_vector(0, 1, 0));
+		return (shape->plane_normal);
 	else if (shape->base->type == CYLINDER)
 	{
 		dist = powf(local_point.x, 2) + powf(local_point.z, 2);

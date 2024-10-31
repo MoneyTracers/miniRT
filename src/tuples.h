@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 17:07:14 by maraasve          #+#    #+#             */
-/*   Updated: 2024/10/29 17:38:29 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/10/30 17:29:46 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef struct	s_object
 	float			cyl_min;
 	float			cyl_max;
 	bool			cyl_capped;
+	t_tuple			plane_normal;
 	t_material		material;
 	t_object_base	*base;
 	struct s_object	*next;
@@ -124,8 +125,6 @@ typedef struct s_world
 	t_light			*lights;
 	t_color			ambient;
 	float			ambientf;
-	t_intersection	*intersections;
-	t_intersection	*shadow_intersections;
 	t_object		*shapes;
 }	t_world;
 
@@ -162,7 +161,7 @@ void	free_shapes(t_object **head);
 void	free_transformation_matrix(t_transformation *transform);
 
 //hit.c
-t_color			color_at(t_world *world, t_ray ray);
+t_color	color_at(t_world *world, t_ray ray, int *remaining);
 t_intersection	*get_hit(t_intersection *intersections);
 
 //hooks.c
@@ -205,6 +204,7 @@ t_tuple		multiply_matrix_tuple(t_matrix matrix, t_tuple tuple);
 t_matrix	multiply_matrices(t_matrix one, t_matrix two);
 t_matrix	transpose_matrix(t_matrix matrix);
 bool		is_identity_matrix(float **matrix, int size);
+void	print_matrix(float **matrix, int size); //TAKE THIS OUT LATER
 
 //normal.c
 t_tuple		normal_at(t_object *shape, t_tuple point);
@@ -216,6 +216,9 @@ t_tuple	create_point(float x, float y, float z);
 //rays.c
 t_tuple	position(t_ray ray, float time);
 t_ray	transform_ray(t_ray ray, t_matrix transformation);
+
+//reflection.c
+t_color	reflected_color(t_world *world, t_comps comps, int *remaining);
 
 //rotation.c
 t_matrix	rotate(float x, float y, float z);
