@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   shapes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/01 13:16:49 by maraasve          #+#    #+#             */
-/*   Updated: 2024/10/31 17:50:39 by maraasve         ###   ########.fr       */
+/*   Created: 2024/10/19 13:06:16 by marieke           #+#    #+#             */
+/*   Updated: 2024/10/31 15:58:31 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt.h>
-#include <calculations.h>
+#include <shapes.h>
 
-float	ft_abs(float a)
+t_object	*new_object(t_tuple center, float radius, t_material material, t_object_base *base)
 {
-	if (a < 0)
-		return (-a);
-	return (a);
-}
+	t_object	*new;
 
-bool	equal_float(float a, float b)
-{
-	if (ft_abs(a - b) > EPSILON)
-		return (false);
-	return (true);
+	new = malloc(sizeof(t_object));
+	if (!new)
+		return (NULL);
+	new->center = center;
+	new->radius = radius;
+	new->material = material;
+	new->base = base;
+	new->next = NULL;
+	return (new);
 }

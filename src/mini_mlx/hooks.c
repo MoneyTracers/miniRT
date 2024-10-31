@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/01 13:16:49 by maraasve          #+#    #+#             */
-/*   Updated: 2024/10/31 17:50:39 by maraasve         ###   ########.fr       */
+/*   Created: 2024/05/07 18:22:50 by spenning          #+#    #+#             */
+/*   Updated: 2024/10/31 17:37:42 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt.h>
-#include <calculations.h>
+#include <mini_mlx.h>
+#include <mlx.h>
 
-float	ft_abs(float a)
+int	keypress(int keycode, t_mlx *data)
 {
-	if (a < 0)
-		return (-a);
-	return (a);
+	if (keycode == 65307)
+	{
+		mlx_loop_end(data->mlx);
+	}
+	return (0);
 }
 
-bool	equal_float(float a, float b)
+int	destroy(t_mlx *data)
 {
-	if (ft_abs(a - b) > EPSILON)
-		return (false);
-	return (true);
+	mlx_loop_end(data->mlx);
+	return (0);
+}
+
+void	hooks(t_mlx *data)
+{
+	mlx_hook(data->window, 2, 1L << 0, keypress, data);
+	mlx_hook(data->window, 17, 0L, destroy, data);
 }

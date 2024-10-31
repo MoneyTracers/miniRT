@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   point.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/01 13:16:49 by maraasve          #+#    #+#             */
-/*   Updated: 2024/10/31 17:50:39 by maraasve         ###   ########.fr       */
+/*   Created: 2024/10/01 13:17:37 by maraasve          #+#    #+#             */
+/*   Updated: 2024/10/31 15:56:40 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt.h>
-#include <calculations.h>
+#include <tuples.h>
 
-float	ft_abs(float a)
+bool	is_point(t_tuple tuple)
 {
-	if (a < 0)
-		return (-a);
-	return (a);
+	if (tuple.w == 1.0)
+		return (true);
+	return (false);
 }
 
-bool	equal_float(float a, float b)
+t_tuple	create_point(float x, float y, float z)
 {
-	if (ft_abs(a - b) > EPSILON)
-		return (false);
-	return (true);
+	t_tuple	new;
+
+	new.x = x;
+	new.y = y;
+	new.z = z;
+	new.w = 1.0;
+	return (new);
 }

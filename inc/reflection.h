@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   reflection.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/01 13:16:49 by maraasve          #+#    #+#             */
-/*   Updated: 2024/10/31 17:50:39 by maraasve         ###   ########.fr       */
+/*   Created: 2024/10/31 15:26:36 by maraasve          #+#    #+#             */
+/*   Updated: 2024/10/31 17:48:53 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt.h>
-#include <calculations.h>
+#ifndef REFLECTION_H
+# define REFLECTION_H
 
-float	ft_abs(float a)
-{
-	if (a < 0)
-		return (-a);
-	return (a);
-}
+# include <tuples.h>
+# include <minirt.h>
+# include <intersection.h>
 
-bool	equal_float(float a, float b)
-{
-	if (ft_abs(a - b) > EPSILON)
-		return (false);
-	return (true);
-}
+t_color		reflected_color(t_world *world, t_comps comps, int *remaining);
+t_tuple		reflect(t_tuple in, t_tuple normal);
+
+#endif

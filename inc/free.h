@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   free.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/01 13:16:49 by maraasve          #+#    #+#             */
-/*   Updated: 2024/10/31 17:50:39 by maraasve         ###   ########.fr       */
+/*   Created: 2024/10/31 14:55:02 by maraasve          #+#    #+#             */
+/*   Updated: 2024/10/31 15:44:09 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt.h>
-#include <calculations.h>
+#ifndef FREE_H
+# define FREE_H
 
-float	ft_abs(float a)
-{
-	if (a < 0)
-		return (-a);
-	return (a);
-}
+# include <mini_mlx.h>
+# include <intersection.h>
+# include <shapes.h>
+# include <transformation.h>
 
-bool	equal_float(float a, float b)
-{
-	if (ft_abs(a - b) > EPSILON)
-		return (false);
-	return (true);
-}
+void	free_mlx(t_mlx *data);
+void	free_matrix(float **grid, int size);
+void	free_intersection(t_intersection **intersection);
+void	free_shapes(t_object **head);
+void	free_transformation_matrix(t_transformation *transform);
+
+#endif
