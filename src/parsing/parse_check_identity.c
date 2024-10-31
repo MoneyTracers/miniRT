@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:02:22 by spenning      #+#    #+#                 */
-/*   Updated: 2024/10/30 14:03:29 by spenning      ########   odam.nl         */
+/*   Updated: 2024/10/31 16:59:32 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void	parse_check_identifier(t_parse *parse, int type)
 			}
 			parse->C_identifier++;
 		}
-		else if (type == light)
+		//TODO: if bonus then multiple lights
+		else if (type == light )
 		{
 			if (parse->L_identifier)
 			{
