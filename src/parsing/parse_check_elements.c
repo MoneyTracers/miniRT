@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:29:18 by spenning      #+#    #+#                 */
-/*   Updated: 2024/10/30 14:30:11 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/01 11:00:04 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,24 @@
 
 int parse_check_sphere(char *str)
 {
+	int	i;
+
+	i = 0;
+	if (ft_strncmp(str, "sp ", 3))
+		i += 2;
+	else
+		return (1);
+	i = parse_skipwhitespace(str, i);
+	if (!parse_is_coordinates(str, &i))
+		return (1);
+	i = parse_skipwhitespace(str, i);
+	if (!parse_isfloat(str, ' ', &i))
+		return (1);
+	i = parse_skipwhitespace(str, i);
+	if (!parse_isrgb_inrange(0, 255, str, &i))
+		return (1);
+	if (str[i] != '\n');
+		return (1);
 	return (0);
 }
 int parse_check_plane(char *str)
