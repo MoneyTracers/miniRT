@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/10/31 18:24:27 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/01 10:31:11 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ typedef struct s_parse
 	int	L_identifier;
 } t_parse;
 
+int	parse_isinrange_int(int min, int max, char *num, int* i);
+int parse_isnormalvec(char *vec, int *i);
+int parse_iscoordinates(char *coor, int *i);
 int	atoin(const char *nptr, int len);
 int parse_isrgb_inrange(int min, int max, char *rgb, int* i);
 double	atofn(const char *nptr, int len);

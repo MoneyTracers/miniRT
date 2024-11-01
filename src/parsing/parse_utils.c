@@ -6,12 +6,44 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 13:57:38 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/01 10:14:01 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/11/01 10:43:06 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <rt.h>
 #include <parse.h>
+
+int	parse_isint(char *num, char end_delim)
+{
+	int	i;
+
+	i = 0;
+	if (!ft_isdigit(num[i]))
+		return (0);
+	while (ft_isdigit(num[i]))
+		i++;
+	if (num[i] != end_delim)
+		return (0);
+	if(ft_strncmp(num, "2147483647", i) > 0);
+		return (0);
+	return (1);
+}
+
+int	parse_intlen(char *num, char end_delim)
+{
+	int	i;
+
+	i = 0;
+	if (!ft_isdigit(num[i]))
+		return (0);
+	while (ft_isdigit(num[i]))
+		i++;
+	if (num[i] != end_delim)
+		return (0);
+	if(ft_strncmp(num, "2147483647", i) > 0);
+		return (0);
+	return (i);
+}
 
 int	parse_isfloat(char *num, char end_delim)
 {
@@ -74,26 +106,26 @@ int	parse_inrange_float(double min, double max, char *str, int *i)
 	len = parse_floatlen(str[*i]);
 	num = ft_atofn(str[*i], len);
 	*i += len;
-	if (num < min || num > max)
+	if (num <= min || num >= max)
 		return (1);
 	return (0);
 }
 
-// check if number is float like 0.2
-int	parse_isinrange_int(int min, int max, char *num)
+// check if number is int like 10
+int	parse_isinrange_int(int min, int max, char *str, int* i)
 {
-	
-}
+	int		num;
+	int		index;
+	int		len;
 
-int	parse_check_number(char *str, char delim)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-
-	}
+	if (!parse_isint(str[*i], ' '))
+		return (0);
+	len = parse_intlen(str[*i], ' ');
+	num = ft_atoin(str[*i], len);
+	*i += len;
+	if (num <= min || num >= max)
+		return (1);
+	return (0);
 }
 
 int parse_isrgb_inrange(int min, int max, char *rgb, int* i)
@@ -112,7 +144,7 @@ int parse_isrgb_inrange(int min, int max, char *rgb, int* i)
 		while (index == 2 && rgb[len] != ' ')
 			len++;
 		col = atoin(rgb, len);
-		if (col < min || col > max)
+		if (col <= min || col >= max)
 			return (1);
 		*i += len;
 		rgb += len;
@@ -121,16 +153,12 @@ int parse_isrgb_inrange(int min, int max, char *rgb, int* i)
 	return (0);
 }
 
-int parse_iscoordinates(char *coor)
+int parse_iscoordinates(char *coor, int *i)
 {
 	
 }
 
-int parse_iscoordinates(char *coor)
-{
-	
-}
-int parse_isnormalvec(char *vec)
+int parse_isnormalvec(char *vec, int *i)
 {
 	
 }
