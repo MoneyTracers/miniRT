@@ -6,12 +6,47 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 13:57:38 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/01 10:58:04 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/11/01 15:11:56 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <rt.h>
 #include <parse.h>
+#include <tuples.h>
+
+t_color parse_get_color(char *str, int *i)
+{
+	float r;
+	float g;
+	float b;
+
+	*i = parse_skipwhitespace(str, *i);
+	r = parse_get_float(str, *i);
+	*i++;
+	g = parse_get_float(str, *i);
+	*i++;
+	b = parse_get_float(str, *i);
+	*i++;
+	return (new_color(r, g, b));
+}
+
+float parse_get_float(char *str, int *i)
+{
+	int	start;
+
+	while (!ft_isdigit(str[*i]))
+		*i++;
+	start = *i;
+	while (ft_isdigit(str[*i]))
+		*i++;
+	if (str[*i] == '.')
+	{
+		*i++;
+		while (ft_isdigit(str[*i]))
+			*i++;
+	}
+	return (ft_atofn(str[start], *i - start));
+}
 
 int	parse_isint(char *num, char end_delim, int *i)
 {
@@ -113,12 +148,12 @@ int parse_isrgb_inrange(int min, int max, char *rgb, int* i)
 
 int parse_iscoordinates(char *coor, int *i)
 {
-	
+	//TODO: add
 }
 
 int parse_isnormalvec(char *vec, int *i)
 {
-	
+	//TODO: add
 }
 
 int	parse_open_file(char *file)

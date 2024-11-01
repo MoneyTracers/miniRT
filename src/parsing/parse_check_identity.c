@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:02:22 by spenning      #+#    #+#                 */
-/*   Updated: 2024/10/31 16:59:32 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/01 14:22:14 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int	parse_check_identify(char *str)
 	return (type);
 }
 
-void	parse_check_identifier(t_parse *parse, int type)
+void	parse_check_identifier(t_parse *parse)
 {
-		if (type == ambient)
+		if (parse->type == ambient)
 		{
 			if (parse->A_identifier)
 			{
@@ -47,7 +47,7 @@ void	parse_check_identifier(t_parse *parse, int type)
 			}
 			parse->A_identifier++;
 		}
-		else if (type == camera)
+		else if (parse->type == camera)
 		{
 			if (parse->C_identifier)
 			{
@@ -57,7 +57,7 @@ void	parse_check_identifier(t_parse *parse, int type)
 			parse->C_identifier++;
 		}
 		//TODO: if bonus then multiple lights
-		else if (type == light )
+		else if (parse->type == light )
 		{
 			if (parse->L_identifier)
 			{

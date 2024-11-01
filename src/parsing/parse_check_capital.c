@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:07:59 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/01 11:06:43 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/11/01 14:24:24 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,21 +78,21 @@ int parse_check_light(char *str)
 	return (0);
 }
 
-int	parse_check_correctness(char *str, int type)
+int	parse_check_correctness(t_parse *parse)
 {
-	if (type == ambient)
-		return (parse_check_ambient(str));
-	else if (type == camera)
-		return (parse_check_camera(str));
-	else if (type == light)
-		return (parse_check_light(str));
-	else if (type == sphere)
-		return (parse_check_sphere(str));
-	else if (type == plane)
-		return (parse_check_plane(str));
-	else if (type == cyl)
-		return (parse_check_cyl(str));
-	else if (type == unidentified)
-		return (parse_check_unidentified(str));
+	if (parse->type == ambient)
+		return (parse_check_ambient(parse->str));
+	else if (parse->type == camera)
+		return (parse_check_camera(parse->str));
+	else if (parse->type == light)
+		return (parse_check_light(parse->str));
+	else if (parse->type == sphere)
+		return (parse_check_sphere(parse->str));
+	else if (parse->type == plane)
+		return (parse_check_plane(parse->str));
+	else if (parse->type == cyl)
+		return (parse_check_cyl(parse->str));
+	else if (parse->type == unidentified)
+		return (parse_check_unidentified(parse->str));
 }
 

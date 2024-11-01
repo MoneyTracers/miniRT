@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/10/29 15:44:20 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/01 14:11:18 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int main(int argc, char **argv)
 	t_ray				ray;
 
 
-	parse(argc, argv);
+	parse(world, argc, argv);
 	transformation.scale = scale_matrix(0.9, 0.9, 0.9);
 	transformation.translation = translation_matrix(-1, -0.6, 5);
 	transformation.rotate = create_identity_matrix();
