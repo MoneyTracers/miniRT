@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 13:57:38 by spenning      #+#    #+#                 */
-/*   Updated: 2024/10/31 18:29:40 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/01 10:14:01 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,22 +98,27 @@ int	parse_check_number(char *str, char delim)
 
 int parse_isrgb_inrange(int min, int max, char *rgb, int* i)
 {
+	int	index;
 	int	len;
+	int	col;
 
+	index = 0;
 	len = 0;
-	while (rgb[len] != ',')
-		len++;
-	
-	
-	//TODO:check R
-	//TODO:if (good) iterate i to .
-	//TODO:if (.) skip over .
-	//TODO:check G
-	//TODO:if (good) iterate i to .
-	//TODO:if (.) skip over .
-	//TODO:check B
-	//TODO:if (good) iterate i to ' '
-	//TODO:return (1)
+	while (rgb && index < 3)
+	{
+		len = 0;
+		while (index != 2 && rgb[len] != ',')
+			len++;
+		while (index == 2 && rgb[len] != ' ')
+			len++;
+		col = atoin(rgb, len);
+		if (col < min || col > max)
+			return (1);
+		*i += len;
+		rgb += len;
+		index++;
+	}
+	return (0);
 }
 
 int parse_iscoordinates(char *coor)
