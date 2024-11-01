@@ -6,85 +6,45 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 13:57:38 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/01 10:43:06 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/11/01 10:58:04 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <rt.h>
 #include <parse.h>
 
-int	parse_isint(char *num, char end_delim)
+int	parse_isint(char *num, char end_delim, int *i)
 {
-	int	i;
+	int	start;
 
-	i = 0;
-	if (!ft_isdigit(num[i]))
+	start = *i;
+	if (!ft_isdigit(num[*i]))
 		return (0);
-	while (ft_isdigit(num[i]))
-		i++;
-	if (num[i] != end_delim)
+	while (ft_isdigit(num[*i]))
+		*i++;
+	if (num[*i] != end_delim)
 		return (0);
-	if(ft_strncmp(num, "2147483647", i) > 0);
+	if(ft_strncmp(num, "2147483647", *i - start) > 0);
 		return (0);
 	return (1);
 }
 
-int	parse_intlen(char *num, char end_delim)
+int	parse_isfloat(char *num, char end_delim, int *i)
 {
-	int	i;
-
-	i = 0;
-	if (!ft_isdigit(num[i]))
+	if (!ft_isdigit(num[*i]))
 		return (0);
-	while (ft_isdigit(num[i]))
-		i++;
-	if (num[i] != end_delim)
+	while (ft_isdigit(num[*i]))
+		*i++;
+	if (num[*i] != '.')
 		return (0);
-	if(ft_strncmp(num, "2147483647", i) > 0);
+	*i++;
+	if (!ft_isdigit(num[*i]))
 		return (0);
-	return (i);
-}
-
-int	parse_isfloat(char *num, char end_delim)
-{
-	int	i;
-
-	i = 0;
-	if (!ft_isdigit(num[i]))
-		return (0);
-	while (ft_isdigit(num[i]))
-		i++;
-	if (num[i] != '.')
-		return (0);
-	i++;
-	if (!ft_isdigit(num[i]))
-		return (0);
-	while (ft_isdigit(num[i]))
-		i++;
-	if (num[i] != end_delim)
+	while (ft_isdigit(num[*i]))
+		*i++;
+	if (num[*i] != end_delim)
 		return (0);
 	return (1);
-}
-
-int	parse_floatlen(char *num)
-{
-	int	i;
-
-	i = 0;
-	if (!ft_isdigit(num[i]))
-		return (0);
-	while (ft_isdigit(num[i]))
-		i++;
-	if (num[i] != '.')
-		return (0);
-	i++;
-	if (!ft_isdigit(num[i]))
-		return (0);
-	while (ft_isdigit(num[i]))
-		i++;
-	if (num[i] != ' ')
-		return (0);
-	return (i);
 }
 
 int	parse_skipwhitespace(char *str, int i)
@@ -99,13 +59,12 @@ int	parse_inrange_float(double min, double max, char *str, int *i)
 {
 	double	num;
 	int		index;
-	int		len;
+	int		start;
 
-	if (!parse_isfloat(str[*i], ' '))
+	start = *i;
+	if (!parse_isfloat(str[*i], ' ', i))
 		return (0);
-	len = parse_floatlen(str[*i]);
-	num = ft_atofn(str[*i], len);
-	*i += len;
+	num = ft_atofn(str[start], *i - start);
 	if (num <= min || num >= max)
 		return (1);
 	return (0);
@@ -116,13 +75,12 @@ int	parse_isinrange_int(int min, int max, char *str, int* i)
 {
 	int		num;
 	int		index;
-	int		len;
+	int		start;
 
-	if (!parse_isint(str[*i], ' '))
+	start = *i;
+	if (!parse_isint(str[*i], ' ', i))
 		return (0);
-	len = parse_intlen(str[*i], ' ');
-	num = ft_atoin(str[*i], len);
-	*i += len;
+	num = ft_atoin(str[*i], *i - start);
 	if (num <= min || num >= max)
 		return (1);
 	return (0);
