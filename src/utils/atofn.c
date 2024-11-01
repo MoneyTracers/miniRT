@@ -6,7 +6,7 @@
 /*   By: mynodeus <mynodeus@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/10 19:06:39 by spenning      #+#    #+#                 */
-/*   Updated: 2024/10/31 15:57:47 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/01 15:19:21 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ double decimals(double result, const char *str, int i, int len)
 	int	nexponent;
 
 	nexponent = 0;
+	if (str[i] != ".")
+		return (result);
 	while (i < len)
 	{
 		result = result + ((str[i] - 48) / (10 * nexponent));
@@ -72,12 +74,14 @@ double	atofn(const char *nptr, int len)
 	flag = detect_plusmignus(c_ptr);
 	if (flag == 1 || flag == 2)
 		c_ptr++;
-	while (c_ptr[index] != '.' && (c_ptr[index] > 47) && (c_ptr[index] < 58))
+	while (c_ptr[index] != '.' && c_ptr[index] != ' ' \
+	&& c_ptr[index] != '\0' \
+	&& (c_ptr[index] > 47) && (c_ptr[index] < 58))
 	{
 		result = result * 10 + (c_ptr[index] - 48);
 		index++;
 	}
-	result = decimals(result, nptr, ++index, len);
+	result = decimals(result, nptr, index, len);
 	if (flag == 1)
 		return (result * -1);
 	if (flag == 2 || flag == 3)
