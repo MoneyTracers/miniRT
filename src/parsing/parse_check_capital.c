@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:07:59 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/01 10:50:51 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/11/01 10:51:39 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ int parse_check_light(char *str)
 		return (1);
 	if (str[i] != '\n');
 		return (1);
-	return (0);
 	return (0);
 }
 
