@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:07:59 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/01 10:51:39 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/11/01 11:06:43 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int parse_check_ambient(char *str)
 	int	i;
 
 	i = 0;
-	if (str[i] == 'A' && str[i + 1] == ' ')
+	if (ft_strncmp(str, "A ", 2))
 		i++;
 	else
 		return (1);
@@ -38,7 +38,7 @@ int parse_check_camera(char *str)
 	int	i;
 
 	i = 0;
-	if (str[i] == 'C' && str[i + 1] == ' ')
+	if (ft_strncmp(str, "C ", 2))
 		i++;
 	else
 		return (1);
@@ -60,7 +60,7 @@ int parse_check_light(char *str)
 	int	i;
 
 	i = 0;
-	if (str[i] == 'L' && str[i + 1] == ' ')
+	if (ft_strncmp(str, "L ", 2))
 		i++;
 	else
 		return (1);
