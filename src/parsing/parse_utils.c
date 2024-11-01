@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 13:57:38 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/01 15:11:56 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/01 15:28:52 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,10 +132,22 @@ int parse_isrgb_inrange(int min, int max, char *rgb, int* i)
 	while (rgb && index < 3)
 	{
 		len = 0;
-		while (index != 2 && rgb[len] != ',')
+		while (index != 2)
+		{
+			if (rgb[len] == ',')
+				break ;
+			if (!ft_isdigit(rgb[len]))
+				return (1);
 			len++;
-		while (index == 2 && rgb[len] != ' ')
+		}
+		while (index == 2)
+		{
+			if (rgb[len] == ' ')
+				break ;
+			if (!ft_isdigit(rgb[len]))
+				return (1);
 			len++;
+		}
 		col = atoin(rgb, len);
 		if (col <= min || col >= max)
 			return (1);
@@ -148,12 +160,66 @@ int parse_isrgb_inrange(int min, int max, char *rgb, int* i)
 
 int parse_iscoordinates(char *coor, int *i)
 {
-	//TODO: add
+	int	index;
+	int	len;
+	int	col;
+	int	delim;
+
+	index = 0;
+	len = 0;
+	delim = ',';
+	while (coor && index < 3)
+	{
+		len = 0;
+		if (index == 2)
+			delim = ' ';
+		while (index != 2)
+		{
+			if (coor[len] == delim)
+				break ;
+			if (!ft_isdigit(coor[len]))
+				return (1);
+			len++;
+		}
+		col = atofn(coor, len);
+		*i += len;
+		coor += len;
+		index++;
+	}
+	return (0);
 }
 
 int parse_isnormalvec(char *vec, int *i)
 {
-	//TODO: add
+	int	index;
+	int	len;
+	int	col;
+	int	delim;
+
+	index = 0;
+	len = 0;
+	delim = ',';
+	while (vec && index < 3)
+	{
+		len = 0;
+		if (index == 2)
+			delim = ' ';
+		while (index != 2)
+		{
+			if (vec[len] == delim)
+				break ;
+			if (!ft_isdigit(vec[len]))
+				return (1);
+			len++;
+		}
+		col = atofn(vec, len);
+		if (col < -1 || col > 1)
+			return (1);
+		*i += len;
+		vec += len;
+		index++;
+	}
+	return (0);
 }
 
 int	parse_open_file(char *file)
