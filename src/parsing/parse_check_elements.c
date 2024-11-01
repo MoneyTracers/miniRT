@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:29:18 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/01 11:01:51 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/11/01 11:04:30 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,29 @@ int parse_check_plane(char *str)
 }
 int parse_check_cyl(char *str)
 {
+	int	i;
+
+	i = 0;
+	if (ft_strncmp(str, "cy ", 3))
+		i += 2;
+	else
+		return (1);
+	i = parse_skipwhitespace(str, i);
+	if (!parse_is_coordinates(str, &i))
+		return (1);
+	i = parse_skipwhitespace(str, i);
+	if (!parse_isnormalvec(str, &i))
+		return (1);
+	if (!parse_isfloat(str, ' ', &i))
+		return (1);
+	i = parse_skipwhitespace(str, i);
+	if (!parse_isfloat(str, ' ', &i))
+		return (1);
+	i = parse_skipwhitespace(str, i);
+	if (!parse_isrgb_inrange(0, 255, str, &i))
+		return (1);
+	if (str[i] != '\n');
+		return (1);
 	return (0);
 }
 int parse_check_unidentified(char *str)
