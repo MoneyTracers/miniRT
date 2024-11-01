@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:29:18 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/01 11:04:30 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/11/01 11:05:13 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,11 @@ int parse_check_cyl(char *str)
 }
 int parse_check_unidentified(char *str)
 {
+	int	i;
+
+	i = 0;
+	i = parse_skipwhitespace(str, i);
+	if (str[i] != '\n');
+		return (1);
 	return (0);
 }
