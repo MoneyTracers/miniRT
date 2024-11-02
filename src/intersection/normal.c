@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   normal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 12:24:15 by marieke           #+#    #+#             */
-/*   Updated: 2024/10/31 15:51:55 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/02 13:15:44 by marieke          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,28 @@
 t_tuple	local_normal_at(t_object *shape, t_tuple local_point)
 {
 	float	dist;
+	float	y;
 
 	if (shape->base->type == SPHERE)
 		return (subtract_tuple(local_point, shape->center));
 	else if (shape->base->type == PLANE)
 		return (shape->plane_normal);
-	else if (shape->base->type == CYLINDER)
+	else if (shape->base->type == CYLINDER || shape->base->type == CONE)
 	{
 		dist = powf(local_point.x, 2) + powf(local_point.z, 2);
 		if (dist < 1 && local_point.y >= shape->cyl_max - EPSILON)
 			return (create_vector(0, 1, 0));
 		else if (dist < 1 && local_point.y <= shape->cyl_min + EPSILON)
 			return (create_vector(0, -1, 0));
-		else
+		else if (shape->base->type == CYLINDER)
 			return (create_vector(local_point.x, 0, local_point.z));
+		else
+		{
+			y = sqrtf(powf(local_point.x, 2) + powf(local_point.y, 2));
+			if (local_point.y < 0)
+				y = -y;
+			return (create_vector(local_point.x, -y, local_point.z));
+		}
 	}
 	return (create_vector(0, 0, 0));
 }

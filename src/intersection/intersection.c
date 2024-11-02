@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersection.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 14:39:19 by marieke           #+#    #+#             */
-/*   Updated: 2024/10/31 17:38:36 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/02 13:28:12 by marieke          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,65 +73,112 @@ int	intersect_plane(t_intersection **head, t_ray ray, t_object *plane)
 	return (SUCCESS);
 }
 
-bool check_cap(t_ray ray, float t) {
-	float x = ray.origin.x + t * ray.direction.x;
-	float z = ray.origin.z + t * ray.direction.z;
-	return (powf(x, 2) + powf(z, 2)) <= 1;
+bool check_cap(t_ray ray, float t, float radius) 
+{
+	float x;
+	float z;
+	
+	x = ray.origin.x + t * ray.direction.x;
+	z = ray.origin.z + t * ray.direction.z;
+	return ((powf(x, 2) + powf(z, 2)) <= powf(radius, 2));
 }
 
-bool intersect_caps(t_intersection **head, t_object *cylinder, t_ray ray) {
-	float t;
+bool intersect_caps(t_intersection **head, t_object *shape, t_ray ray) 
+{
+	float	t;
+	float	radius;
 
 	// Return early if cylinder is uncapped or ray direction y is zero (parallel to caps)
-	if (!cylinder->cyl_capped || equal_float(ray.direction.y, 0))
+	if (!shape->cyl_capped || equal_float(ray.direction.y, 0))
 		return (SUCCESS);
-
 	// Check intersection with lower cap at y = cyl_min
-	t = (cylinder->cyl_min - ray.origin.y) / ray.direction.y;
-	if (check_cap(ray, t)) {
-		if (add_intersection_sorted(head, new_intersection(t, cylinder)) == ERROR)
+	radius = 1;
+	if (shape->base->type == CONE)
+		radius = fabs(shape->cyl_min);
+	t = (shape->cyl_min - ray.origin.y) / ray.direction.y;
+	if (check_cap(ray, t, radius))
+	{
+		if (add_intersection_sorted(head, new_intersection(t, shape)) == ERROR)
 			return (ERROR);
 	}
-
 	// Check intersection with upper cap at y = cyl_max
-	t = (cylinder->cyl_max - ray.origin.y) / ray.direction.y;
-	if (check_cap(ray, t)) {
-		if (add_intersection_sorted(head, new_intersection(t, cylinder)) == ERROR)
+	if (shape->base->type == CONE)
+		radius = fabs(shape->cyl_max);
+	t = (shape->cyl_max - ray.origin.y) / ray.direction.y;
+	if (check_cap(ray, t, radius))
+	{
+		if (add_intersection_sorted(head, new_intersection(t, shape)) == ERROR)
 			return (ERROR);
 	}
-
 	return (SUCCESS);
 }
 
-int intersect_cylinder(t_intersection **head, t_ray ray, t_object *cylinder) {
-	float a, b, c, discriminant, t, y;
+int	cyl_cone_algorythm(t_intersection **head, t_ray ray, t_object *shape, float a, float b, float c)
+{
+	float	discriminant;
+	float	t;
+	float	y;
+
+	discriminant = get_discriminant(a, b, c);
+	if (discriminant >= 0)
+	{
+		t = (-b - sqrtf(discriminant)) / (2 * a);
+		y = ray.origin.y + t * ray.direction.y;
+		if (y > shape->cyl_min && y < shape->cyl_max) 
+		{
+			if (add_intersection_sorted(head, new_intersection(t, shape)) == ERROR)
+				return (ERROR);
+		}
+		t = (-b + sqrtf(discriminant)) / (2 * a);
+		y = ray.origin.y + t * ray.direction.y;
+		if (y > shape->cyl_min && y < shape->cyl_max) 
+		{
+			if (add_intersection_sorted(head, new_intersection(t, shape)) == ERROR)
+				return (ERROR);
+		}
+	}
+	// Check for intersections with caps
+	if (intersect_caps(head, shape, ray) == ERROR)
+		return (ERROR);
+	return (SUCCESS);
+}
+
+int intersect_cylinder(t_intersection **head, t_ray ray, t_object *cylinder) 
+{
+	float 	a;
+	float	b;
+	float	c;
 
 	// Body intersection calculations
 	a = powf(ray.direction.x, 2) + powf(ray.direction.z, 2);
 	b = 2 * ray.origin.x * ray.direction.x + 2 * ray.origin.z * ray.direction.z;
 	c = powf(ray.origin.x, 2) + powf(ray.origin.z, 2) - 1;
-	discriminant = get_discriminant(a, b, c);
-
-	if (discriminant >= 0) {
-		t = (-b - sqrtf(discriminant)) / (2 * a);
-		y = ray.origin.y + t * ray.direction.y;
-		if (y > cylinder->cyl_min && y < cylinder->cyl_max) {
-			if (add_intersection_sorted(head, new_intersection(t, cylinder)) == ERROR)
-				return (ERROR);
-		}
-
-		t = (-b + sqrtf(discriminant)) / (2 * a);
-		y = ray.origin.y + t * ray.direction.y;
-		if (y > cylinder->cyl_min && y < cylinder->cyl_max) {
-			if (add_intersection_sorted(head, new_intersection(t, cylinder)) == ERROR)
-				return (ERROR);
-		}
-	}
-
-	// Check for intersections with caps
-	if (intersect_caps(head, cylinder, ray) == ERROR)
+	if (cyl_cone_algorythm(head, ray, cylinder, a, b, c) == ERROR)
 		return (ERROR);
+	return (SUCCESS);
+}
 
+int	intersect_cone(t_intersection **head, t_ray ray, t_object *cone)
+{
+	float	a;
+	float	b;
+	float	c;
+	float	t;
+
+	a = powf(ray.direction.x, 2) - powf(ray.direction.y, 2) + powf(ray.direction.z, 2);
+	b = 2 * ray.origin.x * ray.direction.x - 2 * ray.origin.y * ray.direction.y + 2 * ray.origin.z * ray.direction.z;
+	c = powf(ray.origin.x, 2) - powf(ray.origin.y, 2) + powf(ray.origin.z, 2);
+	if (equal_float(a, 0))
+	{
+		if (equal_float(b, 0))
+			return (SUCCESS);
+		t = -c / 2 * b;
+		if (add_intersection_sorted(head, new_intersection(t, cone)) == ERROR)
+			return (ERROR);
+		return (SUCCESS);
+	}
+	if (cyl_cone_algorythm(head, ray, cone, a, b, c) == ERROR)
+		return (ERROR);
 	return (SUCCESS);
 }
 
@@ -140,7 +187,7 @@ int	intersect_sphere(t_intersection **head, t_ray ray, t_object *sphere)
 	t_tuple			sphere_to_ray;
 	float			discriminant;
 	float			t;
-	float			a; //dont like im calculating this twice, but will do for now
+	float			a;
 	float			b;
 	float			c;
 
@@ -175,6 +222,11 @@ int	local_intersect(t_intersection **head, t_object *shape, t_ray ray)
 	else if (shape->base->type == CYLINDER)
 	{
 		if (intersect_cylinder(head, ray, shape) == ERROR)
+			return (ERROR);
+	}
+	else if (shape->base->type == CONE)
+	{
+		if (intersect_cone(head, ray, shape) == ERROR)
 			return (ERROR);
 	}
 	return (SUCCESS);
