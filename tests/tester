@@ -1,0 +1,11 @@
+#!/bin/bash
+
+exe=$(find ../ -name miniRT)
+incorrect_map=$(find ./ -name incorrect_maps)
+incorrect_maps=$(cd $incorrect_map && ls)
+
+make -C ../ 
+for map in $incorrect_maps
+do
+	$exe $map
+done
