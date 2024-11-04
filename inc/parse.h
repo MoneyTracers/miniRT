@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/01 15:12:39 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/04 14:48:32 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_parse
 	int		L_identifier;
 } t_parse;
 
+t_tuple parse_get_coordinates(char *str, int *i);
 float parse_get_float(char *str, int *i);
 t_color parse_get_color(char *str, int *i);
 int	parse_isint(char *num, char end_delim, int *i);

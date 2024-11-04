@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 14:31:28 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/01 14:48:55 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/04 14:58:58 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,21 @@ void	parse_add_ambient(t_world *world, char *str)
 }
 void	parse_add_camera(t_world *world, char *str)
 {
+	int	i;
+
+	i = 0;
+	world->cam->coordinates = parse_get_coordinates(str, &i);
+	world->cam->norm_vec = parse_get_coordinates(str, &i);
+	world->cam->fov = parse_get_float(str, &i);
 	return ;
 }
 void	parse_add_light(t_world *world, char *str)
 {
+	int i;
+
+	i = 0;
+	world->light.pos = parse_get_coordinates(str, &i);
+	world->light.brightness = parse_get_float(str, &i);
+	world->light.intensity = parse_get_color(str, &i);
 	return ;
 }

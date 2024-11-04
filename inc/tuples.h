@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/30 17:07:14 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/10/29 15:03:37 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/04 14:57:25 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,15 @@ typedef	struct s_point_light
 {
 	t_color	intensity;
 	t_tuple	pos;
+	float	brightness;
 }	t_point_light;
 
+typedef struct	s_camera
+{
+	t_tuple		coordinates;
+	t_tuple		norm_vec;
+	float		fov;
+}	t_camera;
 
 typedef struct s_world
 {
@@ -125,6 +132,7 @@ typedef struct s_world
 	t_intersection	*intersections;
 	t_intersection	*shadow_intersections;
 	t_object		*shapes;
+	t_camera		*cam;
 }	t_world;
 
 typedef struct s_comps
