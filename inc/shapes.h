@@ -6,7 +6,7 @@
 /*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 14:51:48 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/02 12:26:08 by marieke          ###   ########.fr       */
+/*   Updated: 2024/11/02 13:53:08 by marieke          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,14 @@ typedef struct	s_object
 	t_object_base	*base;
 	struct s_object	*next;
 }	t_object;
+
+typedef struct s_triangle
+{
+	t_tuple	p1;
+	t_tuple	p2;
+	t_tuple	p3;
+}	t_triangle;
+
 
 t_object		*new_object(t_tuple center, float radius, t_material material, t_object_base *base);
 t_object_base	*new_object_base(int type, t_matrix transformation);
