@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:07:59 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/04 17:55:59 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/04 18:21:42 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int parse_check_light(char *str)
 
 int	parse_check_correctness(t_parse *parse)
 {
+	ft_debug(BLU "check correctness\n" RESET);
 	if (parse->type == ambient)
 		return (parse_check_ambient(parse->str));
 	else if (parse->type == camera)
