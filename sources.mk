@@ -1,24 +1,24 @@
-SOURCES = src/colors.c \
-src/computations.c \
-src/free.c \
-src/hit.c \
-src/hooks.c \
-src/image.c \
-src/init.c \
-src/intersection.c \
-src/invert_matrix.c \
-src/light.c \
-src/list.c \
+SOURCES = src/colors/colors.c \
+src/intersection/computations.c \
+src/intersection/hit.c \
+src/intersection/intersection.c \
+src/mini_mlx/hooks.c \
+src/free/free.c \
+src/mini_mlx/image.c \
+src/mini_mlx/init.c \
+src/transformation/invert_matrix.c \
+src/transformation/matrix.c \
+src/transformation/transformation.c \
+src/tuples/point.c \
+src/tuples/vector.c \
+src/tuples/tuples.c \
+src/shapes/shapes.c \
+src/lighting/light.c \
+src/list/list.c \
 src/main.c \
-src/matrix.c \
-src/normal.c \
-src/point.c \
-src/rays.c \
-src/rotation.c \
-src/shadow.c \
-src/sphere.c \
-src/transformation.c \
-src/tuples.c \
-src/utils.c \
-src/vector.c \
-src/parsing/parse.c
+src/intersection/normal.c \
+src/intersection/rays.c \
+src/reflection/reflection.c \
+src/transformation/rotation.c \
+src/lighting/shadow.c \
+src/utils.c 

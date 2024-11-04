@@ -6,13 +6,13 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 13:57:38 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/04 14:48:00 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/04 15:34:03 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <rt.h>
 #include <parse.h>
-#include <tuples.h>
+#include <minirt.h>
 
 
 t_tuple parse_get_coordinates(char *str, int *i)

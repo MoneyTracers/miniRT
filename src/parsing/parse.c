@@ -6,13 +6,13 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:57:19 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/01 14:34:22 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/04 15:34:13 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <rt.h>
 #include <parse.h>
-#include <tuples.h>
+#include <minirt.h>
 
 void	parse_add_object(t_world *world, t_parse *parse)
 {

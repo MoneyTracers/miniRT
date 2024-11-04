@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:57:19 by spenning      #+#    #+#                 */
-/*   Updated: 2024/10/30 14:11:44 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/04 15:33:46 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,5 @@ int	parse_line_count(char *str)
 		perror("close error in parse_file_line_count");
 		exit (1);
 	}
-	return (line_count)
+	return (line_count);
 }

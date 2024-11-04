@@ -6,12 +6,12 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 14:32:54 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/04 15:11:16 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/04 15:33:24 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <rt.h>
-#include <tuples.h>
+#include <minirt.h>
 #include <parse.h>
 
 void	parse_add_sphere(t_world *world, char *str)
