@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 13:57:38 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/04 15:34:03 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/04 18:05:31 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ t_tuple parse_get_coordinates(char *str, int *i)
 
 	*i = parse_skipwhitespace(str, *i);
 	tup.w = 0;
-	tup.x = parse_get_float(str, *i);
-	*i++;
-	tup.y = parse_get_float(str, *i);
-	*i++;
-	tup.z = parse_get_float(str, *i);
-	*i++;
+	tup.x = parse_get_float(str, i);
+	*i += 1;
+	tup.y = parse_get_float(str, i);
+	*i += 1;
+	tup.z = parse_get_float(str, i);
+	*i += 1;
 	return (tup);
 }
 
@@ -37,13 +37,13 @@ t_color parse_get_color(char *str, int *i)
 	float b;
 
 	while (!ft_isdigit(str[*i]))
-		*i++;
-	r = parse_get_float(str, *i);
-	*i++;
-	g = parse_get_float(str, *i);
-	*i++;
-	b = parse_get_float(str, *i);
-	*i++;
+		*i += 1;
+	r = parse_get_float(str, i);
+	*i += 1;
+	g = parse_get_float(str, i);
+	*i += 1;
+	b = parse_get_float(str, i);
+	*i += 1;
 	return (new_color(r, g, b));
 }
 
@@ -55,18 +55,18 @@ float parse_get_float(char *str, int *i)
 	{
 		if (str[*i] == '-')
 			break;
-		*i++;
+		*i += 1;
 	}
 	start = *i;
 	while (ft_isdigit(str[*i]))
-		*i++;
+		*i += 1;
 	if (str[*i] == '.')
 	{
-		*i++;
+		*i += 1;
 		while (ft_isdigit(str[*i]))
-			*i++;
+			*i += 1;
 	}
-	return (ft_atofn(str[start], *i - start));
+	return (atofn(&str[start], *i - start));
 }
 
 int	parse_isint(char *num, char end_delim, int *i)
@@ -77,10 +77,10 @@ int	parse_isint(char *num, char end_delim, int *i)
 	if (!ft_isdigit(num[*i]))
 		return (0);
 	while (ft_isdigit(num[*i]))
-		*i++;
+		*i += 1;
 	if (num[*i] != end_delim)
 		return (0);
-	if(ft_strncmp(num, "2147483647", *i - start) > 0);
+	if(ft_strncmp(num, "2147483647", *i - start) > 0)
 		return (0);
 	return (1);
 }
@@ -90,14 +90,14 @@ int	parse_isfloat(char *num, char end_delim, int *i)
 	if (!ft_isdigit(num[*i]))
 		return (0);
 	while (ft_isdigit(num[*i]))
-		*i++;
+		*i += 1;
 	if (num[*i] != '.')
 		return (0);
-	*i++;
+	*i += 1;
 	if (!ft_isdigit(num[*i]))
 		return (0);
 	while (ft_isdigit(num[*i]))
-		*i++;
+		*i += 1;
 	if (num[*i] != end_delim)
 		return (0);
 	return (1);
@@ -114,13 +114,12 @@ int	parse_skipwhitespace(char *str, int i)
 int	parse_inrange_float(double min, double max, char *str, int *i)
 {
 	double	num;
-	int		index;
 	int		start;
 
 	start = *i;
-	if (!parse_isfloat(str[*i], ' ', i))
+	if (!parse_isfloat(&str[*i], ' ', i))
 		return (0);
-	num = ft_atofn(str[start], *i - start);
+	num = atofn(&str[start], *i - start);
 	if (num <= min || num >= max)
 		return (1);
 	return (0);
@@ -130,13 +129,12 @@ int	parse_inrange_float(double min, double max, char *str, int *i)
 int	parse_isinrange_int(int min, int max, char *str, int* i)
 {
 	int		num;
-	int		index;
 	int		start;
 
 	start = *i;
-	if (!parse_isint(str[*i], ' ', i))
+	if (!parse_isint(&str[*i], ' ', i))
 		return (0);
-	num = ft_atoin(str[*i], *i - start);
+	num = atoin(&str[*i], *i - start);
 	if (num <= min || num >= max)
 		return (1);
 	return (0);

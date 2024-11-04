@@ -6,7 +6,7 @@
 /*   By: mynodeus <mynodeus@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/10 19:06:39 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/01 15:19:21 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/04 18:06:36 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ double decimals(double result, const char *str, int i, int len)
 	int	nexponent;
 
 	nexponent = 0;
-	if (str[i] != ".")
+	if (str[i] != '.')
 		return (result);
 	while (i < len)
 	{

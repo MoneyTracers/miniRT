@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/04 15:31:54 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/04 15:58:53 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINIRT_H
 
 # include "tuples.h"
+# include "../lib/libft/inc/libft.h"
 # include "color.h"
 # include <stdbool.h>
 # include <math.h>

@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:07:59 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/01 14:24:24 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/04 17:55:59 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int parse_check_ambient(char *str)
 	if (!parse_isrgb_inrange(0, 255, str, &i))
 		return (1);
 	i = parse_skipwhitespace(str, i);
-	if (str[i] != '\n');
+	if (str[i] != '\n')
 		return (1);
 	return (0);
 }
@@ -43,7 +43,7 @@ int parse_check_camera(char *str)
 	else
 		return (1);
 	i = parse_skipwhitespace(str, i);
-	if (!parse_is_coordinates(str, &i))
+	if (!parse_iscoordinates(str, &i))
 		return (1);
 	i = parse_skipwhitespace(str, i);
 	if (!parse_isnormalvec(str, &i))
@@ -51,7 +51,7 @@ int parse_check_camera(char *str)
 	i = parse_skipwhitespace(str, i);
 	if (!parse_isrgb_inrange(0, 255, str, &i))
 		return (1);
-	if (str[i] != '\n');
+	if (str[i] != '\n')
 		return (1);
 	return (0);
 }
@@ -65,7 +65,7 @@ int parse_check_light(char *str)
 	else
 		return (1);
 	i = parse_skipwhitespace(str, i);
-	if (!parse_is_coordinates(str, &i))
+	if (!parse_iscoordinates(str, &i))
 		return (1);
 	i = parse_skipwhitespace(str, i);
 	if (!parse_inrange_float(0.0, 1.0, str, &i))
@@ -73,7 +73,7 @@ int parse_check_light(char *str)
 	i = parse_skipwhitespace(str, i);
 	if (!parse_isinrange_int(0, 180, str, &i))
 		return (1);
-	if (str[i] != '\n');
+	if (str[i] != '\n')
 		return (1);
 	return (0);
 }
@@ -94,5 +94,5 @@ int	parse_check_correctness(t_parse *parse)
 		return (parse_check_cyl(parse->str));
 	else if (parse->type == unidentified)
 		return (parse_check_unidentified(parse->str));
+	return (1);
 }
-

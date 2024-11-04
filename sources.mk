@@ -21,4 +21,15 @@ src/intersection/rays.c \
 src/reflection/reflection.c \
 src/transformation/rotation.c \
 src/lighting/shadow.c \
-src/utils.c 
+src/utils.c \
+src/parsing/parse_add_capital.c \
+src/parsing/parse_add_elements.c \
+src/parsing/parse.c \
+src/parsing/parse_check_capital.c \
+src/parsing/parse_check_elements.c \
+src/parsing/parse_check_extension.c \
+src/parsing/parse_check_identity.c \
+src/parsing/parse_line_count.c \
+src/parsing/parse_utils.c\
+src/utils/atofn.c\
+src/utils/atoin.c

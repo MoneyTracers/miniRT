@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/04 15:28:05 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/04 15:59:07 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <shapes.h>
 #include <list.h>
 #include <mlx.h>
+#include <parse.h>
 
 void	render(t_mlx *data, t_world *world)
 {
@@ -70,7 +71,7 @@ int main(int argc, char **argv)
 	t_object			*plane2;
 	t_ray				ray;
 
-
+	ft_bzero(&world, sizeof(world));
 	parse(world, argc, argv);
 	transformation.scale = scale_matrix(0.9, 0.9, 0.9);
 	transformation.translation = translation_matrix(-1, -0.6, 5);
