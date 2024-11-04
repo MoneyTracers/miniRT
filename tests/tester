@@ -1,11 +1,33 @@
 #!/bin/bash
 
+#colors
+RED="\x1B[31m"
+GRN="\x1B[1;32m"
+YEL="\x1B[33m"
+BLU="\x1B[34m"
+MAG="\x1B[35m"
+BMAG="\x1B[1;35m"
+CYN="\x1B[36m"
+BCYN="\x1B[1;36m"
+WHT="\x1B[37m"
+RESET="\x1B[0m"
+LINEP="\033[40G"
+
 exe=$(find ../ -name miniRT)
 incorrect_map=$(find ./ -name incorrect_maps)
 incorrect_maps=$(cd $incorrect_map && ls)
 
 make -C ../ 
+i="1"
 for map in $incorrect_maps
 do
-	$exe $map
+	echo -ne "${YEL}${i} - $map:${RESET}"
+	$exe $map 2> /dev/null
+	exit_code=$(echo $?)
+	if [[ $exit_code != 1 ]]; then
+	echo -e "${RED} KO ${RESET}"
+	else
+	echo -e "${GRN} OK ${RESET}"
+	fi
+	i=$((i+1))
 done
