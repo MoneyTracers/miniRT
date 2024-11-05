@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/04 15:25:07 by spenning      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/30 17:06:00 by maraasve          #+#    #+#             */
+/*   Updated: 2024/11/05 12:43:26 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int main(void)
 	t_ray				ray;
 
 
-	parse();
+	//parse();
 	transformation.scale = scale_matrix(0.9, 0.9, 0.9);
 	transformation.translation = translation_matrix(-1, -0.6, 5);
 	transformation.rotate = create_identity_matrix();
@@ -99,7 +99,7 @@ int main(void)
 
 	free_transformation_matrix(&transformation);
 	transformation.scale = create_identity_matrix();
-	transformation.translation = translation_matrix(-1, -2, 5);
+	transformation.translation = translation_matrix(1, -2, 5);
 	transformation.rotate = create_identity_matrix();
 	cylinder = new_object(create_point(0,0,0), 0, default_material(), new_object_base(CYLINDER, transformation_matrix(transformation)));
 	if (!cylinder)

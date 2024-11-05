@@ -42,7 +42,7 @@ OBJECTS     := $(patsubst $(SRCDIR)/%,$(OBJDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT
 
 #Default Make
 
-all: submodule build $(LIB)/$(MLX)/$(MLX.A) $(LIB)/$(LIBFT)/$(LIB)/$(LIBFT.A) $(TARGETDIR)/$(TARGET) 
+all: submodule build $(LIB)/$(MLX)/$(MLX.A) $(LIB)/$(LIBFT)/$(LIBFT.A) $(TARGETDIR)/$(TARGET) 
 
 #Remake
 re: fclean all
@@ -72,7 +72,7 @@ fclean: clean
 	@$(MAKE) -C $(LIB)/$(MLX) clean
 
 #libft
-$(LIB)/$(LIBFT)/$(LIB)/$(LIBFT.A):
+$(LIB)/$(LIBFT)/$(LIBFT.A):
 	@$(MAKE) -C $(LIB)/$(LIBFT) all
 
 #configure mlx
@@ -81,7 +81,7 @@ $(LIB)/$(MLX)/$(MLX.A):
 
 #Link
 $(TARGETDIR)/$(TARGET) : $(OBJECTS)
-	$(CC) $(OBJECTS) $(MLX_L_FLAGS) $(LIB)/$(LIBFT)/$(LIB)/$(LIBFT.A) -o $(TARGETDIR)/$(TARGET)  -g
+	$(CC) $(OBJECTS) $(MLX_L_FLAGS) $(LIB)/$(LIBFT)/$(LIBFT.A) -o $(TARGETDIR)/$(TARGET)  -g
 
 #Compile
 $(OBJDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)

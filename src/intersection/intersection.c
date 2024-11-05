@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   intersection.c                                     :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/10/19 14:39:19 by marieke       #+#    #+#                 */
-/*   Updated: 2024/11/04 15:24:00 by spenning      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   intersection.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/19 14:39:19 by marieke           #+#    #+#             */
+/*   Updated: 2024/11/05 12:58:22 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,65 +73,60 @@ int	intersect_plane(t_intersection **head, t_ray ray, t_object *plane)
 	return (SUCCESS);
 }
 
-bool check_cap(t_ray ray, float t) {
+bool check_cap(t_ray ray, float t) 
+{
 	float x = ray.origin.x + t * ray.direction.x;
 	float z = ray.origin.z + t * ray.direction.z;
 	return (powf(x, 2) + powf(z, 2)) <= 1;
 }
 
-bool intersect_caps(t_intersection **head, t_object *cylinder, t_ray ray) {
+bool intersect_caps(t_intersection **head, t_object *cylinder, t_ray ray) 
+{
 	float t;
 
-	// Return early if cylinder is uncapped or ray direction y is zero (parallel to caps)
 	if (!cylinder->cyl_capped || equal_float(ray.direction.y, 0))
 		return (SUCCESS);
-
-	// Check intersection with lower cap at y = cyl_min
 	t = (cylinder->cyl_min - ray.origin.y) / ray.direction.y;
-	if (check_cap(ray, t)) {
+	if (check_cap(ray, t)) 
+	{
 		if (add_intersection_sorted(head, new_intersection(t, cylinder)) == ERROR)
 			return (ERROR);
 	}
-
-	// Check intersection with upper cap at y = cyl_max
 	t = (cylinder->cyl_max - ray.origin.y) / ray.direction.y;
-	if (check_cap(ray, t)) {
+	if (check_cap(ray, t))
+	{
 		if (add_intersection_sorted(head, new_intersection(t, cylinder)) == ERROR)
 			return (ERROR);
 	}
-
 	return (SUCCESS);
 }
 
-int intersect_cylinder(t_intersection **head, t_ray ray, t_object *cylinder) {
+int intersect_cylinder(t_intersection **head, t_ray ray, t_object *cylinder) 
+{
 	float a, b, c, discriminant, t, y;
-
-	// Body intersection calculations
 	a = powf(ray.direction.x, 2) + powf(ray.direction.z, 2);
 	b = 2 * ray.origin.x * ray.direction.x + 2 * ray.origin.z * ray.direction.z;
 	c = powf(ray.origin.x, 2) + powf(ray.origin.z, 2) - 1;
 	discriminant = get_discriminant(a, b, c);
-
-	if (discriminant >= 0) {
+	if (discriminant >= 0) 
+	{
 		t = (-b - sqrtf(discriminant)) / (2 * a);
 		y = ray.origin.y + t * ray.direction.y;
-		if (y > cylinder->cyl_min && y < cylinder->cyl_max) {
+		if (y > cylinder->cyl_min && y < cylinder->cyl_max) 
+		{
 			if (add_intersection_sorted(head, new_intersection(t, cylinder)) == ERROR)
 				return (ERROR);
 		}
-
 		t = (-b + sqrtf(discriminant)) / (2 * a);
 		y = ray.origin.y + t * ray.direction.y;
-		if (y > cylinder->cyl_min && y < cylinder->cyl_max) {
+		if (y > cylinder->cyl_min && y < cylinder->cyl_max) 
+		{
 			if (add_intersection_sorted(head, new_intersection(t, cylinder)) == ERROR)
 				return (ERROR);
 		}
 	}
-
-	// Check for intersections with caps
 	if (intersect_caps(head, cylinder, ray) == ERROR)
 		return (ERROR);
-
 	return (SUCCESS);
 }
 
