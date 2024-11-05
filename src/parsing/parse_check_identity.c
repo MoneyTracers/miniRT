@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:02:22 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/01 14:22:14 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/05 14:19:22 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	parse_check_identify(char *str)
 
 void	parse_check_identifier(t_parse *parse)
 {
+		debugger(GRN "check (A, L, C)\n" RESET);
+
 		if (parse->type == ambient)
 		{
 			if (parse->A_identifier)

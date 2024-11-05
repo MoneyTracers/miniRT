@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:57:19 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/05 14:02:18 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/05 14:19:40 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,14 @@ void	parse_lines(t_world *world, int line_count, char *file)
 	while (i < line_count)
 	{
 		parse.str = get_next_line(fd, 0);
-		debugger(BLU "parse str:\t%s\n" RESET, parse.str);
+		debugger(CYN "parse str:\t%s" RESET, parse.str);
 		if (parse.str == NULL)
 		{
 			perror("gln error\n");
 			exit (1);
 		}
 		parse.type = parse_check_identify(parse.str);
-		debugger(BLU "parse type:\t%d\n" RESET, parse.type);
-		debugger(BLU "check identifier (A, L, C)\n" RESET);
+		debugger(CYN "parse type:\t%d\n" RESET, parse.type);
 		parse_check_identifier(&parse);
 		if (parse_check_correctness(&parse))
 		{

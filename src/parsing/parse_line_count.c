@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:57:19 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/04 15:33:46 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/05 14:17:58 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	parse_line_count(char *str)
 	while (1)
 	{
 		ret = read(fd, buf, 99);
+		debugger(GRN"read return:\t%d\n"RESET, ret);
 		if (ret == -1)
 		{
 			perror("read error in parse_file_line_count");
@@ -40,6 +41,7 @@ int	parse_line_count(char *str)
 		{
 			if (buf[i] == '\n')
 				line_count++;
+			i++;
 		}
 	}
 	if (close (fd))
