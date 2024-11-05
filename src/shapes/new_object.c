@@ -1,41 +1,86 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shapes.c                                           :+:      :+:    :+:   */
+/*   new_object.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 13:06:16 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/05 13:27:16 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:53:06 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <shapes.h>
+#include <free.h>
+#include <libft.h>
 
-t_object_base	*new_object_base(t_matrix transformation, t_material material)
+// t_object_base	*new_object_base(t_matrix transformation, t_material material)
+// {
+// 	t_object_base	*new;
+
+// 	new = malloc(sizeof(t_object));
+// 	if(!new)
+// 		return (NULL);
+// 	new->transformation = transformation;
+// 	if (!is_identity_matrix(transformation.grid, 4))
+// 		new->inverted = invert_matrix(transformation.grid, 4);
+// 	else
+// 		new->inverted = NULL;
+// 	return (new);
+// }
+
+void	add_object_to_list(t_object **head, t_object *new)
 {
-	t_object_base	*new;
+	t_object *cur;
 
-	new = malloc(sizeof(t_object));
-	if(!new)
-		return (NULL);
-	new->transformation = transformation;
-	if (!is_identity_matrix(transformation.grid, 4))
-		new->inverted = invert_matrix(transformation.grid, 4);
-	else
-		new->inverted = NULL;
-	return (new);
+	if (!head || !new)
+		return ;
+	if (!*head)
+	{
+		*head = new;
+		return ;
+	}
+	cur = *head;
+	while (cur->next)
+		cur = cur->next;
+	cur->next = new;
 }
 
-t_object	*new_object(int type, t_object_base *base)
+void	add_shape_to_object(t_object *object, void *shape)
 {
-	t_object	*new;
+	if (object->type == CYLINDER)
+		object->shape.cylinder = (t_cylinder *)shape;
+	else if (object->type == SPHERE)
+		object->shape.sphere = (t_sphere *)shape;
+	else if (object->type == CONE)
+		object->shape.cone = (t_cone *)shape;
+	else if (object->type == PLANE)
+		object->shape.plane = (t_plane *)shape;
+}
 
-	new = malloc(sizeof(t_object));
-	if (!new)
+t_object	*new_object(int type, t_material m, t_matrix transform, void *shape)
+{
+	t_object	*object;
+
+	object = malloc(sizeof(t_object));
+	if (!object)
 		return (NULL);
-	new->type = type;
-	new->base = base;
-	new->next = NULL;
-	return (new);
+	ft_bzero(object, sizeof(t_object));
+	object->type = type;
+	object->material = m;
+	object->transformation = transform;
+	if (!is_identity_matrix(transform.grid, 4))
+	{
+		object->inverted = invert_matrix(transform.grid, 4);
+		if (!object->inverted)
+		{
+			free_matrix(transform.grid, 4);
+			free(object);
+		}
+	}
+	else
+		object->inverted = NULL;
+	add_shape(object, object);
+	object->next = NULL;
+	return (object);
 }

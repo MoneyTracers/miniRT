@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersection.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 14:39:19 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/02 13:28:12 by marieke          ###   ########.fr       */
+/*   Updated: 2024/11/05 17:15:32 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ int	add_intersection_sorted(t_intersection **head, t_intersection *new)
 	return (SUCCESS);
 }
 
-int	intersect_plane(t_intersection **head, t_ray ray, t_object *plane)
+int	intersect_plane(t_intersection **head, t_ray ray, t_plane *plane)
 {
 	t_tuple	plane_pos;
 	float	t;
 	float	denominator;
 
-	denominator = get_dot_product(plane->plane_normal, ray.direction);
+	denominator = get_dot_product(plane->normal, ray.direction);
 	if (ft_abs(denominator) < EPSILON)
 		return (SUCCESS);
 	plane_pos = multiply_matrix_tuple(plane->base->transformation, create_point(0, 0, 0));
@@ -88,10 +88,8 @@ bool intersect_caps(t_intersection **head, t_object *shape, t_ray ray)
 	float	t;
 	float	radius;
 
-	// Return early if cylinder is uncapped or ray direction y is zero (parallel to caps)
 	if (!shape->cyl_capped || equal_float(ray.direction.y, 0))
 		return (SUCCESS);
-	// Check intersection with lower cap at y = cyl_min
 	radius = 1;
 	if (shape->base->type == CONE)
 		radius = fabs(shape->cyl_min);
@@ -101,7 +99,6 @@ bool intersect_caps(t_intersection **head, t_object *shape, t_ray ray)
 		if (add_intersection_sorted(head, new_intersection(t, shape)) == ERROR)
 			return (ERROR);
 	}
-	// Check intersection with upper cap at y = cyl_max
 	if (shape->base->type == CONE)
 		radius = fabs(shape->cyl_max);
 	t = (shape->cyl_max - ray.origin.y) / ray.direction.y;
@@ -113,7 +110,7 @@ bool intersect_caps(t_intersection **head, t_object *shape, t_ray ray)
 	return (SUCCESS);
 }
 
-int	cyl_cone_algorythm(t_intersection **head, t_ray ray, t_object *shape, float a, float b, float c)
+int	cyl_cone_algorithm(t_intersection **head, t_ray ray, t_object *shape, float a, float b, float c)
 {
 	float	discriminant;
 	float	t;
@@ -124,41 +121,39 @@ int	cyl_cone_algorythm(t_intersection **head, t_ray ray, t_object *shape, float 
 	{
 		t = (-b - sqrtf(discriminant)) / (2 * a);
 		y = ray.origin.y + t * ray.direction.y;
-		if (y > shape->cyl_min && y < shape->cyl_max) 
+		if (y > shape->cyl_min && y < shape->cyl_max)
 		{
 			if (add_intersection_sorted(head, new_intersection(t, shape)) == ERROR)
 				return (ERROR);
 		}
 		t = (-b + sqrtf(discriminant)) / (2 * a);
 		y = ray.origin.y + t * ray.direction.y;
-		if (y > shape->cyl_min && y < shape->cyl_max) 
+		if (y > shape->cyl_min && y < shape->cyl_max)
 		{
 			if (add_intersection_sorted(head, new_intersection(t, shape)) == ERROR)
 				return (ERROR);
 		}
 	}
-	// Check for intersections with caps
 	if (intersect_caps(head, shape, ray) == ERROR)
 		return (ERROR);
 	return (SUCCESS);
 }
 
-int intersect_cylinder(t_intersection **head, t_ray ray, t_object *cylinder) 
+int intersect_cylinder(t_intersection **head, t_ray ray, t_cylinder *cylinder) 
 {
 	float 	a;
 	float	b;
 	float	c;
 
-	// Body intersection calculations
 	a = powf(ray.direction.x, 2) + powf(ray.direction.z, 2);
 	b = 2 * ray.origin.x * ray.direction.x + 2 * ray.origin.z * ray.direction.z;
 	c = powf(ray.origin.x, 2) + powf(ray.origin.z, 2) - 1;
-	if (cyl_cone_algorythm(head, ray, cylinder, a, b, c) == ERROR)
+	if (cyl_cone_algorithm(head, ray, cylinder, a, b, c) == ERROR)
 		return (ERROR);
 	return (SUCCESS);
 }
 
-int	intersect_cone(t_intersection **head, t_ray ray, t_object *cone)
+int	intersect_cone(t_intersection **head, t_ray ray, t_cone *cone)
 {
 	float	a;
 	float	b;
@@ -182,7 +177,7 @@ int	intersect_cone(t_intersection **head, t_ray ray, t_object *cone)
 	return (SUCCESS);
 }
 
-int	intersect_sphere(t_intersection **head, t_ray ray, t_object *sphere)
+int	intersect_sphere(t_intersection **head, t_ray ray, t_sphere *sphere)
 {
 	t_tuple			sphere_to_ray;
 	float			discriminant;
@@ -207,47 +202,47 @@ int	intersect_sphere(t_intersection **head, t_ray ray, t_object *sphere)
 	return (SUCCESS);
 }
 
-int	local_intersect(t_intersection **head, t_object *shape, t_ray ray)
+int	local_intersect(t_intersection **head, t_object *object, t_ray ray)
 {
-	if (shape->base->type == SPHERE)
+	if (object->type == SPHERE)
 	{
-		if (intersect_sphere(head, ray, shape) == ERROR)
+		if (intersect_sphere(head, ray, object) == ERROR)
 			return (ERROR);
 	}
-	else if (shape->base->type == PLANE)
+	else if (object->type == PLANE)
 	{
-		if (intersect_plane(head, ray, shape) == ERROR)
+		if (intersect_plane(head, ray, object) == ERROR)
 			return (ERROR);
 	}
-	else if (shape->base->type == CYLINDER)
+	else if (object->type == CYLINDER)
 	{
-		if (intersect_cylinder(head, ray, shape) == ERROR)
+		if (intersect_cylinder(head, ray, object) == ERROR)
 			return (ERROR);
 	}
-	else if (shape->base->type == CONE)
+	else if (object->type == CONE)
 	{
-		if (intersect_cone(head, ray, shape) == ERROR)
+		if (intersect_cone(head, ray, object) == ERROR)
 			return (ERROR);
 	}
 	return (SUCCESS);
 }
 
-int	intersect(t_intersection **head, t_object *shape, t_ray ray)
+int	intersect(t_intersection **head, t_object *object, t_ray ray)
 {
-	if (!is_identity_matrix(shape->base->transformation.grid, 4))
-		ray = transform_ray(ray, *shape->base->inverted);
-	if (local_intersect(head, shape, ray) == ERROR)
+	if (!is_identity_matrix(object->transformation.grid, 4))
+		ray = transform_ray(ray, *object->inverted);
+	if (local_intersect(head, object, ray) == ERROR)
 		return (ERROR);
 	return(SUCCESS);
 }
 
 t_intersection *intersect_world(t_world *world, t_ray ray)
 {
-	t_object *cur;
+	t_object		*cur;
 	t_intersection	*list;
 
 	list = NULL;
-	cur = world->shapes;
+	cur = world->objects;
 	while (cur)
 	{
 		if (intersect(&list, cur, ray) == ERROR)
