@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#REFERENCES: https://www.baeldung.com/linux/insert-line-specific-line-number
+
+
 #colors
 RED="\x1B[31m"
 GRN="\x1B[1;32m"
@@ -16,6 +19,21 @@ LINEP="\033[40G"
 exe=$(find ../ -name miniRT)
 incorrect_map=$(find ./ -name incorrect_maps)
 incorrect_maps=$(cd $incorrect_map && ls)
+A_template=$(find ./ -name A_template)
+L_template=$(find ./ -name L_template)
+C_template=$(find ./ -name C_template)
+cy_template=$(find ./ -name cy_template)
+pl_template=$(find ./ -name pl_template)
+sp_template=$(find ./ -name sp_template)
+normal_template=$(find ./ -name normal_template)
+
+A_cases=$(find ./ -name A_cases)
+L_cases=$(find ./ -name L_cases)
+C_cases=$(find ./ -name C_cases)
+cy_cases=$(find ./ -name cy_cases)
+pl_cases=$(find ./ -name pl_cases)
+sp_cases=$(find ./ -name sp_cases)
+random_cases=$(find ./ -name random_cases)
 
 make -C ../ 
 i="1"
@@ -31,3 +49,12 @@ do
 	fi
 	i=$((i+1))
 done
+
+line_count=$(wc -l $A_template | awk '{print $1}' )
+while IFS= read -r line; do
+	random_line=$(shuf -i1-$line_count -n1)
+	sed "$random_line i $line" $A_template > temp.rt
+	$exe temp.rt
+done < $A_cases
+
+rm -rf temp.rt
