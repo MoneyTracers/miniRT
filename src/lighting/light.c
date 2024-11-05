@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:19:39 by marieke           #+#    #+#             */
-/*   Updated: 2024/10/31 17:43:46 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/05 13:24:49 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,6 @@ t_tuple	reflect(t_tuple in, t_tuple normal)
 	scaled_normal = scale_vector(normal, 2 * dot);
 	reflection = subtract_tuple(in, scaled_normal);
 	return(reflection);
-}
-
-t_light	*new_light(t_tuple pos, t_color intensity)
-{
-	t_light	*new;
-
-	new = malloc(sizeof(t_light));
-	if (!new)
-		return (NULL);
-	new->pos = pos;
-	new->intensity = intensity;
-	new->next = NULL;
-	return (new);
 }
 
 t_material	default_material(void)
