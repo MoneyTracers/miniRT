@@ -35,7 +35,7 @@ pl_cases=$(find ./ -name pl_cases)
 sp_cases=$(find ./ -name sp_cases)
 random_cases=$(find ./ -name random_cases)
 
-make -C ../ 
+make -C ../  
 i="1"
 for map in $incorrect_maps
 do
@@ -50,11 +50,20 @@ do
 	i=$((i+1))
 done
 
+echo -e "${BLU}A Cases${RESET}"
 line_count=$(wc -l $A_template | awk '{print $1}' )
 while IFS= read -r line; do
+	echo -ne "${YEL}${i} - $line:${RESET}"
 	random_line=$(shuf -i1-$line_count -n1)
 	sed "$random_line i $line" $A_template > temp.rt
-	$exe temp.rt
+	timeout --preserve-status 1s $exe temp.rt
+	exit_code=$(echo $?)
+	if [[ $exit_code != 1 ]]; then
+	echo -e "${RED} KO ${RESET}"
+	else
+	echo -e "${GRN} OK ${RESET}"
+	fi
+	i=$((i+1))
 done < $A_cases
 
-rm -rf temp.rt
+# rm -rf temp.rt
