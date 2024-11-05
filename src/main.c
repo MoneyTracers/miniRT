@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 17:06:00 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/05 12:43:26 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/05 17:20:14 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int main(void)
 
 	//parse();
 	transformation.scale = scale_matrix(0.9, 0.9, 0.9);
-	transformation.translation = translation_matrix(-1, -0.6, 5);
+	transformation.translation = translation_matrix(-1, -0.6, 4);
 	transformation.rotate = create_identity_matrix();
 	sphere = new_object(create_point(0, 0, 0), 1, default_material(), new_object_base(SPHERE, transformation_matrix(transformation)));
 	if (!sphere)
@@ -117,7 +117,7 @@ int main(void)
 	plane->material.diffuse = 0.3;
 	plane->material.specular = 0.3;
 	cylinder->material.reflective = 0;
-	plane->material.reflective = 1;
+	plane->material.reflective = 0;
 	cylinder->material.reflective = 0;
 	sphere->material.reflective = 0;
 	plane->material.ambient = 0.3;

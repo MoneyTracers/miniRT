@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   shapes.c                                           :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/10/19 13:06:16 by marieke       #+#    #+#                 */
-/*   Updated: 2024/11/04 15:24:15 by spenning      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   shapes.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/19 13:06:16 by marieke           #+#    #+#             */
+/*   Updated: 2024/11/05 17:24:51 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,19 @@ t_object	*new_object(t_tuple center, float radius, t_material material, t_object
 	new->base = base;
 	new->next = NULL;
 	return (new);
+}
+
+t_material	default_material(void)
+{
+	t_material	material;
+
+	material.color.r = 1;
+	material.color.g = 1;
+	material.color.b = 1;
+	material.ambient = 0.3;
+	material.diffuse = 0.9;
+	material.specular = 0.9;
+	material.shininess = 200.0;
+	material.reflective = 0;
+	return (material);
 }
