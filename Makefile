@@ -17,7 +17,7 @@ SRCEXT      := c
 OBJEXT      := o
 
 #Flags, Libraries and Includes
-CFLAGS      := -Wall -Werror -Wextra -I./inc -g
+CFLAGS      := -Wall -Werror -Wextra -I./inc -I./lib/libft/inc -g
 LIB         := lib
 LIBFT       := libft
 LIBFT.A     := libft.a

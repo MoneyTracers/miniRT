@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/04 15:58:53 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/05 13:59:32 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@
 # define SUCCESS 0
 # define ERROR 1
 # define EPSILON 0.0001
+
+# ifndef DEBUG
+#  define DEBUG 0
+# endif
 
 typedef	struct s_light
 {
@@ -50,5 +54,7 @@ typedef struct s_world
 	t_camera		*cam;
 	t_object		*shapes;
 }	t_world;
+
+void	debugger(char *format, ...);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 13:57:38 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/04 18:14:22 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/05 14:02:18 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,7 +246,7 @@ int	parse_open_file(char *file)
 	int	fd;
 
 	fd = open(file, O_RDONLY);
-	ft_debug(BLU "opening file:\t%s\nfile fd:\t%d" RESET, file, fd);
+	debugger(BLU "opening file:\t%s\nfile fd:\t%d" RESET, file, fd);
 	if (fd == -1)
 	{
 		perror("unable to open file");
