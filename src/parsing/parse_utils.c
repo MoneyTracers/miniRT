@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 13:57:38 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/05 16:57:47 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/05 17:13:50 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,7 +246,7 @@ int	parse_open_file(char *file)
 	int	fd;
 
 	fd = open(file, O_RDONLY);
-	debugger(MAG "%s:%s:%d\nopening file:\t%s\nfile fd:\t%d\n" RESET, __FILE__, __FUNCTION__ ,__LINE__,file, fd);
+	debugger(MAG "%s:%d - %s\nopening file:\t%s\nfile fd:\t%d\n\n" RESET, __FILE__,__LINE__, __FUNCTION__ ,file, fd);
 	if (fd == -1)
 	{
 		perror("unable to open file");
