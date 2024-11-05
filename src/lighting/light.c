@@ -6,23 +6,12 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:19:39 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/05 13:24:49 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/05 17:36:53 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lighting.h>
 #include <calculations.h>
-
-t_tuple	negate_vector(t_tuple vector)
-{
-	t_tuple	negated;
-
-	negated.x = -vector.x;
-	negated.y = -vector.y;
-	negated.z = -vector.z;
-	negated.w = vector.w;
-	return (negated);
-}
 
 t_tuple	light_vector(t_tuple intersection, t_tuple light_src)
 {

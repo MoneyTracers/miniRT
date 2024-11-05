@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 14:51:48 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/05 16:34:34 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/05 17:47:10 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,13 @@
 # include "matrix.h"
 # include "color.h"
 
-
-typedef enum
+typedef enum e_object_type
 {
 	SPHERE,
 	PLANE,
 	CYLINDER,
 	CONE
-} t_object_type;
+} e_object_type;
 
 typedef struct s_material
 {
@@ -43,13 +42,13 @@ typedef struct s_material
 // 	t_material				material;
 // }	t_object_base;
 
-typedef struct	s_sphere
+typedef struct s_sphere
 {
 	t_tuple	center;
 	float	radius;
 }	t_sphere;
 
-typedef struct	s_cylinder
+typedef struct s_cylinder
 {
 	float	min;
 	float	max;
@@ -68,18 +67,19 @@ typedef struct s_plane
 	t_tuple	normal;
 }	t_plane;
 
-typedef struct	s_object
+typedef struct s_object
 {
 	int				type;
 	t_matrix		transformation;
 	t_matrix		*inverted;
 	t_material		material;
-	union {
+	union
+	{
 		t_cylinder	*cylinder;
 		t_cone		*cone;
 		t_sphere	*sphere;
 		t_plane		*plane;
-	}	shape;
+	}	u_shape;
 	struct s_object	*next;
 }	t_object;
 

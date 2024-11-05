@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 14:39:19 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/05 17:15:32 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/05 17:36:43 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,18 @@ int	add_intersection_sorted(t_intersection **head, t_intersection *new)
 	return (SUCCESS);
 }
 
-int	intersect_plane(t_intersection **head, t_ray ray, t_plane *plane)
+int	intersect_plane(t_intersection **head, t_ray ray, t_object *object)
 {
 	t_tuple	plane_pos;
 	float	t;
 	float	denominator;
 
-	denominator = get_dot_product(plane->normal, ray.direction);
+	denominator = get_dot_product(object->shape.plane->normal, ray.direction);
 	if (ft_abs(denominator) < EPSILON)
 		return (SUCCESS);
-	plane_pos = multiply_matrix_tuple(plane->base->transformation, create_point(0, 0, 0));
-	t = get_dot_product(plane->plane_normal, subtract_tuple(plane_pos, ray.origin)) / denominator;
-	if (add_intersection_sorted(head, new_intersection(t, (void *)plane)) == ERROR)
+	plane_pos = multiply_matrix_tuple(object->transformation, create_point(0, 0, 0));
+	t = get_dot_product(object->shape.plane->normal, subtract_tuple(plane_pos, ray.origin)) / denominator;
+	if (add_intersection_sorted(head, new_intersection(t, object)) == ERROR)
 		return (ERROR);
 	return (SUCCESS);
 }
@@ -110,7 +110,7 @@ bool intersect_caps(t_intersection **head, t_object *shape, t_ray ray)
 	return (SUCCESS);
 }
 
-int	cyl_cone_algorithm(t_intersection **head, t_ray ray, t_object *shape, float a, float b, float c)
+int	cyl_cone_algorithm(t_intersection **head, t_ray ray, t_object *object, float a, float b, float c)
 {
 	float	discriminant;
 	float	t;
@@ -121,25 +121,25 @@ int	cyl_cone_algorithm(t_intersection **head, t_ray ray, t_object *shape, float 
 	{
 		t = (-b - sqrtf(discriminant)) / (2 * a);
 		y = ray.origin.y + t * ray.direction.y;
-		if (y > shape->cyl_min && y < shape->cyl_max)
+		if (y > shape->cyl_min && y < shape->cyl_max) //what to do with this
 		{
-			if (add_intersection_sorted(head, new_intersection(t, shape)) == ERROR)
+			if (add_intersection_sorted(head, new_intersection(t, object)) == ERROR)
 				return (ERROR);
 		}
 		t = (-b + sqrtf(discriminant)) / (2 * a);
 		y = ray.origin.y + t * ray.direction.y;
 		if (y > shape->cyl_min && y < shape->cyl_max)
 		{
-			if (add_intersection_sorted(head, new_intersection(t, shape)) == ERROR)
+			if (add_intersection_sorted(head, new_intersection(t, object)) == ERROR)
 				return (ERROR);
 		}
 	}
-	if (intersect_caps(head, shape, ray) == ERROR)
+	if (intersect_caps(head, object, ray) == ERROR)
 		return (ERROR);
 	return (SUCCESS);
 }
 
-int intersect_cylinder(t_intersection **head, t_ray ray, t_cylinder *cylinder) 
+int intersect_cylinder(t_intersection **head, t_ray ray, t_object *object) 
 {
 	float 	a;
 	float	b;
@@ -148,12 +148,12 @@ int intersect_cylinder(t_intersection **head, t_ray ray, t_cylinder *cylinder)
 	a = powf(ray.direction.x, 2) + powf(ray.direction.z, 2);
 	b = 2 * ray.origin.x * ray.direction.x + 2 * ray.origin.z * ray.direction.z;
 	c = powf(ray.origin.x, 2) + powf(ray.origin.z, 2) - 1;
-	if (cyl_cone_algorithm(head, ray, cylinder, a, b, c) == ERROR)
+	if (cyl_cone_algorithm(head, ray, object, a, b, c) == ERROR)
 		return (ERROR);
 	return (SUCCESS);
 }
 
-int	intersect_cone(t_intersection **head, t_ray ray, t_cone *cone)
+int	intersect_cone(t_intersection **head, t_ray ray, t_object *object)
 {
 	float	a;
 	float	b;
@@ -168,16 +168,16 @@ int	intersect_cone(t_intersection **head, t_ray ray, t_cone *cone)
 		if (equal_float(b, 0))
 			return (SUCCESS);
 		t = -c / 2 * b;
-		if (add_intersection_sorted(head, new_intersection(t, cone)) == ERROR)
+		if (add_intersection_sorted(head, new_intersection(t, object)) == ERROR)
 			return (ERROR);
 		return (SUCCESS);
 	}
-	if (cyl_cone_algorythm(head, ray, cone, a, b, c) == ERROR)
+	if (cyl_cone_algorythm(head, ray, object, a, b, c) == ERROR)
 		return (ERROR);
 	return (SUCCESS);
 }
 
-int	intersect_sphere(t_intersection **head, t_ray ray, t_sphere *sphere)
+int	intersect_sphere(t_intersection **head, t_ray ray, t_object *object)
 {
 	t_tuple			sphere_to_ray;
 	float			discriminant;
@@ -186,7 +186,7 @@ int	intersect_sphere(t_intersection **head, t_ray ray, t_sphere *sphere)
 	float			b;
 	float			c;
 
-	sphere_to_ray = subtract_tuple(ray.origin, sphere->center);
+	sphere_to_ray = subtract_tuple(ray.origin, object->shape.sphere->center);
 	a = get_dot_product(ray.direction, ray.direction);
 	b = 2 * get_dot_product(ray.direction, sphere_to_ray);
 	c = get_dot_product(sphere_to_ray, sphere_to_ray) - 1;
@@ -194,10 +194,10 @@ int	intersect_sphere(t_intersection **head, t_ray ray, t_sphere *sphere)
 	if (discriminant < 0)
 		return (SUCCESS);
 	t = (-b - sqrtf(discriminant)) / (2 * a);
-	if (add_intersection_sorted(head, new_intersection(t, sphere)) == ERROR)
+	if (add_intersection_sorted(head, new_intersection(t, object)) == ERROR)
 		return (ERROR);
 	t = (-b + sqrtf(discriminant)) / (2 * a);
-	if (add_intersection_sorted(head, new_intersection(t, sphere)) == ERROR)
+	if (add_intersection_sorted(head, new_intersection(t, object)) == ERROR)
 		return (ERROR);
 	return (SUCCESS);
 }

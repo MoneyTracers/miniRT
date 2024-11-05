@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 13:16:15 by maraasve          #+#    #+#             */
-/*   Updated: 2024/10/31 17:52:35 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/05 17:37:16 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,17 @@ t_tuple	scale_vector(t_tuple vector, float scale)
 	return (new);
 }
 
+t_tuple	negate_vector(t_tuple vector)
+{
+	t_tuple	negated;
+
+	negated.x = -vector.x;
+	negated.y = -vector.y;
+	negated.z = -vector.z;
+	negated.w = vector.w;
+	return (negated);
+}
+
 float	get_magnitude(t_tuple vector)
 {
 	float	magnitude;
@@ -60,7 +71,7 @@ t_tuple	normalize(t_tuple vector)
 	normalized.y = vector.y / magnitude;
 	normalized.z = vector.z / magnitude;
 	normalized.w = vector.w / magnitude;
-	return (normalized);	
+	return (normalized);
 }
 
 float	get_dot_product(t_tuple vector1, t_tuple vector2)
