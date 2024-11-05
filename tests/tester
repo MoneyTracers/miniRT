@@ -66,6 +66,7 @@ random_case_test ()
 
 make -C ../ 
 i="1"
+echo -e "${BLU}extensions${RESET}"
 for map in $incorrect_maps
 do
 	echo -ne "${YEL}${i} - $map:${RESET}"
@@ -85,6 +86,7 @@ random_case_test $C_cases $C_template
 random_case_test $sp_cases $sp_template
 random_case_test $pl_cases $pl_template
 random_case_test $cy_cases $cy_template
+random_case_test $random_cases $normal_template
 
 
 rm -rf temp.rt
