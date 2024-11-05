@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:57:19 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/05 14:19:40 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/05 16:59:33 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	parse_add_object(t_world *world, t_parse *parse)
 {
-	debugger(BLU "add object:\t%s\nobject type:\t%d\n" RESET, parse->str, parse->type);
+	debugger(BLU "%s:%s:%d - add object:\t%s\nobject type:\t%d\n" RESET, __FILE__, __FUNCTION__ ,__LINE__, parse->str, parse->type);
 	if (parse->type == ambient)
 		parse_add_ambient(world, parse->str);
 	else if (parse->type == camera)
@@ -47,14 +47,14 @@ void	parse_lines(t_world *world, int line_count, char *file)
 	while (i < line_count)
 	{
 		parse.str = get_next_line(fd, 0);
-		debugger(CYN "parse str:\t%s" RESET, parse.str);
+		debugger(CYN "%s:%s:%d - parse str:\t%s" RESET, __FILE__, __FUNCTION__ ,__LINE__, parse.str);
 		if (parse.str == NULL)
 		{
 			perror("gln error\n");
 			exit (1);
 		}
 		parse.type = parse_check_identify(parse.str);
-		debugger(CYN "parse type:\t%d\n" RESET, parse.type);
+		debugger(CYN "%s:%s:%d - parse type:\t%d\n" RESET, __FILE__, __FUNCTION__ ,__LINE__, parse.type);
 		parse_check_identifier(&parse);
 		if (parse_check_correctness(&parse))
 		{
@@ -71,18 +71,18 @@ void	parse(t_world world, int argc, char **argv)
 {
 	int		line_count;
 
-	debugger(BLU "entering parsing\n" RESET);
+	debugger(BLU "%s:%s:%d - entering parsing\n" RESET, __FILE__, __FUNCTION__ ,__LINE__);
 	if (argc < 2 || argc > 2)
 	{
 		perror("wrong arguments");
 		exit(1);
 	}
-	debugger(BLU "parse_extension_check\n" RESET);
+	debugger(BLU "%s:%s:%d - parse_extension_check\n" RESET, __FILE__, __FUNCTION__ ,__LINE__);
 	parse_check_extension(argv[1]);
-	debugger(BLU "parse_line_count\n" RESET);
+	debugger(BLU "%s:%s:%d - parse_line_count\n" RESET, __FILE__, __FUNCTION__ ,__LINE__);
 	line_count = parse_line_count(argv[1]);
-	debugger(BLU "line count:\t%d\n" RESET, line_count);
-	debugger(BLU "parse_lines\n" RESET);
+	debugger(BLU "%s:%s:%d - line count:\t%d\n" RESET, __FILE__, __FUNCTION__ ,__LINE__, line_count);
+	debugger(BLU "%s:%s:%d - parse_lines" RESET, __FILE__, __FUNCTION__ ,__LINE__);
 	parse_lines(&world, line_count, argv[1]);
 	exit(0);
 }
