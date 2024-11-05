@@ -35,7 +35,36 @@ pl_cases=$(find ./ -name pl_cases)
 sp_cases=$(find ./ -name sp_cases)
 random_cases=$(find ./ -name random_cases)
 
-make -C ../  
+mkdir -p logs
+parsing_log=logs/parsing.log
+echo > $parsing_log
+
+
+random_case_test ()
+{
+	name=$(basename $1)
+	case=$1
+	template=$2
+	echo -e "${BLU}$name${RESET}"
+	while IFS= read -r line; do
+		echo -ne "${YEL}${i} - $line:${RESET}"
+		random_line=$(shuf -i1-5 -n1)
+		sed "$random_line i $line" $template > temp.rt
+		timeout --preserve-status 1s $exe temp.rt &> /dev/null
+		exit_code=$(echo $?)
+		if [[ $exit_code != 1 ]]; then
+		echo -e "${RED} KO ${RESET}"
+		echo -e "#${i} - $line\nmap\n--------" >> $parsing_log 
+		cat temp.rt >> $parsing_log 
+		echo -e "\n--------" >> $parsing_log 
+		else
+		echo -e "${GRN} OK ${RESET}"
+		fi
+		i=$((i+1))
+	done < $case
+}
+
+make -C ../ 
 i="1"
 for map in $incorrect_maps
 do
@@ -50,20 +79,12 @@ do
 	i=$((i+1))
 done
 
-echo -e "${BLU}A Cases${RESET}"
-line_count=$(wc -l $A_template | awk '{print $1}' )
-while IFS= read -r line; do
-	echo -ne "${YEL}${i} - $line:${RESET}"
-	random_line=$(shuf -i1-$line_count -n1)
-	sed "$random_line i $line" $A_template > temp.rt
-	timeout --preserve-status 1s $exe temp.rt
-	exit_code=$(echo $?)
-	if [[ $exit_code != 1 ]]; then
-	echo -e "${RED} KO ${RESET}"
-	else
-	echo -e "${GRN} OK ${RESET}"
-	fi
-	i=$((i+1))
-done < $A_cases
+random_case_test $A_cases $A_template
+random_case_test $L_cases $L_template
+random_case_test $C_cases $C_template
+random_case_test $sp_cases $sp_template
+random_case_test $pl_cases $pl_template
+random_case_test $cy_cases $cy_template
 
-# rm -rf temp.rt
+
+rm -rf temp.rt
