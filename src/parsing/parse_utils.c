@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 13:57:38 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/05 17:13:50 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/05 17:36:31 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ int parse_isrgb_inrange(int min, int max, char *rgb, int* i)
 			if (rgb[len] == ',')
 				break ;
 			if (!ft_isdigit(rgb[len]))
-				return (1);
+				return (0);
 			len++;
 		}
 		while (index == 2)
@@ -164,17 +164,17 @@ int parse_isrgb_inrange(int min, int max, char *rgb, int* i)
 			if (rgb[len] == ' ')
 				break ;
 			if (!ft_isdigit(rgb[len]))
-				return (1);
+				return (0);
 			len++;
 		}
 		col = atoin(rgb, len);
-		if (col <= min || col >= max)
-			return (1);
+		if (col < min || col > max)
+			return (0);
 		*i += len;
 		rgb += len;
 		index++;
 	}
-	return (0);
+	return (1);
 }
 
 int parse_iscoordinates(char *coor, int *i)
@@ -197,7 +197,7 @@ int parse_iscoordinates(char *coor, int *i)
 			if (coor[len] == delim)
 				break ;
 			if (!ft_isdigit(coor[len]))
-				return (1);
+				return (0);
 			len++;
 		}
 		col = atofn(coor, len);
@@ -205,7 +205,7 @@ int parse_iscoordinates(char *coor, int *i)
 		coor += len;
 		index++;
 	}
-	return (0);
+	return (1);
 }
 
 int parse_isnormalvec(char *vec, int *i)
@@ -228,17 +228,17 @@ int parse_isnormalvec(char *vec, int *i)
 			if (vec[len] == delim)
 				break ;
 			if (!ft_isdigit(vec[len]))
-				return (1);
+				return (0);
 			len++;
 		}
 		col = atofn(vec, len);
 		if (col < -1 || col > 1)
-			return (1);
+			return (0);
 		*i += len;
 		vec += len;
 		index++;
 	}
-	return (0);
+	return (1);
 }
 
 int	parse_open_file(char *file)
