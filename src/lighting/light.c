@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   light.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/18 13:19:39 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/06 14:02:11 by maraasve         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   light.c                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/10/18 13:19:39 by marieke       #+#    #+#                 */
+/*   Updated: 2024/11/06 16:38:27 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_light	*new_light(t_tuple pos, t_color intensity)
 	if (!new)
 		return (NULL);
 	new->pos = pos;
-	new->intensity = intensity;
+	new->color = intensity;
 	new->next = NULL;
 	return (new);
 }
@@ -59,7 +59,7 @@ t_color	lighting(t_world *world, t_light light, t_material m, t_tuple pos, t_tup
 	float	light_dot_normal;
 	float	factor;
 
-	effective_color = colors_multiply(m.color, light.intensity);
+	effective_color = colors_multiply(m.color, light.color);
 	lightv = normalize(subtract_tuple(light.pos, pos));
 	ambient = colors_multi_scalar(colors_multiply(world->ambient, m.color), world->ambientf * m.ambient);
 	light_dot_normal = get_dot_product(lightv, normalv);
@@ -78,7 +78,7 @@ t_color	lighting(t_world *world, t_light light, t_material m, t_tuple pos, t_tup
 		else
 		{
 			factor = powf(reflect_dot_eye, m.shininess);
-			specular = colors_multi_scalar(colors_multi_scalar(light.intensity, m.specular), factor);
+			specular = colors_multi_scalar(colors_multi_scalar(light.color, m.specular), factor);
 		}
 	}
 	result = add_colors(add_colors(ambient, diffuse), specular);

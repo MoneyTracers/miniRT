@@ -6,39 +6,47 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:07:59 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/05 17:14:25 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/06 16:49:22 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <rt.h>
+  
 #include <parse.h>
 
 int parse_check_ambient(char *str)
 {
 	int	i;
-
+	debugger("here1\n");
 	i = 0;
-	if (ft_strncmp(str, "A ", 2))
+	if (!ft_strncmp(str, "A ", 2))
 		i++;
 	else
 		return (1);
+	debugger("A\n");
 	i = parse_skipwhitespace(str, i);
+	debugger("white\n");
 	if (!parse_inrange_float(0.0, 1.0, str, &i))
 		return (1);
+	debugger("float\n");
 	i = parse_skipwhitespace(str, i);
+	debugger("white\n");
 	if (!parse_isrgb_inrange(0, 255, str, &i))
 		return (1);
+	debugger("rgb\n");
 	i = parse_skipwhitespace(str, i);
+	debugger("white\n");
 	if (str[i] != '\n')
 		return (1);
+	debugger("nl\n");
 	return (0);
 }
 int parse_check_camera(char *str)
 {
 	int	i;
 
+	debugger("here2\n");
 	i = 0;
-	if (ft_strncmp(str, "C ", 2))
+	if (!ft_strncmp(str, "C ", 2))
 		i++;
 	else
 		return (1);
@@ -59,8 +67,9 @@ int parse_check_light(char *str)
 {
 	int	i;
 
+	debugger("here3\n");
 	i = 0;
-	if (ft_strncmp(str, "L ", 2))
+	if (!ft_strncmp(str, "L ", 2))
 		i++;
 	else
 		return (1);

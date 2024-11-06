@@ -6,11 +6,11 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:57:19 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/05 17:13:55 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/06 16:41:57 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <rt.h>
+  
 #include <parse.h>
 
 int	parse_line_count(char *str)

@@ -6,11 +6,11 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:02:22 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/06 13:10:17 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/06 16:41:57 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <rt.h>
+  
 #include <parse.h>
 
 int	parse_check_identify(char *str)

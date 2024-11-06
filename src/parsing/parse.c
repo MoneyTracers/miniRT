@@ -6,11 +6,11 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:57:19 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/05 17:14:56 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/06 16:41:57 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <rt.h>
+  
 #include <parse.h>
 
 void	parse_add_object(t_world *world, t_parse *parse)
@@ -80,5 +80,5 @@ void	parse(t_world world, int argc, char **argv)
 	line_count = parse_line_count(argv[1]);
 	debugger(BLU "%s:%d - %s\nline count:\t%d\n\n" RESET, __FILE__, __LINE__, __FUNCTION__, line_count);
 	parse_lines(&world, line_count, argv[1]);
-	exit(0);
+	// exit(0);
 }

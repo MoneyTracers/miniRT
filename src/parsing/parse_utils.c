@@ -6,11 +6,11 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 13:57:38 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/05 17:36:31 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/06 17:32:40 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <rt.h>
+  
 #include <parse.h>
 #include <minirt.h>
 
@@ -111,18 +111,18 @@ int	parse_skipwhitespace(char *str, int i)
 }
 
 // check if number is in range of min and max with float
-int	parse_inrange_float(double min, double max, char *str, int *i)
+int	parse_inrange_float(float min, float max, char *str, int *i)
 {
-	double	num;
+	float	num;
 	int		start;
 
 	start = *i;
-	if (!parse_isfloat(&str[*i], ' ', i))
+	if (!parse_isfloat(str, ' ', i))
 		return (0);
 	num = atofn(&str[start], *i - start);
-	if (num <= min || num >= max)
-		return (1);
-	return (0);
+	if (num < min || num > max)
+		return (0);
+	return (1);
 }
 
 // check if number is int like 10
@@ -132,7 +132,7 @@ int	parse_isinrange_int(int min, int max, char *str, int* i)
 	int		start;
 
 	start = *i;
-	if (!parse_isint(&str[*i], ' ', i))
+	if (!parse_isint(str, ' ', i))
 		return (0);
 	num = atoin(&str[*i], *i - start);
 	if (num <= min || num >= max)

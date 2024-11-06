@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/04 17:55:33 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/06 17:32:40 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ int parse_isnormalvec(char *vec, int *i);
 int parse_iscoordinates(char *coor, int *i);
 int	atoin(const char *nptr, int len);
 int parse_isrgb_inrange(int min, int max, char *rgb, int* i);
-double	atofn(const char *nptr, int len);
+float	atofn(const char *nptr, int len);
 int	parse_skipwhitespace(char *str, int i);
-int	parse_inrange_float(double min, double max, char *str, int *i);
+int	parse_inrange_float(float min, float max, char *str, int *i);
 void	parse_check_extension(char *file);
 int	parse_check_correctness(t_parse *parse);
 void	parse_check_identifier(t_parse *parse);

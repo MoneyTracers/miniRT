@@ -6,11 +6,11 @@
 /*   By: mynodeus <mynodeus@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/10 19:06:39 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/04 18:06:36 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/06 17:28:52 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <rt.h>
+  
 #include <parse.h>
 
 static char	*skipwhitespaces(char *c_ptr)
@@ -44,25 +44,30 @@ static int	detect_plusmignus(char *c_ptr)
 	return (4);
 }
 
-double decimals(double result, const char *str, int i, int len)
+float decimals(float result, const char *str, int i, int len)
 {
 	int	nexponent;
+	int temp;
+	int chr;
 
-	nexponent = 0;
+	nexponent = 1;
 	if (str[i] != '.')
 		return (result);
+	i++;
 	while (i < len)
 	{
-		result = result + ((str[i] - 48) / (10 * nexponent));
+		chr = (str[i] - 48);
+		temp = 10 * nexponent;
+		result += (float)chr / temp;
 		i++;
 		nexponent++;
 	}
 	return (result);
 }
 
-double	atofn(const char *nptr, int len)
+float	atofn(const char *nptr, int len)
 {
-	double		result;
+	float		result;
 	int		index;
 	int		flag;
 	char	*c_ptr;

@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/06 15:40:11 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/06 16:38:54 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,35 +175,35 @@ int main(int argc, char **argv)
 {
 	t_mlx				mlx_data;
 	t_world				world;
-	t_sphere			*sphere;
-	t_cylinder			*cyl;
-	t_transformation	transform;
+	// t_sphere			*sphere;
+	// t_cylinder			*cyl;
+	// t_transformation	transform;
 
 	ft_bzero(&world, sizeof(t_world));
 	parse(world, argc, argv);
-	sphere = new_sphere();
-	transform.rotate = create_identity_matrix();
-	transform.scale = create_identity_matrix();
-	transform.translation = translation_matrix(-1, 0, 0);
-	add_object_to_list(&world.objects, new_object(SPHERE, default_material(), transformation_matrix(transform), (void *)sphere));
-	free_transformation_matrix(&transform);
+	// sphere = new_sphere();
+	// transform.rotate = create_identity_matrix();
+	// transform.scale = create_identity_matrix();
+	// transform.translation = translation_matrix(-1, 0, 0);
+	// add_object_to_list(&world.objects, new_object(SPHERE, default_material(), transformation_matrix(transform), (void *)sphere));
+	// free_transformation_matrix(&transform);
 	
-	cyl = new_cylinder(-1, 1, true);
-	transform.rotate = create_identity_matrix();
-	transform.scale = scale_matrix(0.5, 0.5, 0.5);
-	transform.translation = translation_matrix(1, 0, 0);
-	add_object_to_list(&world.objects, new_object(CYLINDER, default_material(), transformation_matrix(transform), (void *)cyl));
-	free_transformation_matrix(&transform);
+	// cyl = new_cylinder(-1, 1, true);
+	// transform.rotate = create_identity_matrix();
+	// transform.scale = scale_matrix(0.5, 0.5, 0.5);
+	// transform.translation = translation_matrix(1, 0, 0);
+	// add_object_to_list(&world.objects, new_object(CYLINDER, default_material(), transformation_matrix(transform), (void *)cyl));
+	// free_transformation_matrix(&transform);
 
-	world.objects->material.color = new_color(0.4, 0.2, 0.6);
-	world.objects->next->material.color = new_color(0.1, 0.6, 0.6);
+	// world.objects->material.color = new_color(0.4, 0.2, 0.6);
+	// world.objects->next->material.color = new_color(0.1, 0.6, 0.6);
 
-	world.lights = NULL;
-	add_light_to_list(&world.lights, new_light(create_point(0, 0, -5), new_color(0.8, 0.8, 0.8)));
-	add_light_to_list(&world.lights, new_light(create_point(0, 100, 0), new_color(0.5, 0.5, 0.5)));
-	add_light_to_list(&world.lights, new_light(create_point(60, 5, -100), new_color(0.5, 0.5, 0.5)));
-	world.ambient = new_color(0.5, 0.3, 0.4);
-	world.ambientf = 0.4;
+	// world.lights = NULL;
+	// add_light_to_list(&world.lights, new_light(create_point(0, 0, -5), new_color(0.8, 0.8, 0.8)));
+	// add_light_to_list(&world.lights, new_light(create_point(0, 100, 0), new_color(0.5, 0.5, 0.5)));
+	// add_light_to_list(&world.lights, new_light(create_point(60, 5, -100), new_color(0.5, 0.5, 0.5)));
+	// world.ambient = new_color(0.5, 0.3, 0.4);
+	// world.ambientf = 0.4;
 
 	if (!init_mlx(&mlx_data))
 	{
