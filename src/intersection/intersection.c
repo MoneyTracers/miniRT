@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 14:39:19 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/06 13:22:18 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/06 13:53:54 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	intersect_plane(t_intersection **head, t_ray ray, t_object *object)
 	float	denominator;
 
 	denominator = get_dot_product(object->plane->normal, ray.direction);
-	if (ft_abs(denominator) < EPSILON)
+	if (ft_fabs(denominator) < EPSILON)
 		return (SUCCESS);
 	plane_pos = multiply_matrix_tuple(object->transformation, create_point(0, 0, 0));
 	t = get_dot_product(object->plane->normal, subtract_tuple(plane_pos, ray.origin)) / denominator;

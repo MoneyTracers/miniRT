@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 17:06:00 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/06 13:45:18 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/06 13:55:27 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,9 @@ int	main(void)
 	transform.translation = translation_matrix(1, 0, 0);
 	add_object_to_list(&world.objects, new_object(CYLINDER, default_material(), transformation_matrix(transform), (void *)cyl));
 	free_transformation_matrix(&transform);
+
+	world.objects->material.color = new_color(0.4, 0.2, 0.6);
+	world.objects->next->material.color = new_color(0.1, 0.6, 0.6);
 
 	world.lights = NULL;
 	add_light_to_list(&world.lights, new_light(create_point(0, 0, -5), new_color(0.8, 0.8, 0.8)));
