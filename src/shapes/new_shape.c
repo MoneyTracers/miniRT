@@ -48,3 +48,18 @@ t_plane	*new_plane(t_tuple normal)
 	plane->normal = normal;
 	return (plane);
 }
+
+t_material	default_material(void)
+{
+	t_material	material;
+
+	material.color.r = 1;
+	material.color.g = 1;
+	material.color.b = 1;
+	material.ambient = 0.3;
+	material.diffuse = 0.9;
+	material.specular = 0.9;
+	material.shininess = 200.0;
+	material.reflective = 0;
+	return (material);
+}
