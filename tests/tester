@@ -16,6 +16,10 @@ Arguments:
 	This flag will disable the memory tests run in this tester.
 	This flag does not work with all no flags selected
 
+  -nnl, --no-null
+	This flag will disable the null tests run in this tester.
+	This flag does not work with all no flags selected
+
 EOF
 }
 
@@ -27,6 +31,7 @@ usage_fatal() { error "$*"; usage >&2; exit 1; }
 
 
 memory=1
+null_check=1
 
 
 # parse options
@@ -42,6 +47,10 @@ while [ "$#" -gt 0 ]; do
 		continue;;
 		-nm|--no-memory)
 		memory=0
+		shift
+		;;
+		-nnl|--no-null)
+		null_check=0
 		shift
 		;;
 		-h|--help)
@@ -96,15 +105,22 @@ random_cases=$(find ./ -name random_cases)
 #memory
 valgrind_cmd="valgrind --errors-for-leak-kinds=all --error-exitcode=42 --leak-check=full --show-leak-kinds=all"
 temp_valgrind="temp.valgrind"
+
+#null_check
+null_cmd=$(find ./ -name null_checker -type f)
+null_cmd="$null_cmd -b -e 42"
+temp_null="temp.nullcheck"
+
 #logs
 mkdir -p logs
 parsing_log=logs/parsing.log
 mem_log=logs/mem.log
+null_log=logs/null.log
 
 #truncate log
 : > $parsing_log
 : > $mem_log
-
+: > $null_log
 
 random_case_test ()
 {
@@ -163,11 +179,18 @@ do
 			echo -e "${RED} MKO ${RESET}"
 			echo -e "${i} - $map" >> $mem_log
 			$temp_valgrind >> $mem_log 
+		fi
+	fi
+	if [[ $null_check == 1 ]]; then
+		$null_cmd $exe $map 2> $temp_null
+		null_exit_code=$(echo $?)
+		if [[ $null_exit_code == 42 ]]; then
+			echo -e "${RED} NKO ${RESET}"
+			echo -e "${i} - $map" >> $null_log
+			$temp_null >> $null_log 
 		else
 			echo
 		fi
-		else 
-			echo
 	fi
 	i=$((i+1))
 done
@@ -181,4 +204,4 @@ random_case_test $cy_cases $cy_template
 random_case_test $random_cases $normal_template
 
 
-rm -rf temp.rt
+rm -rf temp.*
