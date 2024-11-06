@@ -6,4 +6,4 @@
 	url = https://github.com/42Paris/minilibx-linux.git
 [submodule "tests/null_checker"]
 	path = tests/null_checker
-	url = https://github.com/The-Tests-at-the-End-of-the-Universe/null_checker.git
+	url = git@github.com:The-Tests-at-the-End-of-the-Universe/null_checker.git
