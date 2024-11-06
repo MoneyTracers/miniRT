@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:19:39 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/05 17:36:53 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/06 12:47:48 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ t_tuple	light_vector(t_tuple intersection, t_tuple light_src)
 
 t_tuple	reflect(t_tuple in, t_tuple normal)
 {
-	t_tuple	reflection;
+	t_tuple	reflectv;
 	t_tuple	scaled_normal;
 	float	dot;
 
 	dot = get_dot_product(in, normal);
 	scaled_normal = scale_vector(normal, 2 * dot);
-	reflection = subtract_tuple(in, scaled_normal);
-	return(reflection);
+	reflectv = subtract_tuple(in, scaled_normal);
+	return(reflectv);
 }
 
 t_material	default_material(void)
