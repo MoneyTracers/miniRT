@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 17:06:00 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/05 16:52:53 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/06 13:45:18 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ void	render(t_mlx *data, t_world *world)
 // 	sphere2->material.color = new_color(1.0, 0.6, 0.8);
 // 	cone->material.color = new_color(1.0, 0.6, 0.8);
 
-// 	world.shapes = NULL;
+// 	world.objects = NULL;
 // 	add_shape_to_list(&world.shapes, plane);
 // 	add_shape_to_list(&world.shapes, plane2);
 // 	add_shape_to_list(&world.shapes, sphere);
@@ -173,6 +173,7 @@ void	render(t_mlx *data, t_world *world)
 
 int	main(void)
 {
+	t_mlx				mlx_data;
 	t_world				world;
 	t_sphere			*sphere;
 	t_cylinder			*cyl;
@@ -182,8 +183,8 @@ int	main(void)
 
 	sphere = new_sphere();
 	transform.rotate = create_identity_matrix();
-	transform.scale = scale_matrix(6, 6, 6);
-	transform.translation = translation_matrix(-1, -1, 0);
+	transform.scale = create_identity_matrix();
+	transform.translation = translation_matrix(-1, 0, 0);
 	add_object_to_list(&world.objects, new_object(SPHERE, default_material(), transformation_matrix(transform), (void *)sphere));
 	free_transformation_matrix(&transform);
 	
@@ -194,12 +195,24 @@ int	main(void)
 	add_object_to_list(&world.objects, new_object(CYLINDER, default_material(), transformation_matrix(transform), (void *)cyl));
 	free_transformation_matrix(&transform);
 
-	printf("sphere radius = %f\n", world.objects->shape.sphere->radius);
-	printf("sphere radius = %f\n", world.objects->next->shape.cylinder->min);
-	
-	for(t_object *cur = world.objects; cur; cur = cur->next)
+	world.lights = NULL;
+	add_light_to_list(&world.lights, new_light(create_point(0, 0, -5), new_color(0.8, 0.8, 0.8)));
+	add_light_to_list(&world.lights, new_light(create_point(0, 100, 0), new_color(0.5, 0.5, 0.5)));
+	add_light_to_list(&world.lights, new_light(create_point(60, 5, -100), new_color(0.5, 0.5, 0.5)));
+	world.ambient = new_color(0.5, 0.3, 0.4);
+	world.ambientf = 0.4;
+
+	if (!init_mlx(&mlx_data))
 	{
-		free_matrix(cur->transformation.grid, 4);
-		if ()
+		free_objects(&world.objects);
+		return (1);
 	}
+	hooks(&mlx_data);
+	render(&mlx_data, &world);
+	mlx_put_image_to_window(mlx_data.mlx, mlx_data.window, mlx_data.image, 0, 0);
+	mlx_loop(mlx_data.mlx);
+	
+	free_mlx(&mlx_data);
+	free_lights(&world.lights);
+	free_objects(&world.objects);
 }

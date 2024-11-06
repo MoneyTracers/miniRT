@@ -6,11 +6,12 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:48:24 by maraasve          #+#    #+#             */
-/*   Updated: 2024/10/31 15:58:39 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/06 13:35:29 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <transformation.h>
+#include <free.h>
 
 t_tuple	translate_tuple(t_tuple tuple, float x, float y, float z)
 {
@@ -49,9 +50,12 @@ t_matrix	scale_matrix(float x, float y, float z)
 t_matrix	transformation_matrix(t_transformation transform)
 {
 	t_matrix	transformation;
+	t_matrix	tmp;
 
 	transformation = multiply_matrices(transform.scale, transform.rotate);
+	tmp = transformation;
 	transformation = multiply_matrices(transformation, transform.translation);
+	free_matrix(tmp.grid, 4);
 	return (transformation);
 }
 

@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:43:48 by marieke           #+#    #+#             */
-/*   Updated: 2024/10/31 17:35:27 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/06 13:42:19 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	free_intersection(t_intersection **intersection)
 	(*intersection) = NULL;
 }
 
-void	free_shapes(t_object **head)
+void	free_objects(t_object **head)
 {
 	t_object	*cur;
 	t_object	*next;
@@ -63,17 +63,36 @@ void	free_shapes(t_object **head)
 	while (cur)
 	{
 		next = cur->next;
-		free_matrix(cur->base->transformation.grid, 4);
-		if (cur->base->inverted)
+		free_matrix(cur->transformation.grid, 4);
+		if (cur->inverted)
 		{
-			free_matrix(cur->base->inverted->grid, 4);
-			free(cur->base->inverted);
+			free_matrix(cur->inverted->grid, 4);
+			free(cur->inverted);
 		}
-		free(cur->base);
+		if (cur->type == CYLINDER || cur->type == CONE)
+			free(cur->cylinder);
+		if (cur->type == PLANE)
+			free(cur->plane);
+		if (cur->type == SPHERE)
+			free(cur->sphere);
 		free(cur);
 		cur = next;
 	}
 	(*head) = NULL;
+}
+
+void	free_lights(t_light **head)
+{
+	t_light	*cur;
+	t_light	*tmp;
+
+	cur = *head;
+	while (cur)
+	{
+		tmp = cur;
+		cur = cur->next;
+		free(tmp);
+	}
 }
 
 void	free_transformation_matrix(t_transformation *transform)

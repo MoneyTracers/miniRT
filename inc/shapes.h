@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 14:51:48 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/05 17:47:10 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/06 13:26:25 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,6 @@ typedef struct s_cylinder
 	bool	capped;
 }	t_cylinder;
 
-typedef struct s_cone
-{
-	float	min;
-	float	max;
-	bool	capped;
-}	t_cone;
-
 typedef struct s_plane
 {
 	t_tuple	normal;
@@ -76,10 +69,9 @@ typedef struct s_object
 	union
 	{
 		t_cylinder	*cylinder;
-		t_cone		*cone;
 		t_sphere	*sphere;
 		t_plane		*plane;
-	}	u_shape;
+	};
 	struct s_object	*next;
 }	t_object;
 
@@ -98,6 +90,7 @@ t_object	*new_object(int type, t_material m, t_matrix transform, void *shape);
 void		add_object_to_list(t_object **head, t_object *new);
 
 t_sphere	*new_sphere(void);
-t_object	*new_cylinder(float min, float max, bool capped);
+t_cylinder	*new_cylinder(float min, float max, bool capped);
+t_plane		*new_plane(t_tuple normal);
 
 #endif

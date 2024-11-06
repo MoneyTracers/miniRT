@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 13:06:16 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/05 16:53:06 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/06 13:25:24 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ void	add_object_to_list(t_object **head, t_object *new)
 void	add_shape_to_object(t_object *object, void *shape)
 {
 	if (object->type == CYLINDER)
-		object->shape.cylinder = (t_cylinder *)shape;
+		object->cylinder = (t_cylinder *)shape;
 	else if (object->type == SPHERE)
-		object->shape.sphere = (t_sphere *)shape;
+		object->sphere = (t_sphere *)shape;
 	else if (object->type == CONE)
-		object->shape.cone = (t_cone *)shape;
+		object->cylinder = (t_cylinder *)shape;
 	else if (object->type == PLANE)
-		object->shape.plane = (t_plane *)shape;
+		object->plane = (t_plane *)shape;
 }
 
 t_object	*new_object(int type, t_material m, t_matrix transform, void *shape)
@@ -80,7 +80,7 @@ t_object	*new_object(int type, t_material m, t_matrix transform, void *shape)
 	}
 	else
 		object->inverted = NULL;
-	add_shape(object, object);
+	add_shape_to_object(object, shape);
 	object->next = NULL;
 	return (object);
 }

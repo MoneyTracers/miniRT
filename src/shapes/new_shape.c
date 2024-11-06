@@ -13,7 +13,7 @@
 #include <shapes.h>
 #include <tuples.h>
 
-t_object	*new_cylinder(float min, float max, bool capped)
+t_cylinder	*new_cylinder(float min, float max, bool capped)
 {
 	t_cylinder	*cyl;
 
@@ -47,17 +47,4 @@ t_plane	*new_plane(t_tuple normal)
 		return (NULL);
 	plane->normal = normal;
 	return (plane);
-}
-
-t_cone	*new_cone(float min, float max, bool capped)
-{
-	t_cone	*cone;
-
-	cone = malloc(sizeof(t_cone));
-	if (!cone)
-		return (NULL);
-	cone->min = min;
-	cone->max = max;
-	cone->capped = capped;
-	return (cone);
 }

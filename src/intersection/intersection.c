@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 14:39:19 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/05 17:36:43 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/06 13:22:18 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,11 @@ int	intersect_plane(t_intersection **head, t_ray ray, t_object *object)
 	float	t;
 	float	denominator;
 
-	denominator = get_dot_product(object->shape.plane->normal, ray.direction);
+	denominator = get_dot_product(object->plane->normal, ray.direction);
 	if (ft_abs(denominator) < EPSILON)
 		return (SUCCESS);
 	plane_pos = multiply_matrix_tuple(object->transformation, create_point(0, 0, 0));
-	t = get_dot_product(object->shape.plane->normal, subtract_tuple(plane_pos, ray.origin)) / denominator;
+	t = get_dot_product(object->plane->normal, subtract_tuple(plane_pos, ray.origin)) / denominator;
 	if (add_intersection_sorted(head, new_intersection(t, object)) == ERROR)
 		return (ERROR);
 	return (SUCCESS);
@@ -83,28 +83,28 @@ bool check_cap(t_ray ray, float t, float radius)
 	return ((powf(x, 2) + powf(z, 2)) <= powf(radius, 2));
 }
 
-bool intersect_caps(t_intersection **head, t_object *shape, t_ray ray) 
+bool intersect_caps(t_intersection **head, t_object *object, t_ray ray) 
 {
 	float	t;
 	float	radius;
 
-	if (!shape->cyl_capped || equal_float(ray.direction.y, 0))
+	if (!object->cylinder->capped || equal_float(ray.direction.y, 0))
 		return (SUCCESS);
 	radius = 1;
-	if (shape->base->type == CONE)
-		radius = fabs(shape->cyl_min);
-	t = (shape->cyl_min - ray.origin.y) / ray.direction.y;
+	if (object->type == CONE)
+		radius = fabs(object->cylinder->min);
+	t = (object->cylinder->min - ray.origin.y) / ray.direction.y;
 	if (check_cap(ray, t, radius))
 	{
-		if (add_intersection_sorted(head, new_intersection(t, shape)) == ERROR)
+		if (add_intersection_sorted(head, new_intersection(t, object)) == ERROR)
 			return (ERROR);
 	}
-	if (shape->base->type == CONE)
-		radius = fabs(shape->cyl_max);
-	t = (shape->cyl_max - ray.origin.y) / ray.direction.y;
+	if (object->type == CONE)
+		radius = fabs(object->cylinder->max);
+	t = (object->cylinder->max - ray.origin.y) / ray.direction.y;
 	if (check_cap(ray, t, radius))
 	{
-		if (add_intersection_sorted(head, new_intersection(t, shape)) == ERROR)
+		if (add_intersection_sorted(head, new_intersection(t, object)) == ERROR)
 			return (ERROR);
 	}
 	return (SUCCESS);
@@ -121,14 +121,14 @@ int	cyl_cone_algorithm(t_intersection **head, t_ray ray, t_object *object, float
 	{
 		t = (-b - sqrtf(discriminant)) / (2 * a);
 		y = ray.origin.y + t * ray.direction.y;
-		if (y > shape->cyl_min && y < shape->cyl_max) //what to do with this
+		if (y > object->cylinder->min && y < object->cylinder->max) //what to do with this
 		{
 			if (add_intersection_sorted(head, new_intersection(t, object)) == ERROR)
 				return (ERROR);
 		}
 		t = (-b + sqrtf(discriminant)) / (2 * a);
 		y = ray.origin.y + t * ray.direction.y;
-		if (y > shape->cyl_min && y < shape->cyl_max)
+		if (y > object->cylinder->min && y < object->cylinder->max)
 		{
 			if (add_intersection_sorted(head, new_intersection(t, object)) == ERROR)
 				return (ERROR);
@@ -172,7 +172,7 @@ int	intersect_cone(t_intersection **head, t_ray ray, t_object *object)
 			return (ERROR);
 		return (SUCCESS);
 	}
-	if (cyl_cone_algorythm(head, ray, object, a, b, c) == ERROR)
+	if (cyl_cone_algorithm(head, ray, object, a, b, c) == ERROR)
 		return (ERROR);
 	return (SUCCESS);
 }
@@ -186,7 +186,7 @@ int	intersect_sphere(t_intersection **head, t_ray ray, t_object *object)
 	float			b;
 	float			c;
 
-	sphere_to_ray = subtract_tuple(ray.origin, object->shape.sphere->center);
+	sphere_to_ray = subtract_tuple(ray.origin, object->sphere->center);
 	a = get_dot_product(ray.direction, ray.direction);
 	b = 2 * get_dot_product(ray.direction, sphere_to_ray);
 	c = get_dot_product(sphere_to_ray, sphere_to_ray) - 1;
