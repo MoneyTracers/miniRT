@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:02:22 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/05 17:16:40 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/06 13:10:17 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	parse_check_identifier(t_parse *parse)
 			}
 			parse->C_identifier++;
 		}
+		//TODO: count amount of objects for array later
 		//TODO: if bonus then multiple lights
 		else if (parse->type == light )
 		{
