@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:19:39 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/06 12:47:48 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:39:22 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ t_color	lighting(t_world *world, t_light light, t_material m, t_tuple pos, t_tup
 	float	light_dot_normal;
 	float	factor;
 
-	effective_color = colors_multiply(m.color, light.intensity);
+	effective_color = colors_multi_scalar(m.color, light.intensity);
+	effective_color = colors_multiply(effective_color, light.color);
 	lightv = normalize(subtract_tuple(light.pos, pos));
 	ambient = colors_multi_scalar(colors_multiply(world->ambient, m.color), world->ambientf * m.ambient);
 	light_dot_normal = get_dot_product(lightv, normalv);
@@ -80,7 +81,7 @@ t_color	lighting(t_world *world, t_light light, t_material m, t_tuple pos, t_tup
 		else
 		{
 			factor = powf(reflect_dot_eye, m.shininess);
-			specular = colors_multi_scalar(colors_multi_scalar(light.intensity, m.specular), factor);
+			specular = colors_multi_scalar(light.color, light.intensity * m.specular * factor);
 		}
 	}
 	result = add_colors(add_colors(ambient, diffuse), specular);

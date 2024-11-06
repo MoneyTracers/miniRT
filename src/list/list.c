@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 12:09:43 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/05 13:25:31 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:36:59 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	add_shape_to_list(t_object **head, t_object *new_shape)
 	new_shape->next = NULL;
 }
 
-t_light	*new_light(t_tuple pos, t_color intensity)
+t_light	*new_light(t_tuple pos, t_color color, float intensity)
 {
 	t_light	*new;
 
@@ -40,6 +40,7 @@ t_light	*new_light(t_tuple pos, t_color intensity)
 		return (NULL);
 	new->pos = pos;
 	new->intensity = intensity;
+	new->color = color;
 	new->next = NULL;
 	return (new);
 }

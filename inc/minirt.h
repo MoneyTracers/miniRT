@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 17:28:02 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/05 16:33:32 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:27:41 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@
 
 typedef	struct s_light
 {
-	t_color			intensity;
+	float			intensity;
+	t_color			color;
 	t_tuple			pos;
 	struct s_light	*next;
 }	t_light;
