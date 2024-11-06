@@ -2,6 +2,64 @@
 
 #REFERENCES: https://www.baeldung.com/linux/insert-line-specific-line-number
 
+#usage function
+usage() {
+	cat <<EOF
+Usage: $0 [options] [--] [file...]
+
+Arguments:
+
+  -h, --help
+	Display this usage message and exit.
+
+  -nm, --no-memory
+	This flag will disable the memory tests run in this tester.
+	This flag does not work with all no flags selected
+
+EOF
+}
+
+# handy logging and error handling functions
+log() { printf '%s\n' "$*"; }
+error() { log "ERROR: $*" >&2; }
+fatal() { error "$*"; exit 1; }
+usage_fatal() { error "$*"; usage >&2; exit 1; }
+
+
+memory=1
+
+
+# parse options
+while [ "$#" -gt 0 ]; do
+	arg=$1
+	case $1 in
+		# convert "--opt=the value" to --opt "the value".
+		# the quotes around the equals sign is to work around a
+		# bug in emacs' syntax parsing
+		--*'='*)
+		shift;
+		set -- "${arg%%=*}" "${arg#*=}" "$@";
+		continue;;
+		-nm|--no-memory)
+		memory=0
+		shift
+		;;
+		-h|--help)
+		usage;
+		exit 0
+		;;
+		--)
+		shift;
+		break
+		;;
+		-*)
+		usage_fatal "unknown option:'$1'"
+		;;
+		*)
+		break
+		;; # reached the list of file names
+	esac
+done
 
 #colors
 RED="\x1B[31m"
@@ -35,9 +93,17 @@ pl_cases=$(find ./ -name pl_cases)
 sp_cases=$(find ./ -name sp_cases)
 random_cases=$(find ./ -name random_cases)
 
+#memory
+valgrind_cmd="valgrind --errors-for-leak-kinds=all --error-exitcode=42 --leak-check=full --show-leak-kinds=all"
+temp_valgrind="temp.valgrind"
+#logs
 mkdir -p logs
 parsing_log=logs/parsing.log
-echo > $parsing_log
+mem_log=logs/mem.log
+
+#truncate log
+: > $parsing_log
+: > $mem_log
 
 
 random_case_test ()
@@ -53,12 +119,25 @@ random_case_test ()
 		timeout --preserve-status 1s $exe temp.rt &> /dev/null
 		exit_code=$(echo $?)
 		if [[ $exit_code != 1 ]]; then
-		echo -e "${RED} KO ${RESET}"
-		echo -e "#${i} - $line\nmap\n--------" >> $parsing_log 
-		cat temp.rt >> $parsing_log 
-		echo -e "\n--------" >> $parsing_log 
+			echo -ne "${RED} KO ${RESET}"
+			echo -e "#${i} - $line\nmap\n--------" >> $parsing_log 
+			cat temp.rt >> $parsing_log 
+			echo -e "\n--------" >> $parsing_log 
 		else
-		echo -e "${GRN} OK ${RESET}"
+			echo -ne "${GRN} OK ${RESET}"
+		fi
+		if [[ $memory == 1 ]]; then
+			$valgrind_cmd $exe temp.rt 2> $temp_valgrind
+			mem_exit_code=$(echo $?)
+			if [[ $mem_exit_code == 42 ]]; then
+				echo -e "${RED} MKO ${RESET}"
+				echo -e "${i} - $line" >> $mem_log
+				cat $temp_valgrind >> $mem_log 
+			else
+				echo 
+			fi
+			else
+				echo 
 		fi
 		i=$((i+1))
 	done < $case
@@ -70,12 +149,25 @@ echo -e "${BLU}extensions${RESET}"
 for map in $incorrect_maps
 do
 	echo -ne "${YEL}${i} - $map:${RESET}"
-	$exe $map 2> /dev/null
+	timeout --preserve-status 1s $exe $map 2> /dev/null
 	exit_code=$(echo $?)
 	if [[ $exit_code != 1 ]]; then
-	echo -e "${RED} KO ${RESET}"
+	echo -ne "${RED} KO ${RESET}"
 	else
-	echo -e "${GRN} OK ${RESET}"
+	echo -ne "${GRN} OK ${RESET}"
+	fi
+	if [[ $memory == 1 ]]; then
+		$valgrind_cmd $exe $map 2> $temp_valgrind
+		mem_exit_code=$(echo $?)
+		if [[ $mem_exit_code == 42 ]]; then
+			echo -e "${RED} MKO ${RESET}"
+			echo -e "${i} - $map" >> $mem_log
+			$temp_valgrind >> $mem_log 
+		else
+			echo
+		fi
+		else 
+			echo
 	fi
 	i=$((i+1))
 done
