@@ -12,7 +12,8 @@ src/transformation/transformation.c \
 src/tuples/point.c \
 src/tuples/vector.c \
 src/tuples/tuples.c \
-src/shapes/shapes.c \
+src/shapes/new_object.c \
+src/shapes/new_shape.c \
 src/lighting/light.c \
 src/list/list.c \
 src/main.c \
