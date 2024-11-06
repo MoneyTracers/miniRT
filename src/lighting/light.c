@@ -1,28 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   light.c                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/10/18 13:19:39 by marieke       #+#    #+#                 */
-/*   Updated: 2024/11/04 15:24:10 by spenning      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   light.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/18 13:19:39 by marieke           #+#    #+#             */
+/*   Updated: 2024/11/06 14:02:11 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lighting.h>
 #include <calculations.h>
-
-t_tuple	negate_vector(t_tuple vector)
-{
-	t_tuple	negated;
-
-	negated.x = -vector.x;
-	negated.y = -vector.y;
-	negated.z = -vector.z;
-	negated.w = vector.w;
-	return (negated);
-}
 
 t_tuple	light_vector(t_tuple intersection, t_tuple light_src)
 {
@@ -34,14 +23,14 @@ t_tuple	light_vector(t_tuple intersection, t_tuple light_src)
 
 t_tuple	reflect(t_tuple in, t_tuple normal)
 {
-	t_tuple	reflection;
+	t_tuple	reflectv;
 	t_tuple	scaled_normal;
 	float	dot;
 
 	dot = get_dot_product(in, normal);
 	scaled_normal = scale_vector(normal, 2 * dot);
-	reflection = subtract_tuple(in, scaled_normal);
-	return(reflection);
+	reflectv = subtract_tuple(in, scaled_normal);
+	return(reflectv);
 }
 
 t_light	*new_light(t_tuple pos, t_color intensity)
@@ -55,21 +44,6 @@ t_light	*new_light(t_tuple pos, t_color intensity)
 	new->intensity = intensity;
 	new->next = NULL;
 	return (new);
-}
-
-t_material	default_material(void)
-{
-	t_material	material;
-
-	material.color.r = 1;
-	material.color.g = 1;
-	material.color.b = 1;
-	material.ambient = 0.3;
-	material.diffuse = 0.9;
-	material.specular = 0.9;
-	material.shininess = 200.0;
-	material.reflective = 0;
-	return (material);
 }
 
 t_color	lighting(t_world *world, t_light light, t_material m, t_tuple pos, t_tuple eyev, t_tuple normalv, bool in_shadow)

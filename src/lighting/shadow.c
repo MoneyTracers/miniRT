@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   shadow.c                                           :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/10/25 17:09:43 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/04 15:24:11 by spenning      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   shadow.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/25 17:09:43 by maraasve          #+#    #+#             */
+/*   Updated: 2024/11/06 14:02:21 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ bool	is_shadowed(t_world *world, t_light light, t_tuple point)
 	shadow_ray.origin = point;
 	shadow_ray.direction = normalize(vector);
 	list = NULL;
-	list = intersect_world(world, shadow_ray); // can also use local intersections list instead of putting this in the struct
+	list = intersect_world(world, shadow_ray);
 	hit = get_hit(list);
 	if (!hit)
 	{

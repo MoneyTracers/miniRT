@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/05 13:59:32 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/06 15:40:49 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_world
 	t_color			ambient;
 	float			ambientf;
 	t_camera		*cam;
-	t_object		*shapes;
+	t_object		*objects;
 }	t_world;
 
 void	debugger(char *format, ...);
