@@ -31,7 +31,7 @@ usage_fatal() { error "$*"; usage >&2; exit 1; }
 
 
 memory=1
-null_check=1
+null_check=0
 
 
 # parse options
@@ -149,13 +149,21 @@ random_case_test ()
 				echo -e "${RED} MKO ${RESET}"
 				echo -e "${i} - $line" >> $mem_log
 				cat $temp_valgrind >> $mem_log 
-			else
-				echo 
 			fi
-			else
-				echo 
 		fi
-		i=$((i+1))
+		if [[ $null_check == 1 ]]; then
+			$null_cmd $exe temp.rt 2> $temp_null
+			null_exit_code=$(echo $?)
+			echo $null_exit_code
+			if [[ $null_exit_code == 42 ]]; then
+				echo -e "${RED} NKO ${RESET}"
+				echo -e "${i} - $line" >> $null_log
+				cat $temp_null >> $null_log 
+			else
+				echo
+			fi
+		fi
+	i=$((i+1))
 	done < $case
 }
 
@@ -178,7 +186,7 @@ do
 		if [[ $mem_exit_code == 42 ]]; then
 			echo -e "${RED} MKO ${RESET}"
 			echo -e "${i} - $map" >> $mem_log
-			$temp_valgrind >> $mem_log 
+			cat $temp_valgrind >> $mem_log 
 		fi
 	fi
 	if [[ $null_check == 1 ]]; then
@@ -187,7 +195,7 @@ do
 		if [[ $null_exit_code == 42 ]]; then
 			echo -e "${RED} NKO ${RESET}"
 			echo -e "${i} - $map" >> $null_log
-			$temp_null >> $null_log 
+			cat $temp_null >> $null_log 
 		else
 			echo
 		fi
