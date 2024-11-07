@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 13:57:38 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/07 13:03:12 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/07 18:16:22 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,18 @@
 t_tuple parse_get_coordinates(char *str, int *i)
 {
 	t_tuple tup;
+	int	j;
 
-	*i = parse_skipwhitespace(str, *i);
+	j = *i;
+	j = parse_skipwhitespace(str, j);
 	tup.w = 0;
-	tup.x = parse_get_float(str, i);
-	*i += 1;
-	tup.y = parse_get_float(str, i);
-	*i += 1;
-	tup.z = parse_get_float(str, i);
-	*i += 1;
+	tup.x = parse_get_float(str, &j);
+	j += 1;
+	tup.y = parse_get_float(str, &j);
+	j += 1;
+	tup.z = parse_get_float(str, &j);
+	j += 1;
+	*i = j;
 	return (tup);
 }
 
@@ -51,13 +54,16 @@ float parse_get_float(char *str, int *i)
 {
 	int	start;
 
+	start = *i;
 	while (!ft_isdigit(str[*i]))
 	{
 		if (str[*i] == '-')
+		{
+			*i += 1;
 			break;
+		}
 		*i += 1;
 	}
-	start = *i;
 	while (ft_isdigit(str[*i]))
 		*i += 1;
 	if (str[*i] == '.')

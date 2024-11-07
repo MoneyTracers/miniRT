@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:07:59 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/07 12:56:29 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/07 14:14:44 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,17 @@ int parse_check_camera(char *str)
 	int	i;
 
 	i = 0;
-	debugger("classifier\n");
 	if (!ft_strncmp(str, "C ", 2))
 		i++;
 	else
 		return (1);
-	debugger("white\n");
 	i = parse_skipwhitespace(str, i);
-	debugger("coor\n");
 	if (!parse_iscoordinates(str, &i))
 		return (1);
-	debugger("white\n");
 	i = parse_skipwhitespace(str, i);
-	debugger("normal\n");
 	if (!parse_isnormalvec(str, &i))
 		return (1);
-	debugger("white\n");
 	i = parse_skipwhitespace(str, i);
-	debugger("float\n");
 	if (!parse_isfloat(str, 0, &i))
 		return (1);
 	if (str[i] != '\n' && str[i] != '\0')
