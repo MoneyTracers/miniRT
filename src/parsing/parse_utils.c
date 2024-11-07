@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 13:57:38 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/07 11:37:11 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/07 11:41:50 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	parse_isfloat(char *num, char end_delim, int *i)
 		return (0);
 	while (ft_isdigit(num[*i]))
 		*i += 1;
-	if (num[*i] == ' ')
+	if (num[*i] == end_delim)
 		return (1);
 	if (num[*i] != '.')
 		return (0);
@@ -195,6 +195,7 @@ int parse_iscoordinates(char *coor, int *i)
 			if (!parse_isfloat(coor, delim, i))
 				return (0);
 		}
+		*i += 1;
 		index++;
 	}
 	return (1);
