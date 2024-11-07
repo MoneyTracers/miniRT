@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:07:59 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/06 16:49:22 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/07 11:30:48 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,50 +16,48 @@
 int parse_check_ambient(char *str)
 {
 	int	i;
-	debugger("here1\n");
 	i = 0;
 	if (!ft_strncmp(str, "A ", 2))
 		i++;
 	else
 		return (1);
-	debugger("A\n");
 	i = parse_skipwhitespace(str, i);
-	debugger("white\n");
 	if (!parse_inrange_float(0.0, 1.0, str, &i))
 		return (1);
-	debugger("float\n");
 	i = parse_skipwhitespace(str, i);
-	debugger("white\n");
 	if (!parse_isrgb_inrange(0, 255, str, &i))
 		return (1);
-	debugger("rgb\n");
 	i = parse_skipwhitespace(str, i);
-	debugger("white\n");
-	if (str[i] != '\n')
+	if (str[i] != '\n' && str[i] != '\0')
 		return (1);
-	debugger("nl\n");
 	return (0);
 }
 int parse_check_camera(char *str)
 {
 	int	i;
 
-	debugger("here2\n");
 	i = 0;
+	debugger("classifier\n");
 	if (!ft_strncmp(str, "C ", 2))
 		i++;
 	else
 		return (1);
+	debugger("white\n");
 	i = parse_skipwhitespace(str, i);
+	debugger("coor\n");
 	if (!parse_iscoordinates(str, &i))
 		return (1);
+	debugger("white\n");
 	i = parse_skipwhitespace(str, i);
+	debugger("normal\n");
 	if (!parse_isnormalvec(str, &i))
 		return (1);
+	debugger("white\n");
 	i = parse_skipwhitespace(str, i);
+	debugger("rgb\n");
 	if (!parse_isrgb_inrange(0, 255, str, &i))
 		return (1);
-	if (str[i] != '\n')
+	if (str[i] != '\n' && str[i] != '\0')
 		return (1);
 	return (0);
 }

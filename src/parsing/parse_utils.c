@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 13:57:38 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/07 11:08:54 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/07 11:37:11 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,14 @@ int	parse_isint(char *num, char end_delim, int *i)
 
 int	parse_isfloat(char *num, char end_delim, int *i)
 {
+	if (num[*i] == '-')
+		*i += 1;
 	if (!ft_isdigit(num[*i]))
 		return (0);
 	while (ft_isdigit(num[*i]))
 		*i += 1;
+	if (num[*i] == ' ')
+		return (1);
 	if (num[*i] != '.')
 		return (0);
 	*i += 1;
@@ -178,29 +182,19 @@ int parse_isrgb_inrange(int min, int max, char *rgb, int* i)
 int parse_iscoordinates(char *coor, int *i)
 {
 	int	index;
-	int	len;
-	int	col;
 	int	delim;
 
 	index = 0;
-	len = 0;
 	delim = ',';
 	while (coor && index < 3)
 	{
-		len = 0;
 		if (index == 2)
 			delim = ' ';
-		while (index != 2)
+		if (index != 2)
 		{
-			if (coor[len] == delim)
-				break ;
-			if (!ft_isdigit(coor[len]))
+			if (!parse_isfloat(coor, delim, i))
 				return (0);
-			len++;
 		}
-		col = atofn(coor, len);
-		*i += len;
-		coor += len;
 		index++;
 	}
 	return (1);
