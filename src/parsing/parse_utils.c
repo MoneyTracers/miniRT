@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 13:57:38 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/06 17:32:40 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/07 11:08:54 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,35 +143,33 @@ int	parse_isinrange_int(int min, int max, char *str, int* i)
 int parse_isrgb_inrange(int min, int max, char *rgb, int* i)
 {
 	int	index;
-	int	len;
+	int	start;
 	int	col;
 
 	index = 0;
-	len = 0;
 	while (rgb && index < 3)
 	{
-		len = 0;
+		start = *i;
 		while (index != 2)
 		{
-			if (rgb[len] == ',')
+			if (rgb[*i] == ',')
 				break ;
-			if (!ft_isdigit(rgb[len]))
+			if (!ft_isdigit(rgb[*i]))
 				return (0);
-			len++;
+			*i += 1;
 		}
 		while (index == 2)
 		{
-			if (rgb[len] == ' ')
+			if (rgb[*i] == ' ' || rgb[*i] == '\n')
 				break ;
-			if (!ft_isdigit(rgb[len]))
+			if (!ft_isdigit(rgb[*i]))
 				return (0);
-			len++;
+			*i += 1;
 		}
-		col = atoin(rgb, len);
+		col = atoin(&rgb[start], *i - start);
 		if (col < min || col > max)
 			return (0);
-		*i += len;
-		rgb += len;
+		*i += 1;
 		index++;
 	}
 	return (1);
