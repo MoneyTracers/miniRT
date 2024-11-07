@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:07:59 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/07 14:14:44 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/07 18:31:45 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,22 @@ int parse_check_light(char *str)
 		i++;
 	else
 		return (1);
+	debugger("white\n");
 	i = parse_skipwhitespace(str, i);
+	debugger("coor\n");
 	if (!parse_iscoordinates(str, &i))
 		return (1);
+	debugger("white\n");
 	i = parse_skipwhitespace(str, i);
+	debugger("float\n");
 	if (!parse_inrange_float(0.0, 1.0, str, &i))
 		return (1);
+	debugger("white\n");
 	i = parse_skipwhitespace(str, i);
+	debugger("white\n");
 	if (!parse_isinrange_int(0, 180, str, &i))
 		return (1);
-	if (str[i] != '\n')
+	if (str[i] != '\n' && str[i] != '\0')
 		return (1);
 	return (0);
 }
