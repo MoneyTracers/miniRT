@@ -12,6 +12,10 @@ Arguments:
   -h, --help
 	Display this usage message and exit.
 
+  -nn, --no-norminette
+	This flag will disable the norminette tests run in this tester.
+	This flag does not work with all no flags selected
+
   -nm, --no-memory
 	This flag will disable the memory tests run in this tester.
 	This flag does not work with all no flags selected
@@ -32,6 +36,7 @@ usage_fatal() { error "$*"; usage >&2; exit 1; }
 
 memory=1
 null_check=0
+norminette=1
 
 
 # parse options
@@ -45,6 +50,10 @@ while [ "$#" -gt 0 ]; do
 		shift;
 		set -- "${arg%%=*}" "${arg#*=}" "$@";
 		continue;;
+		-nn|--no-norminette)
+		norminette=0
+		shift
+		;;
 		-nm|--no-memory)
 		memory=0
 		shift
@@ -129,6 +138,25 @@ null_log=logs/null.log
 : > $parsing_log
 : > $mem_log
 : > $null_log
+
+
+if [[ $norminette == 1 ]]; then
+mkdir -p norm_test
+pwd=$(pwd)
+pwd=$(basename $pwd)
+srcs=$(find ../  -type f -name "*.c" -not -path "../$pwd/*")
+headers=$(find ../ -type f -name "*.h" -not -path "../$pwd/*")
+cp -r $srcs ./norm_test
+cp -r $headers ./norm_test
+rm -rf ./norm_test/mlx_*
+(cd norminette_tester && bash norminette_tester.sh -npi -d ../norm_test)
+norminette_code=$(echo $?)
+if [[ $norminette_code == 1 ]]; then
+	fail=true
+fi
+rm -rf norm_test
+fi
+
 
 random_case_test ()
 {
