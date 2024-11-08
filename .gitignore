@@ -57,3 +57,4 @@ temp.rt
 logs/
 temp.*
 failed_cases
+failed_mem_cases

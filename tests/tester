@@ -115,6 +115,9 @@ null_cmd="$null_cmd -b -e 42"
 temp_null="temp.nullcheck"
 
 #logs
+rm -rf logs
+rm -rf failed_cases
+rm -rf failed_mem_cases
 mkdir -p logs
 mkdir -p failed_cases
 mkdir -p failed_mem_cases
