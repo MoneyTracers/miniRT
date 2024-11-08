@@ -117,6 +117,7 @@ temp_null="temp.nullcheck"
 #logs
 mkdir -p logs
 mkdir -p failed_cases
+mkdir -p failed_mem_cases
 parsing_log=logs/parsing.log
 mem_log=logs/mem.log
 null_log=logs/null.log
@@ -154,7 +155,7 @@ random_case_test ()
 				echo -e "${RED} MKO ${RESET}"
 				echo -e "${i} - $line" >> $mem_log
 				cat $temp_valgrind >> $mem_log
-				cat temp.rt > failed_cases/failed_mem_$i.rt
+				cat temp.rt > failed_mem_cases/failed_mem_$i.rt
 		else
 			echo
 			fi
@@ -195,7 +196,7 @@ do
 			echo -e "${RED} MKO ${RESET}"
 			echo -e "${i} - $map" >> $mem_log
 			cat $temp_valgrind >> $mem_log 
-			cat temp.rt > failed_cases/failed_mem_$i.rt
+			cat temp.rt > failed_mem_cases/failed_mem_$i.rt
 		else
 			echo
 		fi
