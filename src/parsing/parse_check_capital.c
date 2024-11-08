@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:07:59 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/08 11:01:37 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/08 11:24:22 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int parse_check_ambient(char *str)
 	int	i;
 	i = 0;
 
+	debugger(YEL "%s:%d - %s\nparse_check_ambient\n\n" RESET, __FILE__, __LINE__, __FUNCTION__ );
 	if (!ft_strncmp(str, "A ", 2))
 		i++;
 	else
@@ -37,6 +38,7 @@ int parse_check_camera(char *str)
 {
 	int	i;
 
+	debugger(YEL "%s:%d - %s\nparse_check_camera\n\n" RESET, __FILE__, __LINE__, __FUNCTION__ );
 	i = 0;
 	if (!ft_strncmp(str, "C ", 2))
 		i++;
@@ -59,25 +61,19 @@ int parse_check_light(char *str)
 {
 	int	i;
 
-	debugger("here3\n");
+	debugger(YEL "%s:%d - %s\nparse_check_light\n\n" RESET, __FILE__, __LINE__, __FUNCTION__ );
 	i = 0;
 	if (!ft_strncmp(str, "L ", 2))
 		i++;
 	else
 		return (1);
-	debugger("white\n");
 	i = parse_skipwhitespace(str, i);
-	debugger("coor\n");
 	if (!parse_iscoordinates(str, &i))
 		return (1);
-	debugger("white\n");
 	i = parse_skipwhitespace(str, i);
-	debugger("float\n");
 	if (!parse_inrange_float(0.0, 1.0, str, &i))
 		return (1);
-	debugger("white\n");
 	i = parse_skipwhitespace(str, i);
-	debugger("int\n");
 	if (!parse_isrgb_inrange(0, 255, str, &i))
 		return (1);
 	if (str[i] != '\n' && str[i] != '\0')

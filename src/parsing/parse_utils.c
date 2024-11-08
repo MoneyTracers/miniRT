@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 13:57:38 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/08 11:07:21 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/08 11:37:27 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,13 +224,8 @@ int parse_isnormalvec(char *vec, int *i)
 		start = *i;
 		if (index == 2)
 			delim = ' ';
-		while (index != 2)
-		{
-			if (vec[*i] == delim)
-				break ;
-			if (!parse_isfloat(vec, delim, i))
-				return (0);
-		}
+		if (!parse_isfloat(vec, delim, i))
+			return (0);
 		col = atofn(vec, *i - start);
 		if (col < -1 || col > 1)
 			return (0);
