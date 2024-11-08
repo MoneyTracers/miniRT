@@ -102,6 +102,9 @@ pl_cases=$(find ./ -name pl_cases)
 sp_cases=$(find ./ -name sp_cases)
 random_cases=$(find ./ -name random_cases)
 
+#timeout
+timout="timeout --preserve-status 1s"
+
 #memory
 valgrind_cmd="valgrind --errors-for-leak-kinds=all --error-exitcode=42 --leak-check=full --show-leak-kinds=all"
 temp_valgrind="temp.valgrind"
@@ -113,6 +116,7 @@ temp_null="temp.nullcheck"
 
 #logs
 mkdir -p logs
+mkdir -p failed_cases
 parsing_log=logs/parsing.log
 mem_log=logs/mem.log
 null_log=logs/null.log
@@ -137,18 +141,22 @@ random_case_test ()
 		if [[ $exit_code != 1 ]]; then
 			echo -ne "${RED} KO ${RESET}"
 			echo -e "#${i} - $line\nmap\n--------" >> $parsing_log 
-			cat temp.rt >> $parsing_log 
+			cat temp.rt >> $parsing_log
+			cat temp.rt > failed_cases/failed_$i.rt
 			echo -e "\n--------" >> $parsing_log 
 		else
 			echo -ne "${GRN} OK ${RESET}"
 		fi
 		if [[ $memory == 1 ]]; then
-			$valgrind_cmd $exe temp.rt 2> $temp_valgrind
+			timeout --preserve-status 1s $valgrind_cmd $exe temp.rt 2> $temp_valgrind
 			mem_exit_code=$(echo $?)
-			if [[ $mem_exit_code == 42 ]]; then
+			if [[ $mem_exit_code == 42 || $mem_exit_code == 143 ]]; then
 				echo -e "${RED} MKO ${RESET}"
 				echo -e "${i} - $line" >> $mem_log
-				cat $temp_valgrind >> $mem_log 
+				cat $temp_valgrind >> $mem_log
+				cat temp.rt > failed_cases/failed_mem_$i.rt
+		else
+			echo
 			fi
 		fi
 		if [[ $null_check == 1 ]]; then
@@ -181,12 +189,15 @@ do
 	echo -ne "${GRN} OK ${RESET}"
 	fi
 	if [[ $memory == 1 ]]; then
-		$valgrind_cmd $exe $map 2> $temp_valgrind
+		timeout --preserve-status 1s $valgrind_cmd $exe $map 2> $temp_valgrind
 		mem_exit_code=$(echo $?)
-		if [[ $mem_exit_code == 42 ]]; then
+		if [[ $mem_exit_code == 42 || $mem_exit_code == 143 ]]; then
 			echo -e "${RED} MKO ${RESET}"
 			echo -e "${i} - $map" >> $mem_log
 			cat $temp_valgrind >> $mem_log 
+			cat temp.rt > failed_cases/failed_mem_$i.rt
+		else
+			echo
 		fi
 	fi
 	if [[ $null_check == 1 ]]; then

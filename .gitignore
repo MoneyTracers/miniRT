@@ -56,3 +56,4 @@ build/
 temp.rt
 logs/
 temp.*
+failed_cases
