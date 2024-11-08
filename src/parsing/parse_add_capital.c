@@ -6,12 +6,13 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 14:31:28 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/07 18:17:03 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/08 11:14:19 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt.h>
 #include <parse.h>
+#include <list.h>
 
 void	parse_add_ambient(t_world *world, char *str)
 {
@@ -34,11 +35,15 @@ void	parse_add_camera(t_world *world, char *str)
 }
 void	parse_add_light(t_world *world, char *str)
 {
+	t_tuple pos;
+	float brightness;
+	t_color color;
 	int i;
 
 	i = 1;
-	world->lights->pos = parse_get_coordinates(str, &i);
-	world->lights->brightness = parse_get_float(str, &i);
-	world->lights->color = parse_get_color(str, &i);
+	pos = parse_get_coordinates(str, &i);
+	brightness = parse_get_float(str, &i);
+	color = parse_get_color(str, &i);
+	add_light_to_list(&world->lights, new_light(pos, color));
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/06 16:38:54 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/08 11:12:56 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,124 +60,10 @@ void	render(t_mlx *data, t_world *world)
 	}
 }
 
-// int main(void)
-// {
-// 	t_mlx				data;
-// 	t_world				world;
-// 	t_object			*cone;
-// 	t_object			*sphere;
-// 	t_object			*sphere2;
-// 	// t_object			*cylinder;
-// 	t_object			*plane;
-// 	t_object			*plane2;
-// 	t_transformation	transformation;
-
 int main(int argc, char **argv)
-// 	transformation.scale = scale_matrix(1, 1, 1);
-// 	transformation.translation = translation_matrix(0, -1.95, 5);
-// 	transformation.rotate = create_identity_matrix();
-// 	cone = new_object(create_point(0, 0, 0), 1, default_material(), new_object_base(CONE, transformation_matrix(transformation)));
-// 	if (!cone)
-// 	{
-// 		free_transformation_matrix(&transformation);
-// 		return (1);
-// 	}
-// 	free_transformation_matrix(&transformation);
-// 	cone->cyl_max = 2;
-// 	cone->cyl_min = 0;
-// 	cone->cyl_capped = true;
-
-// 	transformation.scale = scale_matrix(1.2, 1.2, 1.2);
-// 	transformation.translation = translation_matrix(-0.9, 0.5, 5);
-// 	transformation.rotate = create_identity_matrix();
-// 	sphere = new_object(create_point(0, 0, 0), 1, default_material(), new_object_base(SPHERE, transformation_matrix(transformation)));
-// 	if (!sphere)
-// 		return (1);
-// 	free_transformation_matrix(&transformation);
-
-// 	transformation.scale = scale_matrix(1.2, 1.2, 1.2);
-// 	transformation.translation = translation_matrix(0.9, 0.5, 5);
-// 	transformation.rotate = create_identity_matrix();
-// 	sphere2 = new_object(create_point(0, 0, 0), 1, default_material(), new_object_base(SPHERE, transformation_matrix(transformation)));
-// 	if (!sphere2)
-// 		return (1);
-// 	free_transformation_matrix(&transformation);
-
-// 	transformation.scale = create_identity_matrix();
-// 	transformation.translation = translation_matrix(0, -2, 0);
-// 	transformation.rotate = create_identity_matrix();
-// 	plane = new_object(create_point(0,0,0), 0, default_material(), new_object_base(PLANE, transformation_matrix(transformation)));
-// 	if (!plane)
-// 		return (2);
-// 	plane->plane_normal = create_vector(0,1,0);
-	
-// 	free_transformation_matrix(&transformation);
-// 	transformation.scale = create_identity_matrix();
-// 	transformation.translation = translation_matrix(0, 0, 100);
-// 	transformation.rotate = create_identity_matrix();
-// 	plane2 = new_object(create_point(0,0,0), 0, default_material(), new_object_base(PLANE, transformation_matrix(transformation)));
-// 	if (!plane2)
-// 		return (2);
-// 	plane2->plane_normal = create_vector(0,0,-1);
-
-// 	// free_transformation_matrix(&transformation);
-// 	// transformation.scale = create_identity_matrix();
-// 	// transformation.translation = translation_matrix(-1, -2, 5);
-// 	// transformation.rotate = create_identity_matrix();
-// 	// cylinder = new_object(create_point(0,0,0), 0, default_material(), new_object_base(CYLINDER, transformation_matrix(transformation)));
-// 	// if (!cylinder)
-// 	// 	return (2);
-// 	// free_transformation_matrix(&transformation);
-
-// 	plane->material.color = new_color(0.2, 0.6, 0.6);;
-// 	plane2->material.color = new_color(0.2, 0.6, 0.6);
-// 	// cylinder->material.color = new_color(0.3, 0.5, 0.8);
-// 	// cylinder->cyl_max = 3;
-// 	// cylinder->cyl_min = 0;
-// 	// cylinder->cyl_capped = true;
-// 	// plane->material.ambient = 0.6;
-// 	// plane->material.diffuse = 0.3;
-// 	// plane->material.specular = 0.3;
-// 	// cylinder->material.reflective = 0;
-// 	// plane->material.reflective = 1;
-// 	// cylinder->material.reflective = 0;
-// 	// plane->material.ambient = 0.3;
-// 	// sphere->material.reflective = 0;
-// 	// add_shape_to_list(&world.shapes, cylinder);
-// 	sphere->material.color = new_color(1.0, 0.6, 0.8);
-// 	sphere2->material.color = new_color(1.0, 0.6, 0.8);
-// 	cone->material.color = new_color(1.0, 0.6, 0.8);
-
-// 	world.objects = NULL;
-// 	add_shape_to_list(&world.shapes, plane);
-// 	add_shape_to_list(&world.shapes, plane2);
-// 	add_shape_to_list(&world.shapes, sphere);
-// 	add_shape_to_list(&world.shapes, sphere2);
-// 	add_shape_to_list(&world.shapes, cone);
-	
-// 	world.lights = NULL;
-// 	add_light_to_list(&world.lights, new_light(create_point(0, 0, -5), new_color(0.8, 0.8, 0.8)));
-// 	add_light_to_list(&world.lights, new_light(create_point(0, 100, 0), new_color(0.5, 0.5, 0.5)));
-// 	add_light_to_list(&world.lights, new_light(create_point(60, 5, -100), new_color(0.5, 0.5, 0.5)));
-// 	world.ambient = new_color(0.5, 0.3, 0.4);
-// 	world.ambientf = 0.4;
-
-// 	if (!init_mlx(&data))
-// 		return (1);
-// 	hooks(&data);
-// 	render(&data, &world);
-// 	mlx_put_image_to_window(data.mlx, data.window, data.image, 0, 0);
-// 	mlx_loop(data.mlx);
-// 	free_mlx(&data);
-
-// 	free_shapes(&world.shapes);
-// }
 {
 	t_mlx				mlx_data;
 	t_world				world;
-	// t_sphere			*sphere;
-	// t_cylinder			*cyl;
-	// t_transformation	transform;
 
 	ft_bzero(&world, sizeof(t_world));
 	parse(world, argc, argv);

@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:07:59 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/07 18:31:45 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/08 11:01:37 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int parse_check_camera(char *str)
 	if (!parse_isnormalvec(str, &i))
 		return (1);
 	i = parse_skipwhitespace(str, i);
-	if (!parse_isfloat(str, 0, &i))
+	if (!parse_isinrange_int(0, 180, str, &i))
 		return (1);
 	if (str[i] != '\n' && str[i] != '\0')
 		return (1);
@@ -77,8 +77,8 @@ int parse_check_light(char *str)
 		return (1);
 	debugger("white\n");
 	i = parse_skipwhitespace(str, i);
-	debugger("white\n");
-	if (!parse_isinrange_int(0, 180, str, &i))
+	debugger("int\n");
+	if (!parse_isrgb_inrange(0, 255, str, &i))
 		return (1);
 	if (str[i] != '\n' && str[i] != '\0')
 		return (1);

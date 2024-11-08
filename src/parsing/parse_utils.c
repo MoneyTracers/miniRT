@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 13:57:38 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/07 18:16:22 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/08 11:07:21 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ float parse_get_float(char *str, int *i)
 	return (atofn(&str[start], *i - start));
 }
 
-int	parse_isint(char *num, char end_delim, int *i)
+int	parse_isint(char *num, int *i)
 {
 	int	start;
 
@@ -84,9 +84,9 @@ int	parse_isint(char *num, char end_delim, int *i)
 		return (0);
 	while (ft_isdigit(num[*i]))
 		*i += 1;
-	if (num[*i] != end_delim)
+	if (num[*i] != ' ' && num[*i] != '\n')
 		return (0);
-	if(ft_strncmp(num, "2147483647", *i - start) > 0)
+	if(ft_strncmp(num, "2147483647", *i - start) < 0)
 		return (0);
 	return (1);
 }
@@ -146,7 +146,7 @@ int	parse_isinrange_int(int min, int max, char *str, int* i)
 	int		start;
 
 	start = *i;
-	if (!parse_isint(str, ' ', i))
+	if (!parse_isint(str, i))
 		return (0);
 	num = atoin(&str[*i], *i - start);
 	if (num <= min || num >= max)

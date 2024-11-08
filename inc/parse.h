@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/07 17:52:49 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/08 11:04:29 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	parse_add_light(t_world *world, char *str);
 t_tuple parse_get_coordinates(char *str, int *i);
 float parse_get_float(char *str, int *i);
 t_color parse_get_color(char *str, int *i);
-int	parse_isint(char *num, char end_delim, int *i);
+int	parse_isint(char *num, int *i);
 int	parse_isfloat(char *num, char end_delim, int *i);
 int	parse_isinrange_int(int min, int max, char *num, int* i);
 int parse_isnormalvec(char *vec, int *i);
