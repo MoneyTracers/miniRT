@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 13:57:38 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/08 11:37:27 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/08 13:13:28 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,10 +174,10 @@ int parse_isrgb_inrange(int min, int max, char *rgb, int* i)
 		}
 		while (index == 2)
 		{
-			if (rgb[*i] == ' ' || rgb[*i] == '\n')
-				break ;
 			if (!ft_isdigit(rgb[*i]))
 				return (0);
+			if (rgb[*i] == ' ' || rgb[*i] == '\n')
+				break ;
 			*i += 1;
 		}
 		col = atoin(&rgb[start], *i - start);
