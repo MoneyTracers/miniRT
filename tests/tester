@@ -183,26 +183,22 @@ random_case_test ()
 			timeout --preserve-status 1s $valgrind_cmd $exe temp.rt 2> $temp_valgrind
 			mem_exit_code=$(echo $?)
 			if [[ $mem_exit_code == 42 || $mem_exit_code == 143 ]]; then
-				echo -e "${RED} MKO ${RESET}"
+				echo -ne "${RED} MKO ${RESET}"
 				echo -e "${i} - $line" >> $mem_log
 				cat $temp_valgrind >> $mem_log
 				cat temp.rt > failed_mem_cases/failed_mem_$i.rt
-		else
-			echo
 			fi
 		fi
 		if [[ $null_check == 1 ]]; then
 			$null_cmd $exe temp.rt 2> $temp_null
 			null_exit_code=$(echo $?)
-			echo $null_exit_code
 			if [[ $null_exit_code == 42 ]]; then
 				echo -e "${RED} NKO ${RESET}"
 				echo -e "${i} - $line" >> $null_log
 				cat $temp_null >> $null_log 
-			else
-				echo
 			fi
 		fi
+		echo
 	i=$((i+1))
 	done < $case
 }
@@ -224,25 +220,22 @@ do
 		timeout --preserve-status 1s $valgrind_cmd $exe $map 2> $temp_valgrind
 		mem_exit_code=$(echo $?)
 		if [[ $mem_exit_code == 42 || $mem_exit_code == 143 ]]; then
-			echo -e "${RED} MKO ${RESET}"
+			echo -ne "${RED} MKO ${RESET}"
 			echo -e "${i} - $map" >> $mem_log
 			cat $temp_valgrind >> $mem_log 
 			cat temp.rt > failed_mem_cases/failed_mem_$i.rt
-		else
-			echo
 		fi
 	fi
 	if [[ $null_check == 1 ]]; then
 		$null_cmd $exe $map 2> $temp_null
 		null_exit_code=$(echo $?)
 		if [[ $null_exit_code == 42 ]]; then
-			echo -e "${RED} NKO ${RESET}"
+			echo -ne "${RED} NKO ${RESET}"
 			echo -e "${i} - $map" >> $null_log
 			cat $temp_null >> $null_log 
-		else
-			echo
 		fi
 	fi
+	echo 
 	i=$((i+1))
 done
 
