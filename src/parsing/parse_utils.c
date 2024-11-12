@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 13:57:38 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/12 14:02:31 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/12 16:19:14 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ float parse_get_float(char *str, int *i)
 {
 	int	start;
 
-	start = *i;
 	while (!ft_isdigit(str[*i]))
 	{
 		if (str[*i] == '-')
@@ -82,6 +81,9 @@ float parse_get_float(char *str, int *i)
 		}
 		*i += 1;
 	}
+	start = *i;
+	if (str[*i - 1] == '-')
+		start = start - 1;
 	while (ft_isdigit(str[*i]))
 		*i += 1;
 	if (str[*i] == '.')

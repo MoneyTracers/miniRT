@@ -6,7 +6,7 @@
 /*   By: mynodeus <mynodeus@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/10 19:06:39 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/07 11:33:23 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/12 16:21:41 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ float	atofn(const char *nptr, int len)
 		result = result * 10 + (c_ptr[index] - 48);
 		index++;
 	}
-	result = decimals(result, nptr, index, len);
+	result = decimals(result, &c_ptr[index], index - 1, len - index);
 	if (flag == 1)
 		return (result * -1);
 	if (flag == 2 || flag == 3)
