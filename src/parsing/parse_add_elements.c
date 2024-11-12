@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 14:32:54 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/12 14:05:30 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/12 16:10:09 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	parse_add_sphere(t_world *world, char *str)
 	m.color = parse_get_color(str, &i);
 	sphere = new_sphere();
 	transform.rotate = create_identity_matrix();
-	transform.scale = scale_matrix(diameter / 10, diameter / 10, diameter / 10);
+	transform.scale = scale_matrix(diameter, diameter, diameter);
 	transform.translation = translation_matrix(coor.x, coor.y, coor.z);
 	add_object_to_list(&world->objects, new_object(SPHERE, m, transformation_matrix(transform), (void *)sphere));
 	free_transformation_matrix(&transform);
@@ -83,7 +83,7 @@ void	parse_add_cyl(t_world *world, char *str)
 	cyl = new_cylinder(0, height, true);
 	// TODO:translate normal_vec to radians
 	transform.rotate = create_identity_matrix();
-	transform.scale = scale_matrix(diameter / 10, diameter / 10, diameter / 10);
+	transform.scale = scale_matrix(diameter, diameter, diameter);
 	transform.translation = translation_matrix(coor.x, coor.y, coor.z);
 	add_object_to_list(&world->objects, new_object(CYLINDER, m, transformation_matrix(transform), (void *)cyl));
 	free_transformation_matrix(&transform);
