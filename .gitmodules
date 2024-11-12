@@ -1,6 +1,12 @@
-[submodule "lib/libft"]
-	path = lib/libft
-	url = https://github.com/ruby1610/libft.git
 [submodule "lib/mlx_linux"]
 	path = lib/mlx_linux
 	url = https://github.com/42Paris/minilibx-linux.git
+[submodule "tests/null_checker"]
+	path = tests/null_checker
+	url = git@github.com:The-Tests-at-the-End-of-the-Universe/null_checker.git
+[submodule "tests/norminette_tester"]
+	path = tests/norminette_tester
+	url = https://github.com/The-Tests-at-the-End-of-the-Universe/norminette_tester.git
+[submodule "lib/libft"]
+	path = lib/libft
+	url = git@github.com:sairutra/libft.git

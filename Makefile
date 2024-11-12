@@ -17,7 +17,7 @@ SRCEXT      := c
 OBJEXT      := o
 
 #Flags, Libraries and Includes
-CFLAGS      := -Wall -Werror -Wextra -I./inc -g
+CFLAGS      := -Wall -Werror -Wextra -I./inc -I./lib/libft/inc -g
 LIB         := lib
 LIBFT       := libft
 LIBFT.A     := libft.a
@@ -42,17 +42,21 @@ OBJECTS     := $(patsubst $(SRCDIR)/%,$(OBJDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT
 
 #Default Make
 
-all: submodule build $(LIB)/$(MLX)/$(MLX.A) $(LIB)/$(LIBFT)/$(LIBFT.A) $(TARGETDIR)/$(TARGET) 
+all: submodule build $(LIB)/$(MLX)/$(MLX.A) $(LIB)/$(LIBFT)/$(LIB)/$(LIBFT.A) $(TARGETDIR)/$(TARGET) 
 
 #Remake
 re: fclean all
+
+
+bonus: CFLAGS += -DBONUS
+bonus: fclean all
 
 debug: CFLAGS += -DDEBUG
 debug: fclean all
 
 #Prep submodules
 submodule:
-	git submodule update --init --recursive
+# 	git submodule update --init --recursive
 
 #Make the Directories
 build:
@@ -72,7 +76,7 @@ fclean: clean
 	@$(MAKE) -C $(LIB)/$(MLX) clean
 
 #libft
-$(LIB)/$(LIBFT)/$(LIBFT.A):
+$(LIB)/$(LIBFT)/$(LIB)/$(LIBFT.A):
 	@$(MAKE) -C $(LIB)/$(LIBFT) all
 
 #configure mlx
@@ -81,7 +85,7 @@ $(LIB)/$(MLX)/$(MLX.A):
 
 #Link
 $(TARGETDIR)/$(TARGET) : $(OBJECTS)
-	$(CC) $(OBJECTS) $(MLX_L_FLAGS) $(LIB)/$(LIBFT)/$(LIBFT.A) -o $(TARGETDIR)/$(TARGET)  -g
+	$(CC) $(OBJECTS) $(MLX_L_FLAGS) $(LIB)/$(LIBFT)/$(LIB)/$(LIBFT.A) -o $(TARGETDIR)/$(TARGET)  -g
 
 #Compile
 $(OBJDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)

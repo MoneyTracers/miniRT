@@ -1,0 +1,251 @@
+#!/bin/bash
+
+#REFERENCES: https://www.baeldung.com/linux/insert-line-specific-line-number
+
+#usage function
+usage() {
+	cat <<EOF
+Usage: $0 [options] [--] [file...]
+
+Arguments:
+
+  -h, --help
+	Display this usage message and exit.
+
+  -nn, --no-norminette
+	This flag will disable the norminette tests run in this tester.
+	This flag does not work with all no flags selected
+
+  -nm, --no-memory
+	This flag will disable the memory tests run in this tester.
+	This flag does not work with all no flags selected
+
+  -nnl, --no-null
+	This flag will disable the null tests run in this tester.
+	This flag does not work with all no flags selected
+
+EOF
+}
+
+# handy logging and error handling functions
+log() { printf '%s\n' "$*"; }
+error() { log "ERROR: $*" >&2; }
+fatal() { error "$*"; exit 1; }
+usage_fatal() { error "$*"; usage >&2; exit 1; }
+
+
+memory=1
+null_check=0
+norminette=1
+
+
+# parse options
+while [ "$#" -gt 0 ]; do
+	arg=$1
+	case $1 in
+		# convert "--opt=the value" to --opt "the value".
+		# the quotes around the equals sign is to work around a
+		# bug in emacs' syntax parsing
+		--*'='*)
+		shift;
+		set -- "${arg%%=*}" "${arg#*=}" "$@";
+		continue;;
+		-nn|--no-norminette)
+		norminette=0
+		shift
+		;;
+		-nm|--no-memory)
+		memory=0
+		shift
+		;;
+		-nnl|--no-null)
+		null_check=0
+		shift
+		;;
+		-h|--help)
+		usage;
+		exit 0
+		;;
+		--)
+		shift;
+		break
+		;;
+		-*)
+		usage_fatal "unknown option:'$1'"
+		;;
+		*)
+		break
+		;; # reached the list of file names
+	esac
+done
+
+#colors
+RED="\x1B[31m"
+GRN="\x1B[1;32m"
+YEL="\x1B[33m"
+BLU="\x1B[34m"
+MAG="\x1B[35m"
+BMAG="\x1B[1;35m"
+CYN="\x1B[36m"
+BCYN="\x1B[1;36m"
+WHT="\x1B[37m"
+RESET="\x1B[0m"
+LINEP="\033[40G"
+
+exe=$(find ../ -name miniRT)
+incorrect_map=$(find ./ -name incorrect_maps)
+incorrect_maps=$(cd $incorrect_map && ls)
+A_template=$(find ./ -name A_template)
+L_template=$(find ./ -name L_template)
+C_template=$(find ./ -name C_template)
+cy_template=$(find ./ -name cy_template)
+pl_template=$(find ./ -name pl_template)
+sp_template=$(find ./ -name sp_template)
+normal_template=$(find ./ -name normal_template)
+
+A_cases=$(find ./ -name A_cases)
+L_cases=$(find ./ -name L_cases)
+C_cases=$(find ./ -name C_cases)
+cy_cases=$(find ./ -name cy_cases)
+pl_cases=$(find ./ -name pl_cases)
+sp_cases=$(find ./ -name sp_cases)
+random_cases=$(find ./ -name random_cases)
+
+#timeout
+timout="timeout --preserve-status 1s"
+
+#memory
+valgrind_cmd="valgrind --errors-for-leak-kinds=all --error-exitcode=42 --leak-check=full --show-leak-kinds=all"
+temp_valgrind="temp.valgrind"
+
+#null_check
+null_cmd=$(find ./ -name null_checker -type f)
+null_cmd="$null_cmd -b -e 42"
+temp_null="temp.nullcheck"
+
+#logs
+rm -rf logs
+rm -rf failed_cases
+rm -rf failed_mem_cases
+mkdir -p logs
+mkdir -p failed_cases
+mkdir -p failed_mem_cases
+parsing_log=logs/parsing.log
+mem_log=logs/mem.log
+null_log=logs/null.log
+
+#truncate log
+: > $parsing_log
+: > $mem_log
+: > $null_log
+
+
+if [[ $norminette == 1 ]]; then
+mkdir -p norm_test
+pwd=$(pwd)
+pwd=$(basename $pwd)
+srcs=$(find ../  -type f -name "*.c" -not -path "../$pwd/*")
+headers=$(find ../ -type f -name "*.h" -not -path "../$pwd/*")
+cp -r $srcs ./norm_test
+cp -r $headers ./norm_test
+rm -rf ./norm_test/mlx_*
+(cd norminette_tester && bash norminette_tester.sh -npi -d ../norm_test)
+norminette_code=$(echo $?)
+if [[ $norminette_code == 1 ]]; then
+	fail=true
+fi
+rm -rf norm_test
+fi
+
+
+random_case_test ()
+{
+	name=$(basename $1)
+	case=$1
+	template=$2
+	echo -e "${BLU}$name${RESET}"
+	while IFS= read -r line; do
+		echo -ne "${YEL}${i} - $line:${RESET}"
+		random_line=$(shuf -i1-5 -n1)
+		sed "$random_line i $line" $template > temp.rt
+		timeout --preserve-status 1s $exe temp.rt &> /dev/null
+		exit_code=$(echo $?)
+		if [[ $exit_code != 1 ]]; then
+			echo -ne "${RED} KO ${RESET}"
+			echo -e "#${i} - $line\nmap\n--------" >> $parsing_log 
+			cat temp.rt >> $parsing_log
+			cat temp.rt > failed_cases/failed_$i.rt
+			echo -e "\n--------" >> $parsing_log 
+		else
+			echo -ne "${GRN} OK ${RESET}"
+		fi
+		if [[ $memory == 1 ]]; then
+			timeout --preserve-status 1s $valgrind_cmd $exe temp.rt 2> $temp_valgrind
+			mem_exit_code=$(echo $?)
+			if [[ $mem_exit_code == 42 || $mem_exit_code == 143 ]]; then
+				echo -ne "${RED} MKO ${RESET}"
+				echo -e "${i} - $line" >> $mem_log
+				cat $temp_valgrind >> $mem_log
+				cat temp.rt > failed_mem_cases/failed_mem_$i.rt
+			fi
+		fi
+		if [[ $null_check == 1 ]]; then
+			$null_cmd $exe temp.rt 2> $temp_null
+			null_exit_code=$(echo $?)
+			if [[ $null_exit_code == 42 ]]; then
+				echo -e "${RED} NKO ${RESET}"
+				echo -e "${i} - $line" >> $null_log
+				cat $temp_null >> $null_log 
+			fi
+		fi
+		echo
+	i=$((i+1))
+	done < $case
+}
+
+make -C ../ 
+i="1"
+echo -e "${BLU}extensions${RESET}"
+for map in $incorrect_maps
+do
+	echo -ne "${YEL}${i} - $map:${RESET}"
+	timeout --preserve-status 1s $exe $map 2> /dev/null
+	exit_code=$(echo $?)
+	if [[ $exit_code != 1 ]]; then
+	echo -ne "${RED} KO ${RESET}"
+	else
+	echo -ne "${GRN} OK ${RESET}"
+	fi
+	if [[ $memory == 1 ]]; then
+		timeout --preserve-status 1s $valgrind_cmd $exe $map 2> $temp_valgrind
+		mem_exit_code=$(echo $?)
+		if [[ $mem_exit_code == 42 || $mem_exit_code == 143 ]]; then
+			echo -ne "${RED} MKO ${RESET}"
+			echo -e "${i} - $map" >> $mem_log
+			cat $temp_valgrind >> $mem_log 
+			cat temp.rt > failed_mem_cases/failed_mem_$i.rt
+		fi
+	fi
+	if [[ $null_check == 1 ]]; then
+		$null_cmd $exe $map 2> $temp_null
+		null_exit_code=$(echo $?)
+		if [[ $null_exit_code == 42 ]]; then
+			echo -ne "${RED} NKO ${RESET}"
+			echo -e "${i} - $map" >> $null_log
+			cat $temp_null >> $null_log 
+		fi
+	fi
+	echo 
+	i=$((i+1))
+done
+
+random_case_test $A_cases $A_template
+random_case_test $L_cases $L_template
+random_case_test $C_cases $C_template
+random_case_test $sp_cases $sp_template
+random_case_test $pl_cases $pl_template
+random_case_test $cy_cases $cy_template
+random_case_test $random_cases $normal_template
+
+
+rm -rf temp.*
