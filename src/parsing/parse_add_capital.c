@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 14:31:28 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/12 14:04:57 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/12 16:36:42 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	parse_add_ambient(t_world *world, char *str)
 	int	i;
 
 	i = 1;
-	// TODO:check ambientf
 	world->ambientf = parse_get_float(str, &i);
 	world->ambient = parse_get_color(str, &i);
 	return ;
