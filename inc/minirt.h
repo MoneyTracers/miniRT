@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 17:28:02 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/11 11:30:32 by marieke          ###   ########.fr       */
+/*   Updated: 2024/11/12 13:48:31 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@
 
 typedef	struct s_light
 {
-	float			intensity;
-	t_color			color;
 	t_tuple			pos;
+	t_color			color;
+	float			brightness;
 	struct s_light	*next;
 }	t_light;
 

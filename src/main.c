@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 17:06:00 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/11 16:49:44 by marieke          ###   ########.fr       */
+/*   Updated: 2024/11/12 13:46:00 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,15 +124,15 @@ int	main(void)
 	add_object_to_list(&world.objects, new_object(PLANE, default_material(), transformation_matrix(transform), (void *)plane2));
 	free_transformation_matrix(&transform);
 
-	world.objects->material.color = new_color(0.7, 0.4, 0.9);
-	world.objects->next->material.color = new_color(0.1, 0.6, 0.6);
+	world.objects->material.color = new_color(0, 0, 255);
+	world.objects->next->material.color = new_color(255, 0, 0);
 	//world.objects->next->next->material.color = new_color(1, 1, 1);
 
 	//world.lights = NULL;
-	add_light_to_list(&world.lights, new_light(create_point(-40, 0, 30), new_color(1, 1, 1), 0.5));
-	add_light_to_list(&world.lights, new_light(create_point(2, 10, -30), new_color(1, 1,1), 0.7));
+	add_light_to_list(&world.lights, new_light(create_point(-40, 0, 30), new_color(255, 255, 255), 0.5));
+	//add_light_to_list(&world.lights, new_light(create_point(2, 10, -30), new_color(255, 255, 255), 0.7));
 	// add_light_to_list(&world.lights, new_light(create_point(-40, 50, -5), new_color(1, 1, 1), 1));
-	world.ambient = new_color(1, 1, 1);
+	world.ambient = new_color(255, 255, 255);
 	world.ambientf = 0.6;
 
 	t_matrix view_transform = view_transformation(create_point(0, 0, 30), create_vector(0, 0, 1), create_vector(0, 1, 0));

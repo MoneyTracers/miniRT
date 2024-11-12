@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:47:44 by maraasve          #+#    #+#             */
-/*   Updated: 2024/10/31 15:48:41 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/12 13:30:40 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,20 +69,17 @@ int	create_trgb(float t, float r, float g, float b)
 	int	blue;
 	int	alpha;
 
-	// Clamp the float values between 0 and 1, then scale to 0-255
-	red = (int)(r * 255.0);
-	green = (int)(g * 255.0);
-	blue = (int)(b * 255.0);
-	alpha = (int)(t * 255.0); // Transparency (optional, can set to 255 for full opacity)
-
-	// Combine into a single int in the format 0xTTRRGGBB
+	alpha = (int)t;
+	red = (int)r;
+	green = (int)g;
+	blue = (int)b;
 	return (alpha << 24 | red << 16 | green << 8 | blue);
 }
 
-t_color clamp_color(t_color color) 
+t_color	clamp_color(t_color color) 
 {
-    color.r = fminf(fmaxf(color.r, 0.0), 1.0);
-    color.g = fminf(fmaxf(color.g, 0.0), 1.0);
-    color.b = fminf(fmaxf(color.b, 0.0), 1.0);
+    color.r = fminf(fmaxf(color.r, 0.0), 255.0);
+    color.g = fminf(fmaxf(color.g, 0.0), 255.0);
+    color.b = fminf(fmaxf(color.b, 0.0), 255.0);
     return color;
 }
