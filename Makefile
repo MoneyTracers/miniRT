@@ -47,6 +47,10 @@ all: submodule build $(LIB)/$(MLX)/$(MLX.A) $(LIB)/$(LIBFT)/$(LIB)/$(LIBFT.A) $(
 #Remake
 re: fclean all
 
+
+bonus: CFLAGS += -DBONUS
+bonus: fclean all
+
 debug: CFLAGS += -DDEBUG
 debug: fclean all
 

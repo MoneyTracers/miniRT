@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/07 14:18:59 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/12 11:25:19 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,12 @@
 # ifndef DEBUG
 #  define DEBUG 0
 # endif
+
+# ifndef BONUS
+#  define BONUS 0
+# endif
+
+
 
 typedef	struct s_light
 {
