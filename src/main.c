@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: marieke <marieke@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/12 13:50:23 by spenning      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/30 17:06:00 by maraasve          #+#    #+#             */
+/*   Updated: 2024/11/12 14:41:38 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,10 @@ int	main(int argc, char **argv)
 	// world.ambientf = 0.6;
 	ft_bzero(&world, sizeof(t_world));
 	parse(&world, argc, argv);
+
+	print_matrix(world.cam.tranformation.grid, 4);
+	printf("\n");
+	print_matrix(world.cam.inverse->grid, 4);
 	
 	if (!init_mlx(&mlx_data))
 	{
