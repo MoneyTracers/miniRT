@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 13:19:39 by marieke       #+#    #+#                 */
-/*   Updated: 2024/11/06 16:38:27 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/12 11:50:36 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_tuple	reflect(t_tuple in, t_tuple normal)
 	return(reflectv);
 }
 
-t_light	*new_light(t_tuple pos, t_color intensity)
+t_light	*new_light(t_tuple pos, t_color color, float intensity)
 {
 	t_light	*new;
 
@@ -41,7 +41,8 @@ t_light	*new_light(t_tuple pos, t_color intensity)
 	if (!new)
 		return (NULL);
 	new->pos = pos;
-	new->color = intensity;
+	new->color = color;
+	new->intensity = intensity;
 	new->next = NULL;
 	return (new);
 }
@@ -59,7 +60,12 @@ t_color	lighting(t_world *world, t_light light, t_material m, t_tuple pos, t_tup
 	float	light_dot_normal;
 	float	factor;
 
+<<<<<<< HEAD
 	effective_color = colors_multiply(m.color, light.color);
+=======
+	effective_color = colors_multi_scalar(m.color, light.intensity);
+	effective_color = colors_multiply(effective_color, light.color);
+>>>>>>> 5b08761b1d6e30dc2d95182d229443b685d33714
 	lightv = normalize(subtract_tuple(light.pos, pos));
 	ambient = colors_multi_scalar(colors_multiply(world->ambient, m.color), world->ambientf * m.ambient);
 	light_dot_normal = get_dot_product(lightv, normalv);
@@ -78,7 +84,11 @@ t_color	lighting(t_world *world, t_light light, t_material m, t_tuple pos, t_tup
 		else
 		{
 			factor = powf(reflect_dot_eye, m.shininess);
+<<<<<<< HEAD
 			specular = colors_multi_scalar(colors_multi_scalar(light.color, m.specular), factor);
+=======
+			specular = colors_multi_scalar(light.color, light.intensity * m.specular * factor);
+>>>>>>> 5b08761b1d6e30dc2d95182d229443b685d33714
 		}
 	}
 	result = add_colors(add_colors(ambient, diffuse), specular);

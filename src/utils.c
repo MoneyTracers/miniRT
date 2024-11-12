@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   utils.c                                            :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
+/*   By: marieke <marieke@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 13:16:49 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/06 15:40:25 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/12 11:48:29 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,12 @@ bool	equal_float(float a, float b)
 	if (ft_fabs(a - b) > EPSILON)
 		return (false);
 	return (true);
+}
+
+float	degrees_to_radians(float degrees)
+{
+	float	radians;
+
+	radians = degrees * M_PI / 180;
+	return (radians);
 }

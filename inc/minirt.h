@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   minirt.h                                           :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
+/*   By: marieke <marieke@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/12 11:25:19 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/12 11:51:16 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 
 # define SUCCESS 0
 # define ERROR 1
-# define EPSILON 0.0001
+# define EPSILON 0.001
 
 # ifndef DEBUG
 #  define DEBUG 0
@@ -52,6 +52,7 @@
 
 typedef	struct s_light
 {
+	float			intensity;
 	t_color			color;
 	t_tuple			pos;
 	float			brightness;

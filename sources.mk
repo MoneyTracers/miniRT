@@ -1,4 +1,5 @@
-SOURCES = src/colors/colors.c \
+SOURCES = src/camera/camera.c \
+src/colors/colors.c \
 src/intersection/computations.c \
 src/intersection/hit.c \
 src/intersection/intersection.c \
