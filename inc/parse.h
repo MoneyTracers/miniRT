@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/12 12:20:22 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/12 14:02:44 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_parse
 	int		L_identifier;
 } t_parse;
 
+t_tuple parse_get_normal(char *str, int *i);
 int parse_check_unidentified(char *str);
 int parse_check_cyl(char *str);
 int parse_check_plane(char *str);

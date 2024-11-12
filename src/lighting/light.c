@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 13:19:39 by marieke       #+#    #+#                 */
-/*   Updated: 2024/11/12 12:16:43 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/12 13:50:33 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ t_color	lighting(t_world *world, t_light light, t_material m, t_tuple pos, t_tup
 	float	factor;
 
 	effective_color = colors_multi_scalar(m.color, light.brightness);
-	effective_color = colors_multiply(effective_color, light.color);
+	effective_color = colors_multiply(effective_color, colors_multi_scalar(light.color, 1.0 / 255));
 	lightv = normalize(subtract_tuple(light.pos, pos));
-	ambient = colors_multi_scalar(colors_multiply(world->ambient, m.color), world->ambientf * m.ambient);
+	ambient = colors_multi_scalar(colors_multiply(world->ambient, m.color), world->ambientf * m.ambient / 255.0);
 	light_dot_normal = get_dot_product(lightv, normalv);
 	if (light_dot_normal < 0 || in_shadow)
 	{

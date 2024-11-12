@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 14:32:54 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/06 16:41:57 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/12 14:05:30 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	parse_add_plane(t_world *world, char *str)
 
 	i = 0;
 	coor = parse_get_coordinates(str, &i);
-	normal_vec = parse_get_coordinates(str, &i);
+	normal_vec = parse_get_normal(str, &i);
 	m = default_material();
 	m.color = parse_get_color(str, &i);
 	// TODO:translate normal_vec to radians
@@ -75,7 +75,7 @@ void	parse_add_cyl(t_world *world, char *str)
 
 	i = 0;
 	coor = parse_get_coordinates(str, &i);
-	normal_vec = parse_get_coordinates(str, &i);
+	normal_vec = parse_get_normal(str, &i);
 	diameter = parse_get_float(str, &i);
 	height = parse_get_float(str, &i);
 	m = default_material();

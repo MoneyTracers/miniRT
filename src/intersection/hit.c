@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/23 12:37:18 by marieke       #+#    #+#                 */
-/*   Updated: 2024/11/04 15:24:00 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/12 13:51:16 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static t_color	shade_hit(t_world *world, t_comps comps, int *remaining)
 
 t_color	color_at(t_world *world, t_ray ray, int *remaining)
 {
-	t_comps	comps;
+	t_comps			comps;
 	t_intersection *hit;
 	t_intersection *list;
 
@@ -59,7 +59,7 @@ t_color	color_at(t_world *world, t_ray ray, int *remaining)
 	list = intersect_world(world, ray);
 	hit = get_hit(list);
 	if (!hit)
-		return (clamp_color(new_color(0, 0, 0)));
+		return (new_color(0, 0, 0));
 	comps = prepare_comps(hit, ray);
 	free_intersection(&list);
 	return (shade_hit(world, comps, remaining));

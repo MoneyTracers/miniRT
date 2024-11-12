@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 13:57:38 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/12 12:31:39 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/12 14:02:31 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <minirt.h>
 
 
-t_tuple parse_get_coordinates(char *str, int *i)
+t_tuple parse_get_normal(char *str, int *i)
 {
 	t_tuple tup;
 	int	j;
@@ -23,6 +23,24 @@ t_tuple parse_get_coordinates(char *str, int *i)
 	j = *i;
 	j = parse_skipwhitespace(str, j);
 	tup.w = 0;
+	tup.x = parse_get_float(str, &j);
+	j += 1;
+	tup.y = parse_get_float(str, &j);
+	j += 1;
+	tup.z = parse_get_float(str, &j);
+	j += 1;
+	*i = j;
+	return (tup);
+}
+
+t_tuple parse_get_coordinates(char *str, int *i)
+{
+	t_tuple tup;
+	int	j;
+
+	j = *i;
+	j = parse_skipwhitespace(str, j);
+	tup.w = 1;
 	tup.x = parse_get_float(str, &j);
 	j += 1;
 	tup.y = parse_get_float(str, &j);

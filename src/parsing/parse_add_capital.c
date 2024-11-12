@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 14:31:28 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/12 12:22:37 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/12 14:04:57 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	parse_add_camera(t_world *world, char *str)
 	int	i;
 
 	i = 1;
-	t_matrix view_transform = view_transformation(parse_get_coordinates(str, &i), parse_get_coordinates(str, &i), create_vector(0, 1, 0));
+	t_matrix view_transform = view_transformation(parse_get_coordinates(str, &i), parse_get_normal(str, &i), create_vector(0, 1, 0));
 	world->cam = new_camera(HEIGHT, WIDTH, degrees_to_radians(parse_get_float(str, &i)), view_transform);
 	return ;
 }

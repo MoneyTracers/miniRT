@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   minirt.h                                           :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: marieke <marieke@student.42.fr>              +#+                     */
+/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/12 12:16:27 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/12 13:52:22 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ typedef struct s_camera
 
 typedef	struct s_light
 {
-	t_color			color;
 	t_tuple			pos;
+	t_color			color;
 	float			brightness;
 	struct s_light	*next;
 }	t_light;
