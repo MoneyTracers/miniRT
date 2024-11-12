@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/08 11:04:29 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/12 12:20:22 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	parse_check_identifier(t_parse *parse);
 int	parse_check_identify(char *str);
 int	parse_open_file(char *file);
 void	parse_lines(t_world *world, int line_count, char *file);
-void	parse(t_world world, int argc, char **argv);
+void	parse(t_world *world, int argc, char **argv);
 
 #endif
 

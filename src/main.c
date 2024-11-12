@@ -6,7 +6,7 @@
 /*   By: marieke <marieke@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/12 11:48:16 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/12 12:20:42 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,85 +22,20 @@
 #include <list.h>
 #include <mlx.h>
 #include <camera.h>
+#include <parse.h>
 
-// void	render(t_mlx *data, t_world *world)
-// {
-// 	t_ray			ray;
-// 	t_tuple			target;
-// 	t_color			color;
-// 	t_color			sample;
-// 	float			wall_z = 30;
-// 	float			wall_size = 7.0;
-// 	float			aspect_ratio = (float)WIDTH / (float)HEIGHT;;
-// 	float			pixel_size = wall_size / HEIGHT;
-// 	float			half_height = wall_size / 2;
-// 	float			half_width = half_height * aspect_ratio;
-// 	float			world_y;
-// 	float			world_x;
-// 	float			sworld_y;
-// 	float			sworld_x;
-// 	float			offset = pixel_size / 2;
-// 	int				x;
-// 	int				y;
-// 	int				sx;
-// 	int				sy;
-// 	int				remaining;
-
-// 	ray.origin = create_point(-5, 0, 20);
-// 	y = 0;
-// 	while (y < HEIGHT)
-// 	{
-// 		world_y = half_height - pixel_size * y;
-// 		x = 0;
-// 		while (x < WIDTH)
-// 		{
-// 			world_x = -half_width + pixel_size * x;
-// 			color = new_color(0, 0 , 0);
-
-// 			sx = 0;
-// 			while (sx < 3)
-// 			{
-
-// 				sy = 0;
-// 				while (sy < 3)
-// 				{
-// 					sworld_x = world_x + (sx * offset);
-// 					sworld_y = world_y + (sy * offset);
-
-// 					target = create_point(sworld_x, sworld_y, wall_z);
-// 					ray.direction = normalize(subtract_tuple(target, ray.origin));
-
-// 					remaining = 5;
-// 					sample = color_at(world, ray, &remaining);
-
-// 					color = add_colors(color, sample);
-// 					sy++;
-// 				}
-				
-// 				sx++;
-// 			}
-// 			color = colors_multi_scalar(color, 1.0 / 9);
-// 			pixel_put(data, x, y, color);
-// 			x++;
-// 		}
-// 		y++;
-// 	}
-// }
-
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_mlx				mlx_data;
 	t_world				world;
-	t_transformation	transform;
 
-	ft_bzero(&world, sizeof(t_world));
 
-	t_sphere *sphere = new_sphere();
-	transform.rotate = create_identity_matrix();
-	transform.scale = scale_matrix(20,20,20);
-	transform.translation = translation_matrix(0, 0.5, -3);
-	add_object_to_list(&world.objects, new_object(SPHERE, default_material(), transformation_matrix(transform), (void *)sphere));
-	free_transformation_matrix(&transform);
+	// t_sphere *sphere = new_sphere();
+	// transform.rotate = create_identity_matrix();
+	// transform.scale = scale_matrix(20,20,20);
+	// transform.translation = translation_matrix(0, 0.5, -3);
+	// add_object_to_list(&world.objects, new_object(SPHERE, default_material(), transformation_matrix(transform), (void *)sphere));
+	// free_transformation_matrix(&transform);
 	
 	// t_cylinder			*cyl;
 	// cyl = new_cylinder(-1, 1, true);
@@ -117,27 +52,26 @@ int	main(void)
 	// add_object_to_list(&world.objects, new_object(PLANE, default_material(), create_identity_matrix(), (void *)plane));
 	// free_transformation_matrix(&transform);
 
-	t_plane *plane2 = new_plane(create_vector(0, 1, 0));
-	transform.rotate = create_identity_matrix();
-	transform.scale = create_identity_matrix();
-	transform.translation = translation_matrix(0, -5, 0);
-	add_object_to_list(&world.objects, new_object(PLANE, default_material(), transformation_matrix(transform), (void *)plane2));
-	free_transformation_matrix(&transform);
+	// t_plane *plane2 = new_plane(create_vector(0, 1, 0));
+	// transform.rotate = create_identity_matrix();
+	// transform.scale = create_identity_matrix();
+	// transform.translation = translation_matrix(0, -5, 0);
+	// add_object_to_list(&world.objects, new_object(PLANE, default_material(), transformation_matrix(transform), (void *)plane2));
+	// free_transformation_matrix(&transform);
 
-	world.objects->material.color = new_color(0.7, 0.4, 0.9);
-	world.objects->next->material.color = new_color(0.1, 0.6, 0.6);
+	// world.objects->material.color = new_color(0.7, 0.4, 0.9);
+	// world.objects->next->material.color = new_color(0.1, 0.6, 0.6);
 	//world.objects->next->next->material.color = new_color(1, 1, 1);
 
 	//world.lights = NULL;
-	add_light_to_list(&world.lights, new_light(create_point(-40, 0, 30), new_color(1, 1, 1), 0.5));
-	add_light_to_list(&world.lights, new_light(create_point(2, 10, -30), new_color(1, 1,1), 0.7));
+	// add_light_to_list(&world.lights, new_light(create_point(-40, 0, 30), new_color(1, 1, 1), 0.5));
+	// add_light_to_list(&world.lights, new_light(create_point(2, 10, -30), new_color(1, 1,1), 0.7));
 	// add_light_to_list(&world.lights, new_light(create_point(-40, 50, -5), new_color(1, 1, 1), 1));
-	world.ambient = new_color(1, 1, 1);
-	world.ambientf = 0.6;
-
-	t_matrix view_transform = view_transformation(create_point(0, 0, 30), create_vector(0, 0, 1), create_vector(0, 1, 0));
-	t_camera camera = new_camera(HEIGHT, WIDTH, degrees_to_radians(90), view_transform);
-
+	// world.ambient = new_color(1, 1, 1);
+	// world.ambientf = 0.6;
+	ft_bzero(&world, sizeof(t_world));
+	parse(&world, argc, argv);
+	
 	if (!init_mlx(&mlx_data))
 	{
 		free_objects(&world.objects);
@@ -145,7 +79,7 @@ int	main(void)
 	}
 	
 	hooks(&mlx_data);
-	render(&mlx_data, camera, &world);
+	render(&mlx_data, world.cam, &world);
 	printf("DONE\n");
 	mlx_put_image_to_window(mlx_data.mlx, mlx_data.window, mlx_data.image, 0, 0);
 	mlx_loop(mlx_data.mlx);
@@ -153,6 +87,6 @@ int	main(void)
 	free_mlx(&mlx_data);
 	free_lights(&world.lights);
 	free_objects(&world.objects);
-	free_matrix(camera.tranformation.grid, 4);
-	free_matrix(camera.inverse->grid, 4);
+	free_matrix(world.cam.tranformation.grid, 4);
+	free_matrix(world.cam.inverse->grid, 4);
 }

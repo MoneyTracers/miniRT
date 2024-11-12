@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/18 13:19:39 by marieke       #+#    #+#                 */
-/*   Updated: 2024/11/12 11:52:33 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/12 12:16:43 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_tuple	reflect(t_tuple in, t_tuple normal)
 	return(reflectv);
 }
 
-t_light	*new_light(t_tuple pos, t_color color, float intensity)
+t_light	*new_light(t_tuple pos, t_color color, float brightness)
 {
 	t_light	*new;
 
@@ -42,7 +42,7 @@ t_light	*new_light(t_tuple pos, t_color color, float intensity)
 		return (NULL);
 	new->pos = pos;
 	new->color = color;
-	new->intensity = intensity;
+	new->brightness = brightness;
 	new->next = NULL;
 	return (new);
 }
@@ -60,7 +60,7 @@ t_color	lighting(t_world *world, t_light light, t_material m, t_tuple pos, t_tup
 	float	light_dot_normal;
 	float	factor;
 
-	effective_color = colors_multi_scalar(m.color, light.intensity);
+	effective_color = colors_multi_scalar(m.color, light.brightness);
 	effective_color = colors_multiply(effective_color, light.color);
 	lightv = normalize(subtract_tuple(light.pos, pos));
 	ambient = colors_multi_scalar(colors_multiply(world->ambient, m.color), world->ambientf * m.ambient);
@@ -80,7 +80,7 @@ t_color	lighting(t_world *world, t_light light, t_material m, t_tuple pos, t_tup
 		else
 		{
 			factor = powf(reflect_dot_eye, m.shininess);
-			specular = colors_multi_scalar(light.color, light.intensity * m.specular * factor);
+			specular = colors_multi_scalar(light.color, light.brightness * m.specular * factor);
 		}
 	}
 	result = add_colors(add_colors(ambient, diffuse), specular);

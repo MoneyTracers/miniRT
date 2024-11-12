@@ -6,7 +6,7 @@
 /*   By: marieke <marieke@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/12 11:51:16 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/12 12:16:27 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,23 +48,44 @@
 #  define BONUS 0
 # endif
 
+typedef struct s_camera
+{
+	int		image_width;
+	int		image_heigth;
+	float	fov;
+	float	half_width;
+	float	half_height;
+	float	aspect_ratio;
+	float	pixel_size;
+	t_matrix	tranformation;
+	t_matrix	*inverse;
 
+	// int		samples_per_pixel;
+	// int		max_depth;
+	// double	pixel_samples_scale;
+	// double	focal_length;
+	// double	viewport_heigth;
+	// double	viewport_width;
+	// t_tuple	lookfrom;
+	// t_tuple	lookat;
+	// t_tuple	vup;
+	// t_tuple	viewport_u;
+	// t_tuple	viewport_v;
+	// t_tuple	center;
+	// t_tuple	pixel_delta_u;
+	// t_tuple	pixel_delta_v;
+	// t_tuple	viewport_upper_left;
+	// t_tuple	pixel00_loc;
+}	t_camera;
 
 typedef	struct s_light
 {
-	float			intensity;
 	t_color			color;
 	t_tuple			pos;
 	float			brightness;
 	struct s_light	*next;
 }	t_light;
 
-typedef struct s_camera
-{
-	t_tuple coordinates;
-	t_tuple norm_vec;
-	float fov;
-}	t_camera;
 
 typedef struct s_world
 {
