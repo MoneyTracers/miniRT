@@ -6,17 +6,16 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:02:53 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/06 17:09:03 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/13 13:44:45 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-  
 #include <parse.h>
 
 void	parse_check_extension(char *file)
 {
-	int	i;
-	char *temp;
+	int		i;
+	char	*temp;
 
 	i = 0;
 	temp = ft_strrchr(file, '.');

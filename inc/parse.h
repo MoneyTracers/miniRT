@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/12 14:02:44 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/13 12:11:56 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ float parse_get_float(char *str, int *i);
 t_color parse_get_color(char *str, int *i);
 int	parse_isint(char *num, int *i);
 int	parse_isfloat(char *num, char end_delim, int *i);
-int	parse_isinrange_int(int min, int max, char *num, int* i);
+int	parse_inrange_int(int min, int max, char *num, int* i);
 int parse_isnormalvec(char *vec, int *i);
 int parse_iscoordinates(char *coor, int *i);
 int	atoin(const char *nptr, int len);
-int parse_isrgb_inrange(int min, int max, char *rgb, int* i);
+int parse_inrange_rgb(int min, int max, char *rgb, int* i);
 float	atofn(const char *nptr, int len);
 int	parse_skipwhitespace(char *str, int i);
 int	parse_inrange_float(float min, float max, char *str, int *i);

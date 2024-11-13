@@ -34,4 +34,8 @@ src/parsing/parse_check_identity.c \
 src/parsing/parse_line_count.c \
 src/parsing/parse_utils.c\
 src/utils/atofn.c\
-src/utils/atoin.c
+src/utils/atoin.c\
+src/utils/exit.c\
+src/parsing/parse_get.c\
+src/parsing/parse_in_range.c\
+src/parsing/parse_is_variable.c

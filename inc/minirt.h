@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/12 13:52:22 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/13 11:59:10 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,6 @@ typedef struct s_world
 }	t_world;
 
 void	debugger(char *format, ...);
+void	exit_err(char *err, int ec);
 
 #endif

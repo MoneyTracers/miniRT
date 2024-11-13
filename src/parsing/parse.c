@@ -6,16 +6,16 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:57:19 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/12 12:20:04 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/13 12:02:58 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-  
 #include <parse.h>
 
 void	parse_add_object(t_world *world, t_parse *parse)
 {
-	debugger(BLU "%s:%d - %s\nadd object:\t%sobject type:\t%d\n\n" RESET, __FILE__, __LINE__, __FUNCTION__ ,parse->str, parse->type);
+	debugger(BLU "%s:%d - %s\nadd object:\t%sobject type:\t%d\n\n" RESET, \
+	__FILE__, __LINE__, __FUNCTION__, parse->str, parse->type);
 	if (parse->type == ambient)
 		parse_add_ambient(world, parse->str);
 	else if (parse->type == camera)
@@ -32,13 +32,12 @@ void	parse_add_object(t_world *world, t_parse *parse)
 	parse->str = NULL;
 }
 
-
 void	parse_lines(t_world *world, int line_count, char *file)
 {
-	int	i;
-	int	fd;
-	int	type;
-	t_parse parse;
+	int		i;
+	int		fd;
+	int		type;
+	t_parse	parse;
 
 	i = 0;
 	type = 0;
@@ -47,20 +46,12 @@ void	parse_lines(t_world *world, int line_count, char *file)
 	while (i < line_count)
 	{
 		parse.str = get_next_line(fd, 0);
-		debugger(CYN "%s:%d - %s\nparse str:\t%s" RESET, __FILE__, __LINE__, __FUNCTION__ ,parse.str);
 		if (parse.str == NULL)
-		{
-			perror("gln error\n");
-			exit (1);
-		}
+			exit_err("gln error", 1);
 		parse.type = parse_check_identify(parse.str);
-		debugger(CYN "%s:%d - %s\nparse type:\t%d\n\n" RESET, __FILE__, __LINE__,__FUNCTION__ , parse.type);
 		parse_check_identifier(&parse);
 		if (parse_check_correctness(&parse))
-		{
-			perror("incorrect format in file");
-			exit (1);
-		}
+			exit_err("incorrect format in file", 1);
 		parse_add_object(world, &parse);
 		i++;
 	}
@@ -72,12 +63,10 @@ void	parse(t_world *world, int argc, char **argv)
 	int		line_count;
 
 	if (argc < 2 || argc > 2)
-	{
-		perror("wrong arguments");
-		exit(1);
-	}
+		exit_err("wrong arguments", 1);
 	parse_check_extension(argv[1]);
 	line_count = parse_line_count(argv[1]);
-	debugger(BLU "%s:%d - %s\nline count:\t%d\n\n" RESET, __FILE__, __LINE__, __FUNCTION__, line_count);
+	debugger(BLU "%s:%d - %s\nline count:\t%d\n\n" RESET, \
+	__FILE__, __LINE__, __FUNCTION__, line_count);
 	parse_lines(world, line_count, argv[1]);
 }

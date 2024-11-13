@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 14:31:28 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/12 16:36:42 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/13 14:07:26 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,26 @@ void	parse_add_ambient(t_world *world, char *str)
 	world->ambient = parse_get_color(str, &i);
 	return ;
 }
+
 void	parse_add_camera(t_world *world, char *str)
 {
-	int	i;
+	int			i;
+	t_matrix	view_transform;
 
 	i = 1;
-	t_matrix view_transform = view_transformation(parse_get_coordinates(str, &i), parse_get_normal(str, &i), create_vector(0, 1, 0));
-	world->cam = new_camera(HEIGHT, WIDTH, degrees_to_radians(parse_get_float(str, &i)), view_transform);
+	view_transform = view_transformation(parse_get_coordinates(str, &i), \
+	parse_get_normal(str, &i), create_vector(0, 1, 0));
+	world->cam = new_camera(HEIGHT, WIDTH, \
+	degrees_to_radians(parse_get_float(str, &i)), view_transform);
 	return ;
 }
+
 void	parse_add_light(t_world *world, char *str)
 {
-	t_tuple pos;
-	float brightness;
-	t_color color;
-	int i;
+	t_tuple	pos;
+	float	brightness;
+	t_color	color;
+	int		i;
 
 	i = 1;
 	pos = parse_get_coordinates(str, &i);
