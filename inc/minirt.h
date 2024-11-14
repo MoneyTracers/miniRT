@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/14 16:26:32 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/11/14 17:42:37 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/time.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <aabb.h>
 
 # define RED   "\x1B[31m"
 # define GRN   "\x1B[1;32m"
@@ -90,6 +91,14 @@ typedef	struct s_light
 }	t_light;
 
 
+typedef struct s_bvh
+{
+	t_bvh		*left;
+	t_bvh		*right;
+	t_aabb		bbox;
+	t_object	*object;
+}	t_bvh;
+
 typedef struct s_world
 {
 	t_light			*lights;
@@ -100,6 +109,7 @@ typedef struct s_world
 	int				obj_count;
 	int				arr_size;
 	t_object		**objects_arr;
+	t_bvh			*bvh;
 }	t_world;
 
 void	debugger(char *format, ...);

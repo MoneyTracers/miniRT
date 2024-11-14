@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   shapes.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/31 14:51:48 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/06 13:26:25 by maraasve         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   shapes.h                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/10/31 14:51:48 by maraasve      #+#    #+#                 */
+/*   Updated: 2024/11/14 17:29:05 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "tuples.h"
 # include "matrix.h"
 # include "color.h"
+# include <aabb.h>
 
 typedef enum e_object_type
 {
@@ -66,6 +67,7 @@ typedef struct s_object
 	t_matrix		transformation;
 	t_matrix		*inverted;
 	t_material		material;
+	t_aabb			bbox;
 	union
 	{
 		t_cylinder	*cylinder;
