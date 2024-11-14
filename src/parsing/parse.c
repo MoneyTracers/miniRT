@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:57:19 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/14 15:39:10 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/11/14 16:07:24 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	parse_add_object(t_world *world, t_parse *parse)
 		parse_add_plane(world, parse->str);
 	else if (parse->type == cyl)
 		parse_add_cyl(world, parse->str);
+	if (parse->type == sphere || parse->type == plane || parse->type == cyl)
+		world->obj_count++;
 	free(parse->str);
 	parse->str = NULL;
 }

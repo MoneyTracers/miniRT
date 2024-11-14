@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/13 14:20:27 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/14 16:08:10 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int argc, char **argv)
 
 	ft_bzero(&world, sizeof(t_world));
 	parse(&world, argc, argv);
-
+	debugger(BLU "amount of objects parsed: %d\n" RESET, world.obj_count);
 	print_matrix(world.cam.tranformation.grid, 4);
 	printf("\n");
 	print_matrix(world.cam.inverse->grid, 4);
@@ -48,7 +48,6 @@ int	main(int argc, char **argv)
 	debugger(GRN"DONE\n"RESET);
 	mlx_put_image_to_window(mlx_data.mlx, mlx_data.window, mlx_data.image, 0, 0);
 	mlx_loop(mlx_data.mlx);
-	
 	free_mlx(&mlx_data);
 	free_lights(&world.lights);
 	free_objects(&world.objects);
