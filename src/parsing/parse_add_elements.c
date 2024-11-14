@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 14:32:54 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/14 15:39:05 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/11/14 17:02:23 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,11 @@ void	parse_add_sphere(t_world *world, char *str)
 	transform.rotate = create_identity_matrix();
 	transform.scale = scale_matrix(diameter, diameter, diameter);
 	transform.translation = translation_matrix(coor.x, coor.y, coor.z);
-	add_object_to_list(&world->objects, new_object(SPHERE, m, \
+	add_object_to_list(&world->objects, new_object(SPHERE, m, 
 	transformation_matrix(transform), (void *)new_sphere()));
-	free_transformation_matrix(&transform);
+	world->objects_arr[world->obj_count] = new_object(SPHERE, m, \
+	transformation_matrix(transform), (void *)new_sphere());
+	// free_transformation_matrix(&transform);
 	return ;
 }
 
@@ -54,9 +56,11 @@ void	parse_add_plane(t_world *world, char *str)
 	transform.rotate = create_identity_matrix();
 	transform.scale = create_identity_matrix();
 	transform.translation = translation_matrix(coor.x, coor.y, coor.z);
-	add_object_to_list(&world->objects, new_object(PLANE, m, \
+	add_object_to_list(&world->objects, new_object(PLANE, m, 
 	transformation_matrix(transform), (void *)new_plane(normal_vec)));
-	free_transformation_matrix(&transform);
+	world->objects_arr[world->obj_count] = new_object(PLANE, m, \
+	transformation_matrix(transform), (void *)new_plane(normal_vec));
+	// free_transformation_matrix(&transform);
 	return ;
 }
 
@@ -83,9 +87,11 @@ void	parse_add_cyl(t_world *world, char *str)
 	transform.rotate = create_identity_matrix();
 	transform.scale = scale_matrix(diameter, diameter, diameter);
 	transform.translation = translation_matrix(coor.x, coor.y, coor.z);
-	add_object_to_list(&world->objects, \
-	new_object(CYLINDER, m, transformation_matrix(transform), \
+	add_object_to_list(&world->objects, 
+	new_object(CYLINDER, m, transformation_matrix(transform), 
 	(void *)new_cylinder(0, height, true)));
-	free_transformation_matrix(&transform);
+	world->objects_arr[world->obj_count] = new_object(CYLINDER, m, transformation_matrix(transform), \
+	(void *)new_cylinder(0, height, true));
+	// free_transformation_matrix(&transform);
 	return ;
 }

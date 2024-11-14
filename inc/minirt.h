@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/14 16:06:08 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/11/14 16:26:32 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,8 @@ typedef struct s_world
 	t_camera		cam;
 	t_object		*objects;
 	int				obj_count;
-	t_object		*objects_arr;
+	int				arr_size;
+	t_object		**objects_arr;
 }	t_world;
 
 void	debugger(char *format, ...);

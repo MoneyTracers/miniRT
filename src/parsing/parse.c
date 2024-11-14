@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:57:19 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/14 16:07:24 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/11/14 17:07:38 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,32 @@ void	parse_add_object(t_world *world, t_parse *parse)
 	parse->str = NULL;
 }
 
+
+t_object **realloc_objects(t_object **objects, int *arr_size, int size)
+{
+	int			i;
+	size_t		new_size;
+	t_object	**new_arr;
+
+	i = 0;
+	new_size = size * 2;
+	new_arr = ft_calloc(sizeof(t_object*), new_size);
+	if (new_arr == NULL)
+	{
+		*arr_size = -1;
+		return (NULL);
+	}
+	debugger(BLU "\nrealloc - new array size: %d\n" RESET, new_size);
+	while (i < size)
+	{
+		new_arr[i] = objects[i];
+		i++;
+	}
+	free(objects);
+	*arr_size = new_size;
+	return (new_arr);
+}
+
 void	parse_lines(t_world *world, int line_count, char *file)
 {
 	int		i;
@@ -42,9 +68,15 @@ void	parse_lines(t_world *world, int line_count, char *file)
 
 	i = 0;
 	ft_bzero(&parse, sizeof(t_parse));
+	world->objects_arr = ft_calloc(sizeof(t_object*), 1);
+	world->arr_size = 1;
 	fd = parse_open_file(file);
 	while (i < line_count)
 	{
+		if (world->obj_count == world->arr_size)
+			world->objects_arr = realloc_objects(world->objects_arr, &world->arr_size, world->arr_size);
+		if (world->arr_size == -1)
+			exit_err("realloc error", 1);
 		parse.str = get_next_line(fd, 0);
 		if (parse.str == NULL)
 			exit_err("gln error", 1);

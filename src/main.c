@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/14 16:08:10 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/11/14 16:44:16 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	main(int argc, char **argv)
 	
 	hooks(&mlx_data);
 	debugger(BLU "\nstart render\n"RESET);
+	exit (0);
 	render(&mlx_data, world.cam, &world);
 	debugger(GRN"DONE\n"RESET);
 	mlx_put_image_to_window(mlx_data.mlx, mlx_data.window, mlx_data.image, 0, 0);
