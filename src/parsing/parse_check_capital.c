@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:07:59 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/08 13:08:52 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/13 12:11:56 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int parse_check_ambient(char *str)
 	if (!parse_inrange_float(0.0, 1.0, str, &i))
 		return (1);
 	i = parse_skipwhitespace(str, i);
-	if (!parse_isrgb_inrange(0, 255, str, &i))
+	if (!parse_inrange_rgb(0, 255, str, &i))
 		return (1);
 	i = parse_skipwhitespace(str, i);
 	if (str[i] != '\n' && str[i] != '\0')
@@ -51,7 +51,7 @@ int parse_check_camera(char *str)
 	if (!parse_isnormalvec(str, &i))
 		return (1);
 	i = parse_skipwhitespace(str, i);
-	if (!parse_isinrange_int(0, 180, str, &i))
+	if (!parse_inrange_int(0, 180, str, &i))
 		return (1);
 	if (str[i] != '\n' && str[i] != '\0')
 		return (1);
@@ -74,7 +74,7 @@ int parse_check_light(char *str)
 	if (!parse_inrange_float(0.0, 1.0, str, &i))
 		return (1);
 	i = parse_skipwhitespace(str, i);
-	if (!parse_isrgb_inrange(0, 255, str, &i))
+	if (!parse_inrange_rgb(0, 255, str, &i))
 		return (1);
 	if (str[i] != '\n' && str[i] != '\0')
 		return (1);

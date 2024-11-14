@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/07 12:50:44 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/04 15:24:16 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/13 14:20:13 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,11 +115,13 @@ float determinant(float **grid, int size)
 
 void	print_matrix(float **matrix, int size)
 {
+	debugger(RED"%s:%d - %s\nprint matrix\t\n\n"RESET, \
+	__FILE__, __LINE__, __FUNCTION__);
 	for(int i = 0; i <size; i++)
 	{
 		for(int j = 0; j <size; j++)
-			printf("%f ", matrix[i][j]);
-		printf("\n");
+			debugger(BLU"%f "RESET, matrix[i][j]);
+		debugger("\n");
 	}
 }
 

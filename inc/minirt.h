@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/12 13:52:22 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/14 15:53:01 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@
 # ifndef BONUS
 #  define BONUS 0
 # endif
+
+typedef float				t_fvec \
+__attribute__ ((vector_size (4 * sizeof(float))));
 
 typedef struct s_camera
 {
@@ -97,5 +100,6 @@ typedef struct s_world
 }	t_world;
 
 void	debugger(char *format, ...);
+void	exit_err(char *err, int ec);
 
 #endif

@@ -6,11 +6,10 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:02:22 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/12 11:28:53 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/13 13:44:17 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-  
 #include <parse.h>
 
 int	parse_check_identify(char *str)
@@ -31,40 +30,36 @@ int	parse_check_identify(char *str)
 		type = plane;
 	else if (!ft_strncmp(str, "cy ", 2))
 		type = cyl;
-	else 
+	else
 		type = unidentified;
 	return (type);
 }
 
+//TODO: count amount of objects for array later
 void	parse_check_identifier(t_parse *parse)
 {
-		debugger(GRN "%s:%d - %s\ncheck (A, L, C)\n\n" RESET, __FILE__, __LINE__, __FUNCTION__ );
-		if (parse->type == ambient)
-		{
-			if (parse->A_identifier)
-			{
-				perror("too many A identifiers");
-				exit (1);
-			}
-			parse->A_identifier++;
-		}
-		else if (parse->type == camera)
-		{
-			if (parse->C_identifier)
-			{
-				perror("too many C identifiers");
-				exit (1);
-			}
-			parse->C_identifier++;
-		}
-		else if (parse->type == light )
-		{
-			if (parse->L_identifier && !BONUS)
-			{
-				perror("too many L identifiers");
-				exit (1);
-			}
-			parse->L_identifier++;
-		}
-		//TODO: count amount of objects for array later
+	debugger(CYN "%s:%d - %s\nparse str:\t%s" RESET, __FILE__, \
+	__LINE__, __FUNCTION__, parse->str);
+	debugger(CYN "%s:%d - %s\nparse type:\t%d\n\n" RESET, __FILE__, \
+	__LINE__, __FUNCTION__, parse->type);
+	debugger(GRN "%s:%d - %s\ncheck (A, L, C)\n\n" RESET, __FILE__, \
+	__LINE__, __FUNCTION__);
+	if (parse->type == ambient)
+	{
+		if (parse->A_identifier)
+			exit_err("too many A identifiers", 1);
+		parse->A_identifier++;
+	}
+	else if (parse->type == camera)
+	{
+		if (parse->C_identifier)
+			exit_err("too many C identifiers", 1);
+		parse->C_identifier++;
+	}
+	else if (parse->type == light)
+	{
+		if (parse->L_identifier && !BONUS)
+			exit_err("too many L identifiers", 1);
+		parse->L_identifier++;
+	}
 }
