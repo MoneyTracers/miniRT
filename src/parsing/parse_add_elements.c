@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 14:32:54 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/13 14:06:14 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/14 15:39:05 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	parse_add_cyl(t_world *world, char *str)
 	i = 0;
 	coor = parse_get_coordinates(str, &i);
 	normal_vec = parse_get_normal(str, &i);
+	(void)normal_vec;
 	diameter = parse_get_float(str, &i);
 	height = parse_get_float(str, &i);
 	m = default_material();

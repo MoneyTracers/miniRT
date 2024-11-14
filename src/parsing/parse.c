@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:57:19 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/13 12:02:58 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/14 15:39:10 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,9 @@ void	parse_lines(t_world *world, int line_count, char *file)
 {
 	int		i;
 	int		fd;
-	int		type;
 	t_parse	parse;
 
 	i = 0;
-	type = 0;
 	ft_bzero(&parse, sizeof(t_parse));
 	fd = parse_open_file(file);
 	while (i < line_count)

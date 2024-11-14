@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:02:53 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/13 13:44:45 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/14 15:39:15 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 void	parse_check_extension(char *file)
 {
-	int		i;
 	char	*temp;
 
-	i = 0;
 	temp = ft_strrchr(file, '.');
 	if (temp == NULL)
 	{
