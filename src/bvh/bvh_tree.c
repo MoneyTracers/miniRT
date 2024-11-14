@@ -6,7 +6,7 @@
 /*   By: mynodeus <mynodeus@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 17:40:34 by mynodeus      #+#    #+#                 */
-/*   Updated: 2024/11/14 17:47:07 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/11/14 17:59:18 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_bvh	*bvh_node(t_object **world, size_t start, size_t end)
 	node->right = calloc(1, sizeof(t_bvh));
 	for (size_t i = start; i < end; i++)
 	{
-		node->bbox = aabb_aabb(node->bbox, world[i]->bbox);
+		node->bbox = aabb_const(node->bbox, world[i]->bbox);
 	}
 	axis = longest_axis(node->bbox);
 	if (axis == 0)

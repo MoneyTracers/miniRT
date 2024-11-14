@@ -6,7 +6,7 @@
 /*   By: mynodeus <mynodeus@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 17:50:57 by mynodeus      #+#    #+#                 */
-/*   Updated: 2024/11/14 17:52:00 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/11/14 18:03:02 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,22 +45,22 @@ t_aabb pad_to_minimus(t_aabb bbox)
 	return (bbox);
 }
 
-t_aabb aabb_vec(t_vec3 a, t_vec3 b)
+t_aabb aabb_vec(t_tuple a, t_tuple b)
 {
 	t_aabb new;
 
-	if (a.e[0] <= b.e[0])
-		new.x = inv(a.e[0], b.e[0]);
+	if (a.x <= b.x)
+		new.x = inv(a.x, b.x);
 	else
-		new.x = inv(b.e[0], a.e[0]);
-	if (a.e[1] <= b.e[1])
-		new.y = inv(a.e[1], b.e[1]);
+		new.x = inv(b.x, a.x);
+	if (a.y <= b.y)
+		new.y = inv(a.y, b.y);
 	else
-		new.y = inv(b.e[1], a.e[1]);
-	if (a.e[2] <= b.e[2])
-		new.z = inv(a.e[2], b.e[2]);
+		new.y = inv(b.y, a.y);
+	if (a.z <= b.z)
+		new.z = inv(a.z, b.z);
 	else
-		new.z = inv(b.e[2], a.e[2]);
+		new.z = inv(b.z, a.z);
 	return (pad_to_minimus(new));
 }
 

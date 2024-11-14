@@ -6,32 +6,32 @@
 /*   By: mynodeus <mynodeus@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 17:48:42 by mynodeus      #+#    #+#                 */
-/*   Updated: 2024/11/14 17:49:13 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/11/14 17:57:46 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <interval.h>
 
-double size(t_interval inv)
+float size(t_interval inv)
 {
 	return (inv.max - inv.min);
 }
 
-int contains(t_interval inv, double x)
+int contains(t_interval inv, float x)
 {
 	if ((inv.min <= x) && (x <= inv.max))
 		return (1);
 	return (0);
 }
 
-int surround(t_interval inv, double x)
+int surround(t_interval inv, float x)
 {
 	if ((inv.min < x) && (x < inv.max))
 		return (1);
 	return (0);
 }
 
-double clamp(t_interval inv, double x)
+float clamp(t_interval inv, float x)
 {
 	if (inv.min > x)
 		return (inv.min);
@@ -49,7 +49,7 @@ t_interval dinv(void)
 	new.max = 0;
 	return (new);
 }
-t_interval inv(double min, double max)
+t_interval inv(float min, float max)
 {
 	t_interval new;
 
