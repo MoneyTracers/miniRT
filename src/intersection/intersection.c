@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 14:39:19 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/06 14:00:31 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/15 13:54:31 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	add_intersection_sorted(t_intersection **head, t_intersection *new)
 	}
 	prev = NULL;
 	cur = (*head);
-	while (cur && cur->t < new->t)
+	while (cur && cur->t <= new->t)
 	{
 		prev = cur;
 		cur = cur->next;

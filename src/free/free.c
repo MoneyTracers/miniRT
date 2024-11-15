@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:43:48 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/06 14:00:00 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/15 14:32:59 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 void	free_mlx(t_mlx *data)
 {
 	mlx_loop_end(data->mlx);
-	mlx_destroy_image(data->mlx, data->image);
+	mlx_destroy_image(data->mlx, data->img1.image);
+	mlx_destroy_image(data->mlx, data->img2.image);
 	mlx_destroy_display(data->mlx);
 	mlx_destroy_window(data->mlx, data->window);
 	free(data->mlx);

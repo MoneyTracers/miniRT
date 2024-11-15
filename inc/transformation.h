@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 14:46:56 by maraasve          #+#    #+#             */
-/*   Updated: 2024/10/31 17:46:14 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/15 16:29:48 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,8 @@ t_matrix	scale_matrix(float x, float y, float z);
 t_matrix	rotate(float x, float y, float z);
 t_matrix	transformation_matrix(t_transformation transform);
 t_ray		transform_ray(t_ray ray, t_matrix transformation);
+t_matrix	rotate_x(float radians);
+t_matrix	rotate_y(float radians);
+t_matrix	rotate_z(float radians);
 
 #endif
