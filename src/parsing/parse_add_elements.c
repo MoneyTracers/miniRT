@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 14:32:54 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/14 17:08:29 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/11/15 17:35:44 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	parse_add_sphere(t_world *world, char *str)
 	world->objects_arr[world->obj_count] = new_object(SPHERE, m, \
 	transformation_matrix(transform), (void *)new_sphere());
 	free_transformation_matrix(&transform);
+	world->objects_arr[world->obj_count]->bbox = sphere_bbox(world->objects_arr[world->obj_count]->sphere->center,\
+	world->objects_arr[world->obj_count]->sphere->radius);
 	return ;
 }
 

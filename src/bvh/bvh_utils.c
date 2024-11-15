@@ -6,7 +6,7 @@
 /*   By: mynodeus <mynodeus@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 17:43:59 by mynodeus      #+#    #+#                 */
-/*   Updated: 2024/11/15 17:18:45 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/15 17:32:28 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,14 @@ int longest_axis(t_aabb bbox)
 		else 
 			return (2);
 	}
+}
+
+t_aabb sphere_bbox(t_tuple center, double radius)
+{
+	t_tuple rvec;
+
+	rvec.x = radius;
+	rvec.y = radius;
+	rvec.z = radius;
+	return (aabb_vec(subtract_tuple(center, rvec), add_tuple(center, rvec)));
 }
