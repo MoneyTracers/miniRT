@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   normal.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/23 12:24:15 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/06 14:00:50 by maraasve         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   normal.c                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/10/23 12:24:15 by marieke       #+#    #+#                 */
+/*   Updated: 2024/11/15 17:17:40 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <intersection.h>
+#include <minirt.h>
 
 t_tuple	local_normal_at(t_object *object, t_tuple local_point)
 {

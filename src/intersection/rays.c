@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   rays.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/09 15:57:47 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/06 14:00:59 by maraasve         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   rays.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/10/09 15:57:47 by marieke       #+#    #+#                 */
+/*   Updated: 2024/11/15 17:17:51 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <intersection.h>
+#include <minirt.h>
 
 t_ray	create_ray(t_tuple origin, t_tuple direction)
 {

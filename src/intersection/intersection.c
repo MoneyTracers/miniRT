@@ -1,15 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   intersection.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/19 14:39:19 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/06 14:00:31 by maraasve         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   intersection.c                                     :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/10/19 14:39:19 by marieke       #+#    #+#                 */
+/*   Updated: 2024/11/15 17:16:31 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <minirt.h>
 #include <intersection.h>
 #include <transformation.h>
 

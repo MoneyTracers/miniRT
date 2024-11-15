@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/14 16:44:16 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/11/15 13:45:51 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include <mlx.h>
 #include <camera.h>
 #include <parse.h>
+#include <bvh.h>
 
 int	main(int argc, char **argv)
 {
@@ -32,6 +33,8 @@ int	main(int argc, char **argv)
 	ft_bzero(&world, sizeof(t_world));
 	parse(&world, argc, argv);
 	debugger(BLU "amount of objects parsed: %d\n" RESET, world.obj_count);
+	debugger(BLU "creating bvh\n" RESET);
+	world.bvh = bvh_node(world.objects_arr, 0, world.obj_count);
 	print_matrix(world.cam.tranformation.grid, 4);
 	printf("\n");
 	print_matrix(world.cam.inverse->grid, 4);

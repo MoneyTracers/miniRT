@@ -6,7 +6,7 @@
 /*   By: mynodeus <mynodeus@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 17:50:57 by mynodeus      #+#    #+#                 */
-/*   Updated: 2024/11/14 18:03:02 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/11/15 14:42:21 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,16 @@ t_interval axis_interval(t_aabb aabb, int n)
 	return(aabb.x);
 }
 
+float	get_direction_component(t_tuple vec, int axis) {
+	if (axis == 0)
+		return (vec.x);
+	if (axis == 1)
+		return (vec.y);
+	if (axis == 2)
+		return (vec.z);
+	return (0);
+}
+
 int aabb_hit(t_aabb aabb, t_ray r, t_interval ray_t)
 {
 	int axis;
@@ -95,10 +105,9 @@ int aabb_hit(t_aabb aabb, t_ray r, t_interval ray_t)
 	while (axis < 3)
 	{
 		ax = axis_interval(aabb, axis);
-		adinv = 1 / r.dir.e[axis];
-		t0 = (ax.min - r.org.e[axis]) *adinv;
-		t1 = (ax.max - r.org.e[axis]) *adinv;
-		
+		adinv = 1 / get_direction_component(r.direction, axis);
+		t0 = (ax.min - get_direction_component(r.origin, axis)) *adinv;
+		t1 = (ax.max - get_direction_component(r.origin, axis)) *adinv;
 		if (t0 < t1)
 		{
 			if (t0 > ray_t.min)

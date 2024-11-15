@@ -6,15 +6,26 @@
 /*   By: mynodeus <mynodeus@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 17:43:59 by mynodeus      #+#    #+#                 */
-/*   Updated: 2024/11/14 17:44:04 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/11/15 17:18:45 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <interval.h>
 #include <minirt.h>
+
+float random_float(void)
+{
+	return (rand() / (RAND_MAX + 1.0));
+}
+
+float random_float_between(float min, float max)
+{
+	return (min + (max-min) * random_float());
+}
 
 int random_int(int min, int max)
 {
-	return ((int)random_double_between(min, max+1));
+	return ((int)random_float_between(min, max+1));
 }
 void sort_swap(t_object **a, t_object **b)
 {

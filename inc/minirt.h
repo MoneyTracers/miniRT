@@ -6,12 +6,14 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/14 17:42:37 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/11/15 14:27:17 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
+
+//https://dev.to/pauljlucas/proper-header-file-etiquette-ola
 
 # include "tuples.h"
 # include "../lib/libft/inc/libft.h"
@@ -24,7 +26,6 @@
 # include <sys/time.h>
 # include <sys/stat.h>
 # include <fcntl.h>
-# include <aabb.h>
 
 # define RED   "\x1B[31m"
 # define GRN   "\x1B[1;32m"
@@ -51,6 +52,9 @@
 
 typedef float				t_fvec \
 __attribute__ ((vector_size (4 * sizeof(float))));
+
+typedef struct s_bvh t_bvh;
+typedef struct s_aabb t_aabb;
 
 typedef struct s_camera
 {

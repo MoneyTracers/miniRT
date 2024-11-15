@@ -6,14 +6,13 @@
 /*   By: mynodeus <mynodeus@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 17:18:14 by mynodeus      #+#    #+#                 */
-/*   Updated: 2024/11/14 18:04:57 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/11/15 14:31:19 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AABB_H
 # define AABB_H
 
-# include <minirt.h>
 # include <interval.h>
 # include <intersection.h>
 

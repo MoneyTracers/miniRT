@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   intersection.h                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/31 14:34:14 by maraasve          #+#    #+#             */
-/*   Updated: 2024/10/31 17:51:04 by maraasve         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   intersection.h                                     :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/10/31 14:34:14 by maraasve      #+#    #+#                 */
+/*   Updated: 2024/11/15 14:32:13 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 
 # include <tuples.h>
 # include <calculations.h>
-# include <shapes.h>
-# include <minirt.h>
+
+typedef struct s_object t_object; 
+typedef struct s_color t_color; 
+typedef struct s_world t_world; 
 
 typedef struct	s_intersection
 {

@@ -6,10 +6,11 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/22 14:51:06 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/04 15:24:01 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/15 17:15:53 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <minirt.h>
 #include <intersection.h>
 #include <reflection.h>
 
