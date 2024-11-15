@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   parse_add_elements.c                               :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: spenning <spenning@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/11/01 14:32:54 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/12 16:10:09 by spenning      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   parse_add_elements.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/01 14:32:54 by spenning          #+#    #+#             */
+/*   Updated: 2024/11/15 17:57:08 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,19 @@ void	parse_add_plane(t_world *world, char *str)
 	free_transformation_matrix(&transform);
 	return ;
 }
+
+// t_matrix	get_rotation(t_tuple from, t_tuple to)
+// {
+// 	t_matrix	rotation;
+// 	t_tuple		axis;
+// 	float		angle;
+	
+// 	axis = get_cross_product(from, to);
+// 	angle = acosf(get_dot_product(from, to));
+
+// 	rotation_matrix
+// }
+
 void	parse_add_cyl(t_world *world, char *str)
 {
 	t_cylinder *cyl;
@@ -80,8 +93,9 @@ void	parse_add_cyl(t_world *world, char *str)
 	height = parse_get_float(str, &i);
 	m = default_material();
 	m.color = parse_get_color(str, &i);
-	cyl = new_cylinder(0, height, true);
+	cyl = new_cylinder(-height / 2, height / 2, true);
 	// TODO:translate normal_vec to radians
+	//transform.rotate = get_rotation(coor, normal_vec);
 	transform.rotate = create_identity_matrix();
 	transform.scale = scale_matrix(diameter, diameter, diameter);
 	transform.translation = translation_matrix(coor.x, coor.y, coor.z);

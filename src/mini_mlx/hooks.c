@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 18:22:50 by spenning          #+#    #+#             */
-/*   Updated: 2024/11/15 17:22:34 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/15 17:54:11 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ int	rotate_cam(int keycode, t_camera *cam)
 	rotation.grid = NULL;
 	if (keycode == W_KEY)
 		rotation = rotate_x(degrees_to_radians(-45));
-	else if (keycode == A_KEY)
-		rotation = rotate_y(degrees_to_radians(-45));
 	else if (keycode == S_KEY)
 		rotation = rotate_x(degrees_to_radians(45));
-	else if (keycode == D_KEY)
+	else if (keycode == A_KEY)
 		rotation = rotate_y(degrees_to_radians(45));
+	else if (keycode == D_KEY)
+		rotation = rotate_y(degrees_to_radians(-45));
 	
 	cam->normal = multiply_matrix_tuple(rotation, cam->normal);
 	new_transformation = multiply_matrices(rotation, cam->tranformation);
@@ -98,13 +98,6 @@ int	keypress(int keycode, t_mlx *data)
 			return (0);
 		printf("\n");
 	}
-	
-	//need to think about how to zoom in and out, scrolling or +/- for example??
-	// if (keycode == ZOOM_IN)
-	// 	data->world->cam.pos = add_tuple(cam->pos, scale_tuple(cam->forward, 0.5));
-	// if (keycode == ZOOM_OUT)
-	// 	data->world->cam.pos = add_tuple(cam->pos, scale_tuple(cam->forward, -0.5));
-
 
 	render(data, *cam, data->world);
 	if (data->img_count % 2)
