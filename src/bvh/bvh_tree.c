@@ -6,7 +6,7 @@
 /*   By: mynodeus <mynodeus@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/14 17:40:34 by mynodeus      #+#    #+#                 */
-/*   Updated: 2024/11/15 17:21:24 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/18 17:38:59 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ t_bvh	*bvh_node(t_object **world, size_t start, size_t end)
 	else 
 		comparator = &box_z_compare;
 	object_span = end - start;
-	printf("object_span %lu\n", object_span);
+	debugger(BLU"object_span %lu\n"RESET, object_span);
 	if (object_span == 1)
 	{
 		node->left->object = world[start];
@@ -113,9 +113,10 @@ t_bvh	*bvh_node(t_object **world, size_t start, size_t end)
 		node->bbox = world[start]->bbox;
 		node->left->bbox = world[start]->bbox;
 		node->right->bbox = world[start]->bbox;
-		printf("object 1 span bbox x.min: %f x.max: %f\n\
-	bbox y.min: %f y.max: %f\n, \
-	bbox z.min: %f z.max: %f\n", \
+		debugger(GRN"object 1 \n"RESET);
+		debugger(MAG "span bbox \tx.min: %f x.max: %f\n\
+bbox \t\ty.min: %f y.max: %f\n\
+bbox \t\tz.min: %f z.max: %f\n"RESET, \
 	 node->bbox.x.min, node->bbox.x.max,
 	 node->bbox.y.min, node->bbox.y.max,
 	 node->bbox.z.min, node->bbox.z.max);
@@ -127,9 +128,10 @@ t_bvh	*bvh_node(t_object **world, size_t start, size_t end)
 		node->left->bbox = world[start]->bbox;
 		node->right->bbox = world[start+1]->bbox;
 		node->bbox = aabb_const(world[start]->bbox, world[start + 1]->bbox);
-		printf("object 2 span bbox x.min: %f x.max: %f\n\
-	bbox y.min: %f y.max: %f\n, \
-	bbox z.min: %f z.max: %f\n", \
+		debugger(GRN"object 2 \n"RESET);
+		debugger(MAG"span bbox \tx.min: %f x.max: %f\n\
+bbox \t\ty.min: %f y.max: %f\n\
+bbox \t\tz.min: %f z.max: %f\n"RESET, \
 	 node->bbox.x.min, node->bbox.x.max,
 	 node->bbox.y.min, node->bbox.y.max,
 	 node->bbox.z.min, node->bbox.z.max);
@@ -137,20 +139,20 @@ t_bvh	*bvh_node(t_object **world, size_t start, size_t end)
 	else
 	{
 		sort(world, start, end - 1, comparator);
+		debugger(YEL"sort array\n"RESET);
 		for (unsigned long i = 0; world[i]; i++)
 		{
 		t_interval temp;
 		temp = axis_interval(world[i]->bbox, 0);
-		printf("world[%lu] min: %f\n", i, temp.min);
+		debugger(YEL"world[%lu] min: %f\n"RESET, i, temp.min);
 		}
-		// exit (0);
 		mid = start + object_span / 2;
 		node->left = bvh_node(world, start, mid);
 		node->right = bvh_node(world, mid, end);
 	}
-	printf("node bbox x.min: %f x.max: %f\n\
-	bbox y.min: %f y.max: %f\n, \
-	bbox z.min: %f z.max: %f\n", \
+	debugger(RED"node bbox \tx.min: %f x.max: %f\n\
+bbox \t\ty.min: %f y.max: %f\n\
+bbox \t\tz.min: %f z.max: %f\n"RESET, \
 	 node->bbox.x.min, node->bbox.x.max,
 	 node->bbox.y.min, node->bbox.y.max,
 	 node->bbox.z.min, node->bbox.z.max);
