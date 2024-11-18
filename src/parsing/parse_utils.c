@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   parse_utils.c                                      :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: spenning <spenning@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/10/30 13:57:38 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/12 16:19:14 by spenning      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/30 13:57:38 by spenning          #+#    #+#             */
+/*   Updated: 2024/11/18 15:11:45 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ t_tuple parse_get_normal(char *str, int *i)
 	tup.z = parse_get_float(str, &j);
 	j += 1;
 	*i = j;
+
+	//check if vector is normalized:
+	//if (equal_float(get_magnitude(tup), 1.0))
+		//return vec
+	//else
+		//return error
 	return (tup);
 }
 

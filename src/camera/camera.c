@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 13:54:57 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/15 14:32:49 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:29:59 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_matrix	view_transformation(t_camera *cam, t_tuple from, t_tuple to, t_tuple up
 	transformation = multiply_matrices(orientation, translation);
 	free_matrix(orientation.grid, 4);
 	free_matrix(translation.grid, 4);
+	transformation.size = 4;
 	return (transformation);
 }
 

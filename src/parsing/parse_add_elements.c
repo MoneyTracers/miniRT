@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 14:32:54 by spenning          #+#    #+#             */
-/*   Updated: 2024/11/15 17:57:08 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:12:48 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	parse_add_cyl(t_world *world, char *str)
 	cyl = new_cylinder(-height / 2, height / 2, true);
 	// TODO:translate normal_vec to radians
 	//transform.rotate = get_rotation(coor, normal_vec);
-	transform.rotate = create_identity_matrix();
+	transform.rotate = rotation_matrix_from_normal(normal_vec);
 	transform.scale = scale_matrix(diameter, diameter, diameter);
 	transform.translation = translation_matrix(coor.x, coor.y, coor.z);
 	add_object_to_list(&world->objects, new_object(CYLINDER, m, transformation_matrix(transform), (void *)cyl));

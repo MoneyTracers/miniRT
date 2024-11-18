@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   invert_matrix.c                                    :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/10/07 12:50:44 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/04 15:24:16 by spenning      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   invert_matrix.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/07 12:50:44 by maraasve          #+#    #+#             */
+/*   Updated: 2024/11/18 16:26:27 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ float	minor(float **grid, int row, int col, int size)
 	float	minor_value;
 	
 	sub = submatrix(grid, row, col, size);
-	if (!sub)
-		return (0); //need to look at this since result can also be 0
+	if (!sub) //needs better error handling
+		return (0); //since result can also be 0
 	minor_value = determinant(sub, size - 1);
 	free_matrix(sub, size - 1);
 	return (minor_value);
@@ -93,7 +93,7 @@ float	cofactor(float **grid, int row, int col, int size)
 	return (minor_value);
 }
 
-float determinant(float **grid, int size)
+float	determinant(float **grid, int size)
 {
 	float	det;
 	int		col;
@@ -113,17 +113,17 @@ float determinant(float **grid, int size)
 	return (det);
 }
 
-void	print_matrix(float **matrix, int size)
+void	print_matrix(float **grid, int size)
 {
 	for(int i = 0; i <size; i++)
 	{
 		for(int j = 0; j <size; j++)
-			printf("%f ", matrix[i][j]);
+			printf("%f ", grid[i][j]);
 		printf("\n");
 	}
 }
 
-t_matrix	*invert_matrix(float **matrix, int size)
+t_matrix	*invert_matrix(float **gridmatrix, int size)
 {
 	float		det;
 	t_matrix	*inverted;
@@ -131,7 +131,7 @@ t_matrix	*invert_matrix(float **matrix, int size)
 	int			i;
 	int			j;
 	
-	det = determinant(matrix, size);
+	det = determinant(grid, size);
 	if (!det)
 		return (NULL); // error handling here is shittttt
 	inverted = malloc(sizeof(t_matrix));
@@ -146,7 +146,7 @@ t_matrix	*invert_matrix(float **matrix, int size)
 		j = 0;
 		while (j < size)
 		{
-			grid[i][j] = cofactor(matrix, j, i, size) / det;
+			grid[i][j] = cofactor(grid, j, i, size) / det;
 			j++;
 		}
 		i++;

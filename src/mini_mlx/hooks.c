@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 18:22:50 by spenning          #+#    #+#             */
-/*   Updated: 2024/11/15 17:54:11 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:01:47 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int	keypress(int keycode, t_mlx *data)
 {
 	t_camera	*cam;
 
-	printf("keycode = %i\n", keycode);
 	cam = &data->world->cam;
 	if (keycode == ESC_KEY)
 	{
@@ -96,7 +95,6 @@ int	keypress(int keycode, t_mlx *data)
 	{
 		if (!rotate_cam(keycode, cam))
 			return (0);
-		printf("\n");
 	}
 
 	render(data, *cam, data->world);
