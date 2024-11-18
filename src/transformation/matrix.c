@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   matrix.c                                           :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/10/18 14:48:35 by marieke       #+#    #+#                 */
-/*   Updated: 2024/11/04 15:24:16 by spenning      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   matrix.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/18 14:48:35 by marieke           #+#    #+#             */
+/*   Updated: 2024/11/18 18:13:53 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,9 +124,6 @@ t_matrix	create_identity_matrix(void)
 	int row;
 	int col;
 	
-	identity.grid = allocate_mem_matrix(4);
-	if (!identity.grid)
-		return(identity); //not sure about this error handling
 	row = 0;
 	while (row < MS)
 	{
@@ -150,9 +147,6 @@ t_matrix	transpose_matrix(t_matrix matrix)
 	int			row;
 	int			col;
 
-	new.grid = create_matrix(MS, MS); //better to use matrix.size
-	if (!new.grid)
-		return (create_identity_matrix()); //need better error handling
 	row = 0;
 	while (row < MS)
 	{
@@ -167,20 +161,30 @@ t_matrix	transpose_matrix(t_matrix matrix)
 	return (new);
 }
 
-bool is_identity_matrix(float **matrix, int size) 
+bool is_identity_matrix(t_matrix matrix, int size) 
 {
-	for (int i = 0; i < size; i++) {
-		for (int j = 0; j < size; j++) {
-			if (i == j) {
-				if (matrix[i][j] != 1.0f) {
-					return false;
-				}
-			} else {
-				if (matrix[i][j] != 0.0f) {
-					return false;
-				}
+	int	i;
+	int	j;
+
+	i = 0;
+	while(i < size)
+	{
+		j = 0;
+		while (j < size)
+		{
+			if (i == j)
+			{
+				if (matrix.grid[i][j] != 1.0f) 
+					return (false);
 			}
+			else 
+			{
+				if (matrix.grid[i][j] != 0.0f) 
+					return (false);
+			}
+			j++;
 		}
+		i++;
 	}
-	return true;
+	return (true);
 }

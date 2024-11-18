@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 13:06:16 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/06 13:25:24 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/18 18:10:48 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,8 @@ t_object	*new_object(int type, t_material m, t_matrix transform, void *shape)
 	object->type = type;
 	object->material = m;
 	object->transformation = transform;
-	if (!is_identity_matrix(transform.grid, 4))
-	{
+	if (!is_identity_matrix(transform.grid, 4)){
 		object->inverted = invert_matrix(transform.grid, 4);
-		if (!object->inverted)
-		{
-			free_matrix(transform.grid, 4);
-			free(object);
-		}
-	}
-	else
-		object->inverted = NULL;
 	add_shape_to_object(object, shape);
 	object->next = NULL;
 	return (object);

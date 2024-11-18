@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 14:39:19 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/15 13:54:31 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/18 18:15:05 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,8 +229,8 @@ int	local_intersect(t_intersection **head, t_object *object, t_ray ray)
 
 int	intersect(t_intersection **head, t_object *object, t_ray ray)
 {
-	if (!is_identity_matrix(object->transformation.grid, 4))
-		ray = transform_ray(ray, *object->inverted);
+	if (!is_identity_matrix(object->transformation, 4))
+		ray = transform_ray(ray, object->inverted);
 	if (local_intersect(head, object, ray) == ERROR)
 		return (ERROR);
 	return(SUCCESS);

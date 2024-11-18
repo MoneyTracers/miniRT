@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 14:51:48 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/06 13:26:25 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/18 18:10:05 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct s_object
 {
 	int				type;
 	t_matrix		transformation;
-	t_matrix		*inverted;
+	t_matrix		inverted;
 	t_material		material;
 	union
 	{

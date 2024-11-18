@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 17:06:00 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/15 14:33:15 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/18 18:09:08 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,4 @@ int	main(int argc, char **argv)
 	free_mlx(&mlx_data);
 	free_lights(&world.lights);
 	free_objects(&world.objects);
-	free_matrix(world.cam.tranformation.grid, 4);
-	free_matrix(world.cam.inverse->grid, 4);
 }

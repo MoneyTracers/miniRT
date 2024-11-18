@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:50:44 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/18 16:26:27 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/18 18:07:56 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,14 @@ float	**allocate_mem_matrix(int size)
 	return (new);
 }
 
-float	**submatrix(float **grid, int row, int col, int size)
+t_matrix	submatrix(t_matrix matrix, int row, int col, int size)
 {
-	float	**sub;
+	t_matrix	sub;
 	int		i;
 	int		j;
 	int		new_row;
 	int		new_col;
 
-	sub = allocate_mem_matrix(size - 1);
-	if (!sub)
-		return (NULL);
 	i = 0;
 	new_row = 0;
 	new_col = 0;
@@ -56,7 +53,7 @@ float	**submatrix(float **grid, int row, int col, int size)
 		{
 			if (i != row && j != col)
 			{
-				sub[new_row][new_col++] = grid[i][j];
+				sub.grid[new_row][new_col++] = matrix.grid[i][j];
 				if (new_col == size - 1)
 				{
 					new_col = 0;
@@ -70,43 +67,40 @@ float	**submatrix(float **grid, int row, int col, int size)
 	return (sub);
 }
 
-float	minor(float **grid, int row, int col, int size)
+float	minor(t_matrix matrix, int row, int col, int size)
 {
-	float	**sub;
-	float	minor_value;
+	t_matrix	sub;
+	float		minor_value;
 	
-	sub = submatrix(grid, row, col, size);
-	if (!sub) //needs better error handling
-		return (0); //since result can also be 0
+	sub = submatrix(matrix, row, col, size);
 	minor_value = determinant(sub, size - 1);
-	free_matrix(sub, size - 1);
 	return (minor_value);
 }
 
-float	cofactor(float **grid, int row, int col, int size)
+float	cofactor(t_matrix matrix, int row, int col, int size)
 {
 	float	minor_value;
 
-	minor_value = minor(grid, row, col, size);
+	minor_value = minor(matrix, row, col, size);
 	if ((row + col) % 2)
 		return (-minor_value);
 	return (minor_value);
 }
 
-float	determinant(float **grid, int size)
+float	determinant(t_matrix matrix, int size)
 {
 	float	det;
 	int		col;
 
 	det = 0;
 	if (size == 2)
-		return (grid[0][0] * grid[1][1] - grid[0][1] * grid[1][0]);
+		return (matrix.grid[0][0] * matrix.grid[1][1] - matrix.grid[0][1] * matrix.grid[1][0]);
 	else
 	{
 		col = 0;
 		while (col < size)
 		{
-			det += grid[0][col] * cofactor(grid, 0, col, size);
+			det += matrix.grid[0][col] * cofactor(matrix, 0, col, size);
 			col++;
 		}
 	}
@@ -123,34 +117,24 @@ void	print_matrix(float **grid, int size)
 	}
 }
 
-t_matrix	*invert_matrix(float **gridmatrix, int size)
+t_matrix	invert_matrix(t_matrix matrix, int size)
 {
 	float		det;
-	t_matrix	*inverted;
-	float		**grid;
+	t_matrix	inverted;
 	int			i;
 	int			j;
 	
-	det = determinant(grid, size);
-	if (!det)
-		return (NULL); // error handling here is shittttt
-	inverted = malloc(sizeof(t_matrix));
-	if (!inverted)
-		return (NULL);
-	grid = allocate_mem_matrix(size);
-	if (!grid)
-		return (NULL);
+	det = determinant(matrix, size);
 	i = 0;
 	while (i < size)
 	{
 		j = 0;
 		while (j < size)
 		{
-			grid[i][j] = cofactor(grid, j, i, size) / det;
+			inverted.grid[i][j] = cofactor(matrix, j, i, size) / det;
 			j++;
 		}
 		i++;
 	}
-	inverted->grid = grid;
 	return (inverted);
 }

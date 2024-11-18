@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 18:22:50 by spenning          #+#    #+#             */
-/*   Updated: 2024/11/18 16:01:47 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/18 18:16:14 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,8 @@ int	move_cam(int keycode, t_camera *cam)
 	
 	
 	new_transformation = multiply_matrices(translation, cam->tranformation);
-	free_matrix(cam->tranformation.grid, 4);
 	cam->tranformation = new_transformation;
-	//ERROR HANDLING
-	free_matrix(cam->inverse->grid, 4);
-	cam->inverse = invert_matrix(cam->tranformation.grid, 4);
-	if (!cam->inverse)
+	cam->inverse = invert_matrix(cam->tranformation, 4);
 		return (0);
 	return (1);
 }
@@ -65,12 +61,8 @@ int	rotate_cam(int keycode, t_camera *cam)
 	
 	cam->normal = multiply_matrix_tuple(rotation, cam->normal);
 	new_transformation = multiply_matrices(rotation, cam->tranformation);
-	free_matrix(cam->tranformation.grid, 4);
 	cam->tranformation = new_transformation;
-	//ERROR HANDLING
-	free_matrix(cam->inverse->grid, 4);
-	cam->inverse = invert_matrix(cam->tranformation.grid, 4);
-	if (!cam->inverse)
+	cam->inverse = invert_matrix(cam->tranformation, 4);
 		return (0);
 	return (1);
 }

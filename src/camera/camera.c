@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 13:54:57 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/18 16:29:59 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/18 18:14:49 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	new_camera(t_camera *cam, float fov, t_matrix transformation)
 	}
 	cam->pixel_size = (cam->half_width * 2) / HEIGHT;
 	cam->tranformation = transformation;
-	cam->inverse = invert_matrix(transformation.grid, 4);
+	cam->inverse = invert_matrix(transformation, 4);
 	//error handling
 }
 
@@ -91,8 +91,8 @@ t_ray	ray_for_pixel(t_camera camera, int x, int y)
 	yoffset = ((float)y + 0.5) * camera.pixel_size;
 	world_x = camera.half_width - xoffset;
 	world_y = camera.half_height - yoffset;
-	pixel = multiply_matrix_tuple(*camera.inverse, create_point(world_x, world_y, -1));
-	ray.origin = multiply_matrix_tuple(*camera.inverse, create_point(0, 0, 0));
+	pixel = multiply_matrix_tuple(camera.inverse, create_point(world_x, world_y, -1));
+	ray.origin = multiply_matrix_tuple(camera.inverse, create_point(0, 0, 0));
 	ray.direction = normalize(subtract_tuple(pixel, ray.origin));
 	return (ray); 
 }
