@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/19 18:47:02 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/19 19:05:53 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,6 +327,20 @@ t_fvec	normalize_fvec(t_fvec vector)
 	return (normalized);
 }
 
+void write_color(t_fvec vec3)
+{
+	int rbyte;
+	int gbyte;
+	int bbyte;
+	static t_interval intensity;
+	intensity = inv(0.000, 0.999);
+	rbyte = (int)256*(clamp(intensity, vec3[0]));
+	gbyte = (int)256*(clamp(intensity, vec3[1]));
+	bbyte = (int)256*(clamp(intensity, vec3[2]));
+	printf("%d %d %d\n", rbyte, gbyte, bbyte);
+}
+
+
 int	main(int argc, char **argv)
 {
 	t_mlx				mlx_data;
@@ -353,6 +367,11 @@ int	main(int argc, char **argv)
 	p0 = fvec3(-1, 1, 15);
 	p1 = fvec3(1, 1, -15);
 	p2 = fvec3(-1, -1, -15);
+	// render
+	printf("P3\n");
+	printf("%d ", 640);
+	printf("%d", 640);
+	printf("\n255\n");
 	for (int y = 0; y < 640; y++)
 	{
 		for (int x = 0; x < 640; x++)
@@ -361,10 +380,9 @@ int	main(int argc, char **argv)
 			ray.origin = campos;
 			ray.direction = normalize_fvec(pixelpos - ray.origin);
 			ray.t = 1e30f;
-			for (int i = 0; i < world.obj_count; i++)
-			{
-				intersect_tri(&ray, &world.tri[i]);
-			}
+			intersect_bvh(&world, &ray, 0);
+			if (ray.t < 1e30f)
+				printf("%d %d %d\n", 255, 255, 255);
 		}
 		
 	}
