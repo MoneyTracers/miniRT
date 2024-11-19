@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 14:34:44 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/18 18:14:10 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/19 12:58:52 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@
 # include <tuples.h>
 # include <stdlib.h>
 
-# define MS 4
-
 typedef struct	s_matrix
 {
-	float	**grid;
+	float	grid[4][4];
 	int		size;
 }	t_matrix;
 

@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:25:45 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/18 15:13:06 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/19 13:04:25 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,5 @@ t_matrix	rotate(float x, float y, float z)
 		rotatez = create_identity_matrix();
 	rotation = multiply_matrices(rotatez, rotatey);
 	rotation = multiply_matrices(rotation, rotatex);
-	free_matrix(rotatex.grid, 4);
-	free_matrix(rotatey.grid, 4);
-	free_matrix(rotatez.grid, 4);
 	return (rotation);
 }

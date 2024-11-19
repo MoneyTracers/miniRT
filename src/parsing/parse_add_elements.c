@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 14:32:54 by spenning          #+#    #+#             */
-/*   Updated: 2024/11/18 15:12:48 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/19 13:05:54 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	parse_add_sphere(t_world *world, char *str)
 	transform.scale = scale_matrix(diameter, diameter, diameter);
 	transform.translation = translation_matrix(coor.x, coor.y, coor.z);
 	add_object_to_list(&world->objects, new_object(SPHERE, m, transformation_matrix(transform), (void *)sphere));
-	free_transformation_matrix(&transform);
 	return ;
 }
 void	parse_add_plane(t_world *world, char *str)
@@ -59,7 +58,6 @@ void	parse_add_plane(t_world *world, char *str)
 	transform.scale = create_identity_matrix();
 	transform.translation = translation_matrix(coor.x, coor.y, coor.z);
 	add_object_to_list(&world->objects, new_object(PLANE, m, transformation_matrix(transform), (void *)plane));
-	free_transformation_matrix(&transform);
 	return ;
 }
 
@@ -94,12 +92,9 @@ void	parse_add_cyl(t_world *world, char *str)
 	m = default_material();
 	m.color = parse_get_color(str, &i);
 	cyl = new_cylinder(-height / 2, height / 2, true);
-	// TODO:translate normal_vec to radians
-	//transform.rotate = get_rotation(coor, normal_vec);
 	transform.rotate = rotation_matrix_from_normal(normal_vec);
 	transform.scale = scale_matrix(diameter, diameter, diameter);
 	transform.translation = translation_matrix(coor.x, coor.y, coor.z);
 	add_object_to_list(&world->objects, new_object(CYLINDER, m, transformation_matrix(transform), (void *)cyl));
-	free_transformation_matrix(&transform);
 	return ;
 }

@@ -6,34 +6,12 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:50:44 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/18 18:07:56 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/19 13:03:44 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <matrix.h>
 #include <free.h>
-
-float	**allocate_mem_matrix(int size)
-{
-	float	**new;
-	int		i;
-
-	new = malloc(sizeof(float *) * size);
-	if (!new)
-		return (NULL);
-	i = 0;
-	while (i < size)
-	{
-		new[i] = malloc(sizeof(float) * size);
-		if (!new)
-		{
-			free_matrix(new, i);
-			return (NULL);
-		}
-		i++;
-	}
-	return (new);
-}
 
 t_matrix	submatrix(t_matrix matrix, int row, int col, int size)
 {

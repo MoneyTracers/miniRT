@@ -6,35 +6,13 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 14:48:35 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/18 18:13:53 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/19 13:04:03 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <matrix.h>
 #include <free.h>
 #include <minirt.h>
-
-float **create_matrix(int rows, int columns)
-{
-	float	**matrix;
-	int		i;
-
-	matrix = malloc(sizeof(float *) * rows);
-	if (!matrix)
-		return (NULL);
-	i = 0;
-	while (i < rows)
-	{
-		matrix[i] = malloc(sizeof(float) * columns);
-		if (!matrix[i])
-		{
-			free_matrix(matrix, i);
-			return (NULL);
-		}
-		i++;
-	}
-	return (matrix);
-}
 
 bool	equal_matrix(t_matrix one, t_matrix two, int rows, int columns)
 {
@@ -65,11 +43,10 @@ t_matrix	multiply_matrices(t_matrix one, t_matrix two)
 
 	row = 0;
 	new = create_identity_matrix();
-	//ERROR HANDLING
-	while (row < MS)
+	while (row < 4)
 	{
 		col = 0;
-		while (col < MS)
+		while (col < 4)
 		{
 			new.grid[row][col] = 0;
 			col++;
@@ -77,13 +54,13 @@ t_matrix	multiply_matrices(t_matrix one, t_matrix two)
 		row++;
 	}
 	row = 0;
-	while (row < MS)
+	while (row < 4)
 	{
 		col = 0;
-		while (col < MS)
+		while (col < 4)
 		{
 			k = 0;
-			while (k < MS)
+			while (k < 4)
 			{
 				new.grid[row][col] += one.grid[row][k] * two.grid[k][col];
 				k++;
@@ -125,10 +102,10 @@ t_matrix	create_identity_matrix(void)
 	int col;
 	
 	row = 0;
-	while (row < MS)
+	while (row < 4)
 	{
 		col = 0;
-		while (col < MS)
+		while (col < 4)
 		{
 			if (col == row)
 				identity.grid[row][col] = 1;
@@ -148,10 +125,10 @@ t_matrix	transpose_matrix(t_matrix matrix)
 	int			col;
 
 	row = 0;
-	while (row < MS)
+	while (row < 4)
 	{
 		col = 0;
-		while (col < MS)
+		while (col < 4)
 		{
 			new.grid[row][col] = matrix.grid[col][row];
 			col++;

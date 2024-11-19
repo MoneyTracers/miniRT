@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 13:54:57 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/18 18:14:49 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/19 13:00:07 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,8 @@ t_matrix	view_transformation(t_camera *cam, t_tuple from, t_tuple to, t_tuple up
 	cam->left = get_cross_product(cam->forward, normalize(up));
 	cam->true_up = get_cross_product(cam->left, cam->forward);
 	orientation = view_matrix(cam->left, cam->forward, cam->true_up);
-	//error handling
 	translation = translation_matrix(-from.x, -from.y, -from.z);
-	//error handling
 	transformation = multiply_matrices(orientation, translation);
-	free_matrix(orientation.grid, 4);
-	free_matrix(translation.grid, 4);
 	transformation.size = 4;
 	return (transformation);
 }

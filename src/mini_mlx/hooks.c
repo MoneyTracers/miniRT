@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 18:22:50 by spenning          #+#    #+#             */
-/*   Updated: 2024/11/18 18:16:14 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/19 13:01:16 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	move_cam(int keycode, t_camera *cam)
 	t_matrix	translation;
 	t_matrix	new_transformation;
 
-	translation.grid = NULL;
+	translation = create_identity_matrix();
 	if (keycode == UP_KEY)
 		translation = translation_matrix(0, -10, 0);
 	else if (keycode == DOWN_KEY)
@@ -36,7 +36,6 @@ int	move_cam(int keycode, t_camera *cam)
 	else if (keycode == ZOOM_OUT)
 		translation = translation_matrix(-cam->normal.x * 10, -cam->normal.y * 10, -cam->normal.z * 10);
 	
-	
 	new_transformation = multiply_matrices(translation, cam->tranformation);
 	cam->tranformation = new_transformation;
 	cam->inverse = invert_matrix(cam->tranformation, 4);
@@ -49,7 +48,7 @@ int	rotate_cam(int keycode, t_camera *cam)
 	t_matrix	rotation;
 	t_matrix	new_transformation;
 
-	rotation.grid = NULL;
+	rotation = create_identity_matrix();
 	if (keycode == W_KEY)
 		rotation = rotate_x(degrees_to_radians(-45));
 	else if (keycode == S_KEY)
