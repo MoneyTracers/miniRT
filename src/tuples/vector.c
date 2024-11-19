@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   vector.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/01 13:16:15 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/06 14:03:22 by maraasve         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   vector.c                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/10/01 13:16:15 by maraasve      #+#    #+#                 */
+/*   Updated: 2024/11/19 15:16:47 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,9 @@ float	get_dot_product(t_tuple vector1, t_tuple vector2)
 	return (dot_product);
 }
 
-t_tuple	get_cross_product(t_tuple vector1, t_tuple vector2)
+t_fvec	get_cross_product(t_fvec vector1, t_fvec vector2)
 {
-	t_tuple	cross_product;
+	t_fvec	cross_product;
 
 	cross_product.x = vector1.y* vector2.z \
 							- vector1.z * vector2.y;

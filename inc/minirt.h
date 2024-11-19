@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/15 14:27:17 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/19 14:07:56 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,24 @@ typedef	struct s_light
 }	t_light;
 
 
+typedef	struct s_tri
+{
+	t_fvec vertex0;
+	t_fvec vertex1;
+	t_fvec vertex2;
+	t_fvec centroid;
+} t_tri;
+
+
+
 typedef struct s_bvh
 {
+	t_fvec			aabb_min;
+	t_fvec			aabb_max;
+	unsigned int	left_child;
+	unsigned int	right_child;
+	unsigned int	first_prim;
+	unsigned int	prim_count;
 	t_bvh		*left;
 	t_bvh		*right;
 	t_aabb		bbox;
@@ -114,6 +130,8 @@ typedef struct s_world
 	int				arr_size;
 	t_object		**objects_arr;
 	t_bvh			*bvh;
+	t_tri			*tri;
+	int				node_used;
 }	t_world;
 
 void	debugger(char *format, ...);
