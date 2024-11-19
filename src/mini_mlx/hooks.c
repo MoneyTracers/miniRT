@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 18:22:50 by spenning          #+#    #+#             */
-/*   Updated: 2024/11/19 13:01:16 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:43:36 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,26 @@
 
 int	move_cam(int keycode, t_camera *cam)
 {
-	t_matrix	translation;
-	t_matrix	new_transformation;
+	t_tuple		from;
+	t_tuple		to;
 
-	translation = create_identity_matrix();
+	from = cam->pos;
 	if (keycode == UP_KEY)
-		translation = translation_matrix(0, -10, 0);
+		from = add_tuple(from, scale_tuple(cam->true_up, 10));
 	else if (keycode == DOWN_KEY)
-		translation = translation_matrix(0, 10, 0);
+		from = subtract_tuple(from, scale_tuple(cam->true_up, 10));
 	else if (keycode == LEFT_KEY)
-		translation = translation_matrix(-10, 0, 0);
+		from = add_tuple(from, scale_tuple(cam->left, 10));
 	else if (keycode == RIGHT_KEY)
-		translation = translation_matrix(10, 0, 0);
+		from = subtract_tuple(from, scale_tuple(cam->left, 10));
 	else if (keycode == ZOOM_IN)
-		translation = translation_matrix(cam->normal.x * 10, cam->normal.y * 10, cam->normal.z * 10);
+		from = add_tuple(from, scale_tuple(cam->forward, 10));
 	else if (keycode == ZOOM_OUT)
-		translation = translation_matrix(-cam->normal.x * 10, -cam->normal.y * 10, -cam->normal.z * 10);
+		from = subtract_tuple(from, scale_tuple(cam->forward, 10));
 	
-	new_transformation = multiply_matrices(translation, cam->tranformation);
-	cam->tranformation = new_transformation;
-	cam->inverse = invert_matrix(cam->tranformation, 4);
-		return (0);
+	to = add_tuple(from, cam->forward);
+	cam->transformation = view_transformation(cam, from, to, create_vector(0, 1, 0));
+	cam->inverse = invert_matrix(cam->transformation, 4);
 	return (1);
 }
 
