@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/19 15:33:39 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/19 17:20:06 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,12 @@ t_fvec fvecminf( t_fvec a, t_fvec b )
 	return fvec3( fminf( a[0], b[0] ), fminf( a[1], b[1] ), fminf( a[2], b[2] ) );
 }
 
+t_fvec fvecmaxf( t_fvec a, t_fvec b )
+{ 
+	return fvec3( fmaxf( a[0], b[0] ), fmaxf( a[1], b[1] ), fmaxf( a[2], b[2] ) );
+}
+
+
 void update_nodebounds(t_world *world, unsigned int node_i)
 {
 	t_bvh			node;
@@ -85,7 +91,11 @@ void update_nodebounds(t_world *world, unsigned int node_i)
 	{
 		leaftri = world->tri[first + i];
 		node.aabb_min = fvecminf(node.aabb_min, leaftri.vertex0);
-		//TODO: calculate aabbmin and aabbmax with fminf and fmaxf of triangles
+		node.aabb_min = fvecminf(node.aabb_min, leaftri.vertex1);
+		node.aabb_min = fvecminf(node.aabb_min, leaftri.vertex2);
+		node.aabb_max = fvecminf(node.aabb_max, leaftri.vertex0);
+		node.aabb_max = fvecminf(node.aabb_max, leaftri.vertex1);
+		node.aabb_max = fvecminf(node.aabb_max, leaftri.vertex2);
 		i++;
 	}
 }
