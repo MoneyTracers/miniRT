@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/30 17:07:14 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/04 15:33:17 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/19 18:41:03 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include <math.h>
 # include <stdbool.h>
 # include <stdlib.h>
+
+typedef float				t_fvec \
+__attribute__ ((vector_size (4 * sizeof(float))));
 
 typedef struct	s_tuple
 {

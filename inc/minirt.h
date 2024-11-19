@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/19 14:07:56 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/19 18:41:09 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,6 @@
 # ifndef BONUS
 #  define BONUS 0
 # endif
-
-typedef float				t_fvec \
-__attribute__ ((vector_size (4 * sizeof(float))));
 
 typedef struct s_bvh t_bvh;
 typedef struct s_aabb t_aabb;
@@ -103,16 +100,12 @@ typedef	struct s_tri
 	t_fvec centroid;
 } t_tri;
 
-
-
 typedef struct s_bvh
 {
 	t_fvec			aabb_min;
 	t_fvec			aabb_max;
-	unsigned int	left_child;
-	unsigned int	right_child;
-	unsigned int	first_prim;
-	unsigned int	prim_count;
+	unsigned int	left_first;
+	unsigned int	tri_Count;
 	t_bvh		*left;
 	t_bvh		*right;
 	t_aabb		bbox;
@@ -131,6 +124,7 @@ typedef struct s_world
 	t_object		**objects_arr;
 	t_bvh			*bvh;
 	t_tri			*tri;
+	unsigned int	*tri_index;
 	int				node_used;
 }	t_world;
 

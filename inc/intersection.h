@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/31 14:34:14 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/19 15:21:32 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/19 18:41:26 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,18 @@ typedef struct s_comps
 	bool	inside;
 }	t_comps;
 
-typedef struct	s_ray
+
+typedef struct	s_fray
 {
 	t_fvec	origin;
 	t_fvec	direction;
+	float	t;
+}	t_fray;
+
+typedef struct	s_ray
+{
+	t_tuple	origin;
+	t_tuple	direction;
 	float	t;
 }	t_ray;
 
