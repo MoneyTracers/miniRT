@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/19 18:41:09 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/20 13:12:26 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ typedef struct s_world
 	int				obj_count;
 	int				arr_size;
 	t_object		**objects_arr;
-	t_bvh			*bvh;
+	t_bvh			**bvh;
 	t_tri			*tri;
 	unsigned int	*tri_index;
 	int				node_used;

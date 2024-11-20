@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/19 19:05:53 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/20 15:08:48 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ bool isleaf(unsigned int tricount)
 	return (tricount > 0);
 }
 
-void intersect_tri(t_fray *ray, t_tri * tri)
+void intersect_tri(t_fray *ray, t_tri * tri, int index)
 {
 	t_fvec edge1;
 	t_fvec edge2;
@@ -105,6 +105,7 @@ void intersect_tri(t_fray *ray, t_tri * tri)
 	t_fvec s;
 	t_fvec q;
 
+	(void)index;
 	edge1 = tri->vertex1 - tri->vertex0;
 	edge2 = tri->vertex2 - tri->vertex0;
 	h = fvec_cross(ray->direction, edge2);
@@ -123,41 +124,42 @@ void intersect_tri(t_fray *ray, t_tri * tri)
 	t = f * fvec_dot(edge2, q);
 	if (t > 0.0001f)
 		ray->t = min(ray->t, t);
+	// dprintf(2, "index %d\n", index);
+	// dprintf(2, "vertex0 %f vertex1 %f vertex2 %f\n", tri->vertex0[0], tri->vertex1[0], tri->vertex2[0]);
 }
 
 void update_nodebounds(t_world *world, unsigned int node_i)
 {
-	t_bvh			node;
+	t_bvh			*node;
 	unsigned int	first;
 	unsigned int	i;
 	t_tri			leaftri;
 
 	i = 0;
 	node = world->bvh[node_i];
-	node.aabb_min = fvec(1e30f);
-	node.aabb_max = fvec(-1e30f);
-	first = node.left_first;
-	while (i < node.tri_Count)
+	node->aabb_min = fvec(1e30f);
+	node->aabb_max = fvec(-1e30f);
+	first = node->left_first;
+	while (i < node->tri_Count)
 	{
 		leaftri = world->tri[first + i];
-		node.aabb_min = fvecminf(node.aabb_min, leaftri.vertex0);
-		node.aabb_min = fvecminf(node.aabb_min, leaftri.vertex1);
-		node.aabb_min = fvecminf(node.aabb_min, leaftri.vertex2);
-		node.aabb_max = fvecminf(node.aabb_max, leaftri.vertex0);
-		node.aabb_max = fvecminf(node.aabb_max, leaftri.vertex1);
-		node.aabb_max = fvecminf(node.aabb_max, leaftri.vertex2);
+		node->aabb_min = fvecminf(node->aabb_min, leaftri.vertex0);
+		node->aabb_min = fvecminf(node->aabb_min, leaftri.vertex1);
+		node->aabb_min = fvecminf(node->aabb_min, leaftri.vertex2);
+		node->aabb_max = fvecmaxf(node->aabb_max, leaftri.vertex0);
+		node->aabb_max = fvecmaxf(node->aabb_max, leaftri.vertex1);
+		node->aabb_max = fvecmaxf(node->aabb_max, leaftri.vertex2);
 		i++;
 	}
 }
 
 void swap(unsigned int *a, unsigned int *b)
 {
-	unsigned int *c;
+	unsigned int c;
 
-	c = 0;
-	*c = *a;
+	c = *a;
 	*a = *b;
-	*b = *c;
+	*b = c;
 }
 
 bool intersect_aabb(t_fray *ray, t_fvec bmin, t_fvec bmax)
@@ -183,31 +185,31 @@ bool intersect_aabb(t_fray *ray, t_fvec bmin, t_fvec bmax)
 	tz2 = (bmax[2] - ray->origin[2]) / ray->direction[2];
 	tmin = max(tmin, min(tz1, tz2));
 	tmax = min(tmax, max(tz1, tz2));
-	return (tmax >= tmin && tmin < ray->t);
+	return (tmax >= tmin && tmin < ray->t && tmax > 0);
 }
 
 void intersect_bvh(t_world *world, t_fray *ray, unsigned int node_i)
 {
-	t_bvh	node;
+	t_bvh	*node;
 
 	node = world->bvh[node_i];
-	if (!intersect_aabb(ray, node.aabb_min, node.aabb_max))
+	if (!intersect_aabb(ray, node->aabb_min, node->aabb_max))
 		return ;
-	if (isleaf(node.tri_Count))
+	if (isleaf(node->tri_Count))
 	{
-		for (unsigned int i = 0; i < node.tri_Count; i++)
-			intersect_tri(ray, &world->tri[world->tri_index[node.left_first + 1]]);
+		for (unsigned int i = 0; i < node->tri_Count; i++)
+			intersect_tri(ray, &world->tri[world->tri_index[node->left_first + 1]], node->left_first + 1);
 	}
 	else
 	{
-		intersect_bvh(world, ray, node.left_first);
-		intersect_bvh(world, ray, node.left_first + 1);
+		intersect_bvh(world, ray, node->left_first);
+		intersect_bvh(world, ray, node->left_first + 1);
 	}
 }
 
 void subdivide(t_world *world, unsigned int node_i)
 {
-	t_bvh	node;
+	t_bvh	*node;
 	t_fvec	extent;
 	int		axis;
 	float	splitpos;
@@ -220,38 +222,38 @@ void subdivide(t_world *world, unsigned int node_i)
 	axis = 0;
 	//terminate recursion
 	node = world->bvh[node_i];
-	if (node.tri_Count <= 2)
+	if (node->tri_Count <= 2)
 		return;
 	//determine split axis and position
-	extent = node.aabb_max - node.aabb_min;
+	extent = node->aabb_max - node->aabb_min;
 	if (extent[1] > extent[0])
 		axis = 1;
 	if (extent[2] > extent[axis])
 		axis = 2;
-	splitpos = node.aabb_min[axis] + extent[axis] * 0.5f;
+	splitpos = node->aabb_min[axis] + extent[axis] * 0.5f;
 	// in-place partition
-	i = node.left_first;
-	j = i + node.tri_Count - 1;
+	i = node->left_first;
+	j = i + node->tri_Count - 1;
 	while (i <= j)
 	{
-		if (world->tri[i].centroid[axis] < splitpos)
+		if (world->tri[world->tri_index[i]].centroid[axis] < splitpos)
 			i++;
 		else
 			swap(&world->tri_index[i], &world->tri_index[j--]);
 	}
 	//abort split if one side is empty
-	left_count = i - node.left_first;
-	if (left_count == 0 || left_count == node.tri_Count)
+	left_count = i - node->left_first;
+	if (left_count == 0 || left_count == node->tri_Count)
 		return ;
 	// create childnodes
 	left_child_index = world->node_used++;
 	right_child_index = world->node_used++;
-	world->bvh[left_child_index].left_first = node.left_first;
-	world->bvh[left_child_index].tri_Count = left_count;
-	world->bvh[right_child_index].left_first = i;
-	world->bvh[right_child_index].tri_Count = node.tri_Count - left_count;
-	node.left_first = left_child_index;
-	node.tri_Count = 0;
+	world->bvh[left_child_index]->left_first = node->left_first;
+	world->bvh[left_child_index]->tri_Count = left_count;
+	world->bvh[right_child_index]->left_first = i;
+	world->bvh[right_child_index]->tri_Count = node->tri_Count - left_count;
+	node->left_first = left_child_index;
+	node->tri_Count = 0;
 	update_nodebounds(world, left_child_index);
 	update_nodebounds(world, right_child_index);
 	//recurse
@@ -262,7 +264,7 @@ void subdivide(t_world *world, unsigned int node_i)
 
 void buildbvh(t_world *world)
 {
-	t_bvh	root;
+	t_bvh	*root;
 	t_tri	tri;
 	int		i;
 
@@ -270,16 +272,33 @@ void buildbvh(t_world *world)
 	while (i < world->obj_count)
 	{
 		tri = world->tri[i];
-		tri.centroid = (tri.vertex0 + tri.vertex1 + tri.vertex2) * 0.3333f;
+		world->tri[i].centroid = (tri.vertex0 + tri.vertex1 + tri.vertex2) * 0.3333f;
 		world->tri_index[i] = i;
 		i++;
 	}
 	world->node_used = 1;
 	root = world->bvh[0];
-	root.left_first = 0;
-	root.tri_Count = world->obj_count;
+	root->left_first = 0;
+	root->tri_Count = world->obj_count;
 	update_nodebounds(world, 0);
 	subdivide(world, 0);
+}
+
+
+static unsigned int seed = 0x12345678;
+unsigned int RandomUInt()
+{
+	unsigned int seed_new;
+
+	seed_new = seed;
+	seed_new ^= seed_new << 13;
+	seed_new ^= seed_new >> 17;
+	seed_new ^= seed_new << 5;
+	return seed_new;
+}
+float RandomFloat() 
+{
+	return(RandomUInt() * 2.3283064365387e-10f);
 }
 
 
@@ -293,9 +312,9 @@ void basicbvh_app(t_world *world)
 	i = 0;
 	while (i < world->obj_count)
 	{
-		r0 = fvec3(rand(), rand(), rand());
-		r1 = fvec3(rand(), rand(), rand());
-		r2 = fvec3(rand(), rand(), rand());
+		r0 = fvec3(random_float_between(0, 1), random_float_between(0, 1), random_float_between(0, 1));
+		r1 = fvec3(random_float_between(0, 1), random_float_between(0, 1), random_float_between(0, 1));
+		r2 = fvec3(random_float_between(0, 1), random_float_between(0, 1), random_float_between(0, 1));
 		world->tri[i].vertex0 = r0 * 9 - fvec(5);
 		world->tri[i].vertex1 = world->tri[i].vertex0 + r1;
 		world->tri[i].vertex2 = world->tri[i].vertex0 + r2;
@@ -357,9 +376,13 @@ int	main(int argc, char **argv)
 	parse(&world, argc, argv);
 	debugger(BLU "amount of objects parsed: %d\n" RESET, world.obj_count);
 	debugger(BLU "creating bvh\n" RESET);
-	world.bvh = bvh_node(world.objects_arr, 0, world.obj_count);
+	// world.bvh = bvh_node(world.objects_arr, 0, world.obj_count);
 	world.obj_count = 64;
-	world.bvh = ft_calloc(sizeof(t_bvh), world.obj_count * 2 - 1);
+	world.bvh = ft_calloc(sizeof(t_bvh*), world.obj_count * 2 - 1);
+	for (int i = 0; i < world.obj_count * 2 - 1; i++)
+	{
+		world.bvh[i] = ft_calloc(sizeof(t_bvh), 1);
+	}
 	world.tri = ft_calloc(sizeof(t_tri), world.obj_count);
 	world.tri_index = ft_calloc(sizeof(unsigned int), world.obj_count);
 
@@ -367,6 +390,7 @@ int	main(int argc, char **argv)
 	p0 = fvec3(-1, 1, 15);
 	p1 = fvec3(1, 1, -15);
 	p2 = fvec3(-1, -1, -15);
+	basicbvh_app(&world);
 	// render
 	printf("P3\n");
 	printf("%d ", 640);
@@ -376,13 +400,18 @@ int	main(int argc, char **argv)
 	{
 		for (int x = 0; x < 640; x++)
 		{
-			pixelpos = p0 + (p1 - p0) * (x /640.0f) + (p2 - p0) * (y / 640.0f);
+			pixelpos = p0 + (p1 - p0) * (x /(float)640) + (p2 - p0) * (y / (float)640.0);
 			ray.origin = campos;
 			ray.direction = normalize_fvec(pixelpos - ray.origin);
 			ray.t = 1e30f;
 			intersect_bvh(&world, &ray, 0);
 			if (ray.t < 1e30f)
+			{
 				printf("%d %d %d\n", 255, 255, 255);
+				// dprintf(2, "x: %d y: %d\n", x, y);
+			}
+			else 
+				printf("%d %d %d\n", 0, 0, 0);
 		}
 		
 	}
