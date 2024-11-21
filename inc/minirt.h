@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/20 13:12:26 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/21 18:57:52 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,13 @@
 
 typedef struct s_bvh t_bvh;
 typedef struct s_aabb t_aabb;
+
+typedef struct s_ab
+{
+	t_fvec bmin;
+	t_fvec bmax;
+} t_ab;
+
 
 typedef struct s_camera
 {

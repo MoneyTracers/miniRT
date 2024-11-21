@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/20 15:08:48 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/21 19:11:14 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #include <camera.h>
 #include <parse.h>
 #include <bvh.h>
+#include <time.h> 
 
 
 
@@ -207,10 +208,59 @@ void intersect_bvh(t_world *world, t_fray *ray, unsigned int node_i)
 	}
 }
 
+float	area_aabb(t_ab *aabb)
+{
+	t_fvec e;
+	
+	e = aabb->bmax - aabb->bmin;
+	return (e[0] * e[1] + e[1] * e[2] + e[2] * e[2]);
+}
+
+void grow_aabb(t_fvec *p, t_ab *aabb)
+{
+	aabb->bmin = fvecminf(aabb->bmin, *p);
+	aabb->bmax = fvecmaxf(aabb->bmax, *p);
+}
+
+float evaluate_sah(t_world *world, t_bvh *node, int axis, float pos)
+{
+	t_ab	left;
+	t_ab	right;
+	int		left_count;
+	int		right_count;
+	t_tri	*tri;
+	float	cost;
+
+	left_count = 0;
+	right_count = 0;
+	for (unsigned int i = 0; i < node->tri_Count; i++)
+	{
+		tri = &world->tri[world->tri_index[node->left_first + i]];
+		if (tri->centroid[axis] < pos)
+		{
+			left_count++;
+			grow_aabb(&tri->vertex0, &left);
+			grow_aabb(&tri->vertex1, &left);
+			grow_aabb(&tri->vertex2, &left);
+		}
+		else
+		{
+			right_count++;
+			grow_aabb(&tri->vertex0, &right);
+			grow_aabb(&tri->vertex1, &right);
+			grow_aabb(&tri->vertex2, &right);
+		}
+	}
+	cost = left_count * area_aabb(&left) + right_count * area_aabb(&right);
+	if (cost > 0)
+		return (cost);
+	return(1e30f);
+}
+
 void subdivide(t_world *world, unsigned int node_i)
 {
 	t_bvh	*node;
-	t_fvec	extent;
+	t_fvec	e;
 	int		axis;
 	float	splitpos;
 	int		i;
@@ -218,19 +268,44 @@ void subdivide(t_world *world, unsigned int node_i)
 	unsigned int		left_count;
 	int		left_child_index;
 	int		right_child_index;
+	int		best_axis;
+	float	best_cost;
+	float	best_pos;
+	float	candidate_pos;
+	float	cost;
+	float	parent_area;
+	float	parent_cost;
+	t_tri	*tri;
 
-	axis = 0;
+	best_pos = 0;
+	best_cost = 1e30f;
+	
 	//terminate recursion
 	node = world->bvh[node_i];
-	if (node->tri_Count <= 2)
-		return;
+	axis = 0;
 	//determine split axis and position
-	extent = node->aabb_max - node->aabb_min;
-	if (extent[1] > extent[0])
-		axis = 1;
-	if (extent[2] > extent[axis])
-		axis = 2;
-	splitpos = node->aabb_min[axis] + extent[axis] * 0.5f;
+	for (int a = 0; a < 3; a++)
+	{
+		for (unsigned int i = 0; i < node->tri_Count; i++)
+		{
+			tri = &world->tri[world->tri_index[node->left_first + i]];
+			candidate_pos = tri->centroid[a];
+			cost = evaluate_sah(world, node, axis, candidate_pos);
+			if (cost < best_cost)
+			{
+				best_pos = candidate_pos;
+				best_axis = a;
+				best_cost = cost;
+			}
+		}
+	}
+	e = node->aabb_max - node->aabb_min;
+	parent_area = e[0] * e[1] + e[1] * e[2] + e[2] * e[2];
+	parent_cost = node->tri_Count * parent_area;
+	if (best_cost >= parent_cost)
+		return;
+	axis = best_axis;
+	splitpos = best_pos;
 	// in-place partition
 	i = node->left_first;
 	j = i + node->tri_Count - 1;
@@ -304,22 +379,17 @@ float RandomFloat()
 
 void basicbvh_app(t_world *world)
 {
-	int		i;
-	t_fvec	r0;
-	t_fvec	r1;
-	t_fvec	r2;
-
-	i = 0;
-	while (i < world->obj_count)
+	FILE* file = fopen( "maps/unity.tri", "r" );
+	float a, b, c, d, e, f, g, h, i;
+	for (int t = 0; t < 12582; t++) 
 	{
-		r0 = fvec3(random_float_between(0, 1), random_float_between(0, 1), random_float_between(0, 1));
-		r1 = fvec3(random_float_between(0, 1), random_float_between(0, 1), random_float_between(0, 1));
-		r2 = fvec3(random_float_between(0, 1), random_float_between(0, 1), random_float_between(0, 1));
-		world->tri[i].vertex0 = r0 * 9 - fvec(5);
-		world->tri[i].vertex1 = world->tri[i].vertex0 + r1;
-		world->tri[i].vertex2 = world->tri[i].vertex0 + r2;
-		i++;
+		fscanf( file, "%f %f %f %f %f %f %f %f %f\n", 
+			&a, &b, &c, &d, &e, &f, &g, &h, &i );
+		world->tri[t].vertex0 = fvec3( a, b, c );
+		world->tri[t].vertex1 = fvec3( d, e, f );
+		world->tri[t].vertex2 = fvec3( g, h, i );
 	}
+	fclose( file );
 	buildbvh(world);
 }
 
@@ -370,14 +440,20 @@ int	main(int argc, char **argv)
 	t_fvec				p1;
 	t_fvec				p2;
 	t_fray				ray;
-	
+	int					red;
+	int					green;
+	int					blue;
+	unsigned int		c;
+	clock_t				time;
+	float				elapsed;
+
 
 	ft_bzero(&world, sizeof(t_world));
 	parse(&world, argc, argv);
 	debugger(BLU "amount of objects parsed: %d\n" RESET, world.obj_count);
 	debugger(BLU "creating bvh\n" RESET);
 	// world.bvh = bvh_node(world.objects_arr, 0, world.obj_count);
-	world.obj_count = 64;
+	world.obj_count = 12582;
 	world.bvh = ft_calloc(sizeof(t_bvh*), world.obj_count * 2 - 1);
 	for (int i = 0; i < world.obj_count * 2 - 1; i++)
 	{
@@ -386,32 +462,44 @@ int	main(int argc, char **argv)
 	world.tri = ft_calloc(sizeof(t_tri), world.obj_count);
 	world.tri_index = ft_calloc(sizeof(unsigned int), world.obj_count);
 
-	campos = fvec3(0,0,-18);
-	p0 = fvec3(-1, 1, 15);
-	p1 = fvec3(1, 1, -15);
-	p2 = fvec3(-1, -1, -15);
+	campos = fvec3(-1.5f,-0.2f,-2.5f);
+	p0 = fvec3(-2.5f, 0.8f, -0.5f );
+	p1 = fvec3(-0.5f, 0.8f, -0.5f );
+	p2 = fvec3(-2.5f, -1.2f, -0.5f);
+	time = clock();
+	dprintf(2, "constructing bvh\n");
 	basicbvh_app(&world);
+	elapsed = clock() - time;
+	dprintf(2, "construction time %.2fs\n", elapsed * 1000);
 	// render
 	printf("P3\n");
 	printf("%d ", 640);
 	printf("%d", 640);
 	printf("\n255\n");
+	time = clock();
 	for (int y = 0; y < 640; y++)
 	{
 		for (int x = 0; x < 640; x++)
 		{
-			pixelpos = p0 + (p1 - p0) * (x /(float)640) + (p2 - p0) * (y / (float)640.0);
 			ray.origin = campos;
+			pixelpos = p0 + (p1 - p0) * (x /(float)640) + (p2 - p0) * (y / (float)640.0);
 			ray.direction = normalize_fvec(pixelpos - ray.origin);
 			ray.t = 1e30f;
 			intersect_bvh(&world, &ray, 0);
+			c = 500 - (int)(ray.t * 42);
 			if (ray.t < 1e30f)
 			{
-				printf("%d %d %d\n", 255, 255, 255);
+				c = c * 0x10101;
+				red = (c >> 16) & 0xFF;
+				green = (c >> 8) & 0xFF;
+				blue = c & 0xFF;
+				printf("%d %d %d\n", red, green, blue);
 				// dprintf(2, "x: %d y: %d\n", x, y);
 			}
 			else 
 				printf("%d %d %d\n", 0, 0, 0);
+			elapsed = clock() - time;
+			dprintf(2, "tracing time: %.2fms (%5.2fK rays/s)\n", elapsed, sqrt( 630 ) / elapsed);
 		}
 		
 	}
