@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/21 21:57:03 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/21 22:33:51 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ bool isleaf(unsigned int tricount)
 	return (tricount > 0);
 }
 
-void intersect_tri(t_fray *ray, t_tri * tri, int index)
+void intersect_tri(t_fray *ray, t_tri * tri)
 {
 	t_fvec edge1;
 	t_fvec edge2;
@@ -106,7 +106,6 @@ void intersect_tri(t_fray *ray, t_tri * tri, int index)
 	t_fvec s;
 	t_fvec q;
 
-	(void)index;
 	edge1 = tri->vertex1 - tri->vertex0;
 	edge2 = tri->vertex2 - tri->vertex0;
 	h = fvec_cross(ray->direction, edge2);
@@ -201,7 +200,7 @@ void intersect_bvh(t_world *world, t_fray *ray, unsigned int node_i)
 	if (isleaf(node->tri_Count))
 	{
 		for (unsigned int i = 0; i < node->tri_Count; i++)
-			intersect_tri(ray, &world->tri[world->tri_index[node->left_first + 1]], node->left_first + 1);
+			intersect_tri(ray, &world->tri[world->tri_index[node->left_first + 1]]);
 	}
 	else
 	{
@@ -300,7 +299,7 @@ void subdivide(t_world *world, unsigned int node_i)
 		{
 			tri = &world->tri[world->tri_index[node->left_first + i]];
 			candidate_pos = tri->centroid[a];
-			cost = evaluate_sah(world, node, axis, candidate_pos);
+			cost = evaluate_sah(world, node, a, candidate_pos);
 			if (cost < best_cost)
 			{
 				best_pos = candidate_pos;
@@ -310,7 +309,7 @@ void subdivide(t_world *world, unsigned int node_i)
 		}
 	}
 	e = node->aabb_max - node->aabb_min;
-	parent_area = e[0] * e[1] + e[1] * e[2] + e[2] * e[2];
+	parent_area = e[0] * e[1] + e[1] * e[2] + e[2] * e[0];
 	parent_cost = node->tri_Count * parent_area;
 	if (best_cost >= parent_cost)
 		return;
@@ -389,7 +388,7 @@ void basicbvh_app(t_world *world)
 {
 	FILE* file = fopen( "maps/unity.tri", "r" );
 	float a, b, c, d, e, f, g, h, i;
-	for (int t = 0; t < 12582; t++) 
+	for (int t = 0; t < world->obj_count; t++) 
 	{
 		fscanf( file, "%f %f %f %f %f %f %f %f %f\n", 
 			&a, &b, &c, &d, &e, &f, &g, &h, &i );
@@ -463,6 +462,7 @@ int	main(int argc, char **argv)
 	// world.bvh = bvh_node(world.objects_arr, 0, world.obj_count);
 	world.obj_count = 12582;
 	world.bvh = ft_calloc(sizeof(t_bvh*), world.obj_count * 2 - 1);
+	dprintf(2, "nodes created %d\n", world.obj_count * 2 -1);
 	for (int i = 0; i < world.obj_count * 2 - 1; i++)
 	{
 		world.bvh[i] = ft_calloc(sizeof(t_bvh), 1);
@@ -491,7 +491,7 @@ int	main(int argc, char **argv)
 		for (int x = 0; x < 640; x++)
 		{
 			ray.origin = campos;
-			pixelpos = p0 + (p1 - p0) * (x /(float)640) + (p2 - p0) * (y / (float)640.0);
+			pixelpos = p0 + (p1 - p0) * (x /640.0f) + (p2 - p0) * (y / 640.0f);
 			ray.direction = normalize_fvec(pixelpos - ray.origin);
 			ray.t = 1e30f;
 			intersect_bvh(&world, &ray, 0);
@@ -502,7 +502,7 @@ int	main(int argc, char **argv)
 				red = (c >> 16) & 0xFF;
 				green = (c >> 8) & 0xFF;
 				blue = c & 0xFF;
-				printf("%d %d %d\n", 255, 255, 255);
+				printf("%d %d %d\n", red, green, blue);
 				// dprintf(2, "x: %d y: %d\n", x, y);
 			}
 			else 
