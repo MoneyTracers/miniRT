@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/21 19:11:14 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/21 21:57:03 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,8 @@ void update_nodebounds(t_world *world, unsigned int node_i)
 	t_bvh			*node;
 	unsigned int	first;
 	unsigned int	i;
-	t_tri			leaftri;
+	unsigned int	leaftri_index;
+	t_tri			*leaftri;
 
 	i = 0;
 	node = world->bvh[node_i];
@@ -143,13 +144,14 @@ void update_nodebounds(t_world *world, unsigned int node_i)
 	first = node->left_first;
 	while (i < node->tri_Count)
 	{
-		leaftri = world->tri[first + i];
-		node->aabb_min = fvecminf(node->aabb_min, leaftri.vertex0);
-		node->aabb_min = fvecminf(node->aabb_min, leaftri.vertex1);
-		node->aabb_min = fvecminf(node->aabb_min, leaftri.vertex2);
-		node->aabb_max = fvecmaxf(node->aabb_max, leaftri.vertex0);
-		node->aabb_max = fvecmaxf(node->aabb_max, leaftri.vertex1);
-		node->aabb_max = fvecmaxf(node->aabb_max, leaftri.vertex2);
+		leaftri_index = world->tri_index[first + i];
+		leaftri = &world->tri[leaftri_index];
+		node->aabb_min = fvecminf(node->aabb_min, leaftri->vertex0);
+		node->aabb_min = fvecminf(node->aabb_min, leaftri->vertex1);
+		node->aabb_min = fvecminf(node->aabb_min, leaftri->vertex2);
+		node->aabb_max = fvecmaxf(node->aabb_max, leaftri->vertex0);
+		node->aabb_max = fvecmaxf(node->aabb_max, leaftri->vertex1);
+		node->aabb_max = fvecmaxf(node->aabb_max, leaftri->vertex2);
 		i++;
 	}
 }
@@ -222,6 +224,12 @@ void grow_aabb(t_fvec *p, t_ab *aabb)
 	aabb->bmax = fvecmaxf(aabb->bmax, *p);
 }
 
+void init_ab(t_ab *aabb)
+{
+	aabb->bmax = fvec(-1e30f);
+	aabb->bmin = fvec(1e30f);
+}
+
 float evaluate_sah(t_world *world, t_bvh *node, int axis, float pos)
 {
 	t_ab	left;
@@ -231,6 +239,8 @@ float evaluate_sah(t_world *world, t_bvh *node, int axis, float pos)
 	t_tri	*tri;
 	float	cost;
 
+	init_ab(&left);
+	init_ab(&right);
 	left_count = 0;
 	right_count = 0;
 	for (unsigned int i = 0; i < node->tri_Count; i++)
@@ -277,12 +287,12 @@ void subdivide(t_world *world, unsigned int node_i)
 	float	parent_cost;
 	t_tri	*tri;
 
-	best_pos = 0;
-	best_cost = 1e30f;
-	
 	//terminate recursion
+	best_pos = 0;
 	node = world->bvh[node_i];
 	axis = 0;
+	best_axis = -1;
+	best_cost = 1e30f;
 	//determine split axis and position
 	for (int a = 0; a < 3; a++)
 	{
@@ -340,14 +350,12 @@ void subdivide(t_world *world, unsigned int node_i)
 void buildbvh(t_world *world)
 {
 	t_bvh	*root;
-	t_tri	tri;
 	int		i;
 
 	i = 0;
 	while (i < world->obj_count)
 	{
-		tri = world->tri[i];
-		world->tri[i].centroid = (tri.vertex0 + tri.vertex1 + tri.vertex2) * 0.3333f;
+		world->tri[i].centroid = (world->tri[i].vertex0 + world->tri[i].vertex1 + world->tri[i].vertex2) * 0.3333f;
 		world->tri_index[i] = i;
 		i++;
 	}
@@ -470,7 +478,8 @@ int	main(int argc, char **argv)
 	dprintf(2, "constructing bvh\n");
 	basicbvh_app(&world);
 	elapsed = clock() - time;
-	dprintf(2, "construction time %.2fs\n", elapsed * 1000);
+	dprintf(2, "nodes used: %d\n", world.node_used);
+	dprintf(2, "construction time %.2fs\n", elapsed / 1000000);
 	// render
 	printf("P3\n");
 	printf("%d ", 640);
@@ -493,13 +502,13 @@ int	main(int argc, char **argv)
 				red = (c >> 16) & 0xFF;
 				green = (c >> 8) & 0xFF;
 				blue = c & 0xFF;
-				printf("%d %d %d\n", red, green, blue);
+				printf("%d %d %d\n", 255, 255, 255);
 				// dprintf(2, "x: %d y: %d\n", x, y);
 			}
 			else 
 				printf("%d %d %d\n", 0, 0, 0);
 			elapsed = clock() - time;
-			dprintf(2, "tracing time: %.2fms (%5.2fK rays/s)\n", elapsed, sqrt( 630 ) / elapsed);
+			// dprintf(2, "tracing time: %.2fms (%5.2fK rays/s)\n", elapsed, sqrt( 630 ) / elapsed);
 		}
 		
 	}
