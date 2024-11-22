@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 13:54:57 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/19 16:43:50 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/22 16:16:18 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ t_matrix	view_matrix(t_tuple left, t_tuple forward, t_tuple up)
 	t_matrix	transform;
 
 	transform = create_identity_matrix();
-	//error handling
 	transform.grid[0][0] = left.x;
 	transform.grid[0][1] = left.y;
 	transform.grid[0][2] = left.z;
@@ -41,12 +40,11 @@ t_matrix	view_transformation(t_camera *cam, t_tuple from, t_tuple to, t_tuple up
 
 	cam->pos = from;
 	cam->forward = normalize(subtract_tuple(to, from));
-	cam->left = get_cross_product(cam->forward, normalize(up));
-	cam->true_up = get_cross_product(cam->left, cam->forward);
+	cam->left = normalize(get_cross_product(cam->forward, normalize(up)));
+	cam->true_up = normalize(get_cross_product(cam->left, cam->forward));
 	orientation = view_matrix(cam->left, cam->forward, cam->true_up);
 	translation = translation_matrix(-from.x, -from.y, -from.z);
 	transformation = multiply_matrices(orientation, translation);
-	transformation.size = 4;
 	return (transformation);
 }
 
@@ -70,9 +68,8 @@ void	new_camera(t_camera *cam, float fov, t_matrix transformation)
 		cam->half_width = half_view * cam->aspect_ratio;
 	}
 	cam->pixel_size = (cam->half_width * 2) / HEIGHT;
-	cam->tranformation = transformation;
+	cam->transformation = transformation;
 	cam->inverse = invert_matrix(transformation, 4);
-	//error handling
 }
 
 t_ray	ray_for_pixel(t_camera camera, int x, int y)

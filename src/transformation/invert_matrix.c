@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:50:44 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/19 13:03:44 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:26:26 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,12 @@ float	determinant(t_matrix matrix, int size)
 	return (det);
 }
 
-void	print_matrix(float **grid, int size)
+void	print_matrix(t_matrix matrix, int size)
 {
-	for(int i = 0; i <size; i++)
+	for(int i = 0; i < size; i++)
 	{
-		for(int j = 0; j <size; j++)
-			printf("%f ", grid[i][j]);
+		for(int j = 0; j < size; j++)
+			printf("%f ", matrix.grid[i][j]);
 		printf("\n");
 	}
 }

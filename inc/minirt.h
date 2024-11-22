@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 17:28:02 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/19 16:43:30 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/22 16:14:24 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_camera
 	t_tuple		forward;
 	t_tuple		left;
 	t_tuple		true_up;
-	t_matrix	tranformation;
+	t_matrix	transformation;
 	t_matrix	inverse;
 
 	// int		samples_per_pixel;

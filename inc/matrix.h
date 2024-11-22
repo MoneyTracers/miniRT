@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 14:34:44 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/19 12:58:52 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/22 16:16:29 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 typedef struct	s_matrix
 {
 	float	grid[4][4];
-	int		size;
 }	t_matrix;
 
 t_matrix	create_identity_matrix(void);
@@ -35,6 +34,6 @@ float		determinant(t_matrix matrix, int size);
 t_matrix	invert_matrix(t_matrix matrix, int size);
 
 #include <stdio.h>
-void	print_matrix(float **matrix, int size); //TAKE THIS OUT LATER
+void	print_matrix(t_matrix matrix, int size); //TAKE THIS OUT LATER
 
 #endif
