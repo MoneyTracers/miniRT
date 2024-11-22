@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:49:59 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/22 16:16:06 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/22 16:36:25 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ void	print_tuple(t_tuple tuple, char *str)
 {
 	printf("%s: x = %f | y = %f | z = %f\n", str, tuple.x, tuple.y, tuple.z);
 }
-
-#define MAX_PITCH 1.5  // About 85 degrees in radians
 
 t_matrix rotation_around_axis(t_tuple axis, float angle) 
 {

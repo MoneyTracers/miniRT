@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 14:31:28 by spenning          #+#    #+#             */
-/*   Updated: 2024/11/15 14:13:35 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/22 16:47:57 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ void	parse_add_camera(t_world *world, char *str)
 }
 void	parse_add_light(t_world *world, char *str)
 {
-	t_tuple pos;
-	float brightness;
-	t_color color;
-	int i;
+	t_tuple	pos;
+	t_color	color;
+	float	brightness;
+	int 	i;
 
 	i = 1;
 	pos = parse_get_coordinates(str, &i);
