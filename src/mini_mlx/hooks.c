@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:49:59 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/22 16:36:25 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/22 17:48:29 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,13 @@ int rotate_cam(int keycode, t_camera *cam)
 		look_point = multiply_matrix_tuple(rotation, look_point);
 		cam->forward = normalize(look_point);
 	}
+	t_tuple up;
+	if (ft_fabs(cam->forward.y) > 0.9) // this doesnt seem to work
+		up = create_vector(1, 0, 0);
+	else
+		up = create_vector(0, 1, 0);
 	cam->transformation = view_transformation(cam, cam->pos, 
-	add_tuple(cam->pos, cam->forward), create_vector(0, 1, 0));
+	add_tuple(cam->pos, cam->forward), up);
 	cam->inverse = invert_matrix(cam->transformation, 4);
 	return (1);
 }
