@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/21 22:33:51 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/22 14:48:52 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ float	area_aabb(t_ab *aabb)
 	t_fvec e;
 	
 	e = aabb->bmax - aabb->bmin;
-	return (e[0] * e[1] + e[1] * e[2] + e[2] * e[2]);
+	return (e[0] * e[1] + e[1] * e[2] + e[2] * e[0]);
 }
 
 void grow_aabb(t_fvec *p, t_ab *aabb)
@@ -287,34 +287,34 @@ void subdivide(t_world *world, unsigned int node_i)
 	t_tri	*tri;
 
 	//terminate recursion
-	best_pos = 0;
 	node = world->bvh[node_i];
-	axis = 0;
 	best_axis = -1;
+	axis = 0;
+	best_pos = 0;
 	best_cost = 1e30f;
 	//determine split axis and position
-	for (int a = 0; a < 3; a++)
+	for (int axi = 0; axi < 3; axi++)
 	{
 		for (unsigned int i = 0; i < node->tri_Count; i++)
 		{
 			tri = &world->tri[world->tri_index[node->left_first + i]];
-			candidate_pos = tri->centroid[a];
-			cost = evaluate_sah(world, node, a, candidate_pos);
+			candidate_pos = tri->centroid[axi];
+			cost = evaluate_sah(world, node, axi, candidate_pos);
 			if (cost < best_cost)
 			{
 				best_pos = candidate_pos;
-				best_axis = a;
+				best_axis = axi;
 				best_cost = cost;
 			}
 		}
 	}
+	axis = best_axis;
+	splitpos = best_pos;
 	e = node->aabb_max - node->aabb_min;
 	parent_area = e[0] * e[1] + e[1] * e[2] + e[2] * e[0];
 	parent_cost = node->tri_Count * parent_area;
 	if (best_cost >= parent_cost)
 		return;
-	axis = best_axis;
-	splitpos = best_pos;
 	// in-place partition
 	i = node->left_first;
 	j = i + node->tri_Count - 1;
@@ -503,6 +503,7 @@ int	main(int argc, char **argv)
 				green = (c >> 8) & 0xFF;
 				blue = c & 0xFF;
 				printf("%d %d %d\n", red, green, blue);
+				// printf("%d %d %d\n", 255, 255, 255);
 				// dprintf(2, "x: %d y: %d\n", x, y);
 			}
 			else 
