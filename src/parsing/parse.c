@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:57:19 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/26 17:42:09 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/26 17:47:35 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	parse_lines(t_world *world, int line_count, char *file)
 	i = 0;
 	ft_bzero(&parse, sizeof(t_parse));
 	fd = parse_open_file(file);
-	while (i < line_count)
+	while (i < line_count && !world->exit_code)
 	{
 		parse.str = get_next_line(fd, 0);
 		if (parse.str == NULL)
