@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/13 12:11:56 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/26 17:41:01 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	parse_skipwhitespace(char *str, int i);
 int	parse_inrange_float(float min, float max, char *str, int *i);
 void	parse_check_extension(char *file);
 int	parse_check_correctness(t_parse *parse);
-void	parse_check_identifier(t_parse *parse);
+void	parse_check_identifier(t_world *world, t_parse *parse);
 int	parse_check_identify(char *str);
 int	parse_open_file(char *file);
 void	parse_lines(t_world *world, int line_count, char *file);

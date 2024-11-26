@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/26 17:16:08 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/26 17:39:55 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,9 @@ typedef enum e_error
 {
 	GNL,
 	INC_FORMAT,
+	A_IDENTIFIER,
+	L_IDENTIFIER,
+	C_IDENTIFIER,
 } e_error;
 
 typedef struct s_world

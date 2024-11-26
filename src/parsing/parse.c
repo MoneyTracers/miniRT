@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:57:19 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/26 14:13:04 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/26 17:42:09 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,11 @@ void	parse_lines(t_world *world, int line_count, char *file)
 		if (parse.str == NULL)
 			set_error(world, 1, GNL, NULL);
 		if (world->exit_code)
-			break ; 
+			break ;
 		parse.type = parse_check_identify(parse.str);
-		parse_check_identifier(&parse);
+		parse_check_identifier(world, &parse);
+		if (world->exit_code)
+			break ;
 		if (parse_check_correctness(&parse))
 			set_error(world, 1, INC_FORMAT, NULL);
 		if (world->exit_code)

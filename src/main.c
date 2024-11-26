@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/26 17:17:11 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/26 17:27:12 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void parsing_exit(t_world * world)
 	if (world->err == INC_FORMAT)
 		perror("incorrect format in file");
 	free_objects(&world->objects);
+	free_lights(&world->lights);
 	if (world->exit_code)
 		exit(world->exit_code);
 	return ;
@@ -43,12 +44,12 @@ int	main(int argc, char **argv)
 	t_world				world;
 
 	ft_bzero(&world, sizeof(t_world));
-	ft_bzero(&mlx_data, sizeof(t_mlx));
 	parse(&world, argc, argv);
 	parsing_exit(&world);
 	exit (0);
 	printf("\n");
 	
+	ft_bzero(&mlx_data, sizeof(t_mlx));
 	if (!init_mlx(&mlx_data))
 	{
 		free_objects(&world.objects);

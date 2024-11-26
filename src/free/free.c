@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/02 12:43:48 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/19 13:02:53 by maraasve         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   free.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/10/02 12:43:48 by marieke       #+#    #+#                 */
+/*   Updated: 2024/11/26 17:37:31 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,14 @@ void	free_objects(t_object **head)
 	while (cur)
 	{
 		next = cur->next;
-		if (cur->type == CYLINDER || cur->type == CONE)
-			free(cur->cylinder);
-		if (cur->type == PLANE)
-			free(cur->plane);
-		if (cur->type == SPHERE)
-			free(cur->sphere);
-		free(cur);
+		// if ((cur->type == CYLINDER || cur->type == CONE) && cur->cylinder)
+		// 	free(cur->cylinder);
+		// if (cur->type == PLANE && cur->plane)
+		// 	free(cur->plane);
+		// if (cur->type == SPHERE && cur->sphere)
+		// 	free(cur->sphere);
+		if (cur)
+			free(cur);
 		cur = next;
 	}
 	(*head) = NULL;
