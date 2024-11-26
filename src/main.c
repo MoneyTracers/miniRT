@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/26 14:20:06 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/26 17:17:11 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,29 +43,28 @@ int	main(int argc, char **argv)
 	t_world				world;
 
 	ft_bzero(&world, sizeof(t_world));
+	ft_bzero(&mlx_data, sizeof(t_mlx));
 	parse(&world, argc, argv);
 	parsing_exit(&world);
 	exit (0);
-	print_matrix(world.cam.tranformation.grid, 4);
 	printf("\n");
-	print_matrix(world.cam.inverse->grid, 4);
 	
 	if (!init_mlx(&mlx_data))
 	{
 		free_objects(&world.objects);
 		return (1);
 	}
-	
+
+	mlx_data.world = &world; // added world to data struct for the keyhooks, for now
+
 	hooks(&mlx_data);
 	debugger(BLU "\nstart render\n"RESET);
 	render(&mlx_data, world.cam, &world);
-	debugger(GRN"DONE\n"RESET);
-	mlx_put_image_to_window(mlx_data.mlx, mlx_data.window, mlx_data.image, 0, 0);
+	printf("DONE\n");
+	mlx_put_image_to_window(mlx_data.mlx, mlx_data.window, mlx_data.img1.image, 0, 0);
 	mlx_loop(mlx_data.mlx);
 	
 	free_mlx(&mlx_data);
 	free_lights(&world.lights);
 	free_objects(&world.objects);
-	free_matrix(world.cam.tranformation.grid, 4);
-	free_matrix(world.cam.inverse->grid, 4);
 }

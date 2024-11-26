@@ -1,17 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   rotation.c                                         :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/10/08 14:25:45 by marieke       #+#    #+#                 */
-/*   Updated: 2024/11/04 15:24:17 by spenning      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   rotation.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/08 14:25:45 by marieke           #+#    #+#             */
+/*   Updated: 2024/11/19 13:04:25 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <transformation.h>
 #include <free.h>
+
+t_matrix rotation_matrix_from_normal(t_tuple normal)
+{
+	t_tuple	up;
+	t_tuple	axis;
+	float	cos_theta;
+	float	theta;
+
+	up = create_vector(0, 1, 0);
+	axis = get_cross_product(up, normal);
+	if (equal_float(get_magnitude(axis), 0.0))
+		return (create_identity_matrix());
+	axis = normalize(axis);
+	cos_theta = get_dot_product(up, normal);
+	theta = acosf(fminf(fmaxf(cos_theta, -1.0f), 1.0f));
+	return (rotate(axis.x * theta, axis.y * theta, axis.z * theta));
+}
 
 t_matrix	rotate_x(float radians)
 {
@@ -70,8 +87,5 @@ t_matrix	rotate(float x, float y, float z)
 		rotatez = create_identity_matrix();
 	rotation = multiply_matrices(rotatez, rotatey);
 	rotation = multiply_matrices(rotation, rotatex);
-	free_matrix(rotatex.grid, 4);
-	free_matrix(rotatey.grid, 4);
-	free_matrix(rotatez.grid, 4);
 	return (rotation);
 }
