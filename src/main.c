@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/13 14:20:27 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/26 14:20:06 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,19 @@
 #include <camera.h>
 #include <parse.h>
 
+
+void parsing_exit(t_world * world)
+{
+	if (world->err == GNL)
+		perror("gnl error");
+	if (world->err == INC_FORMAT)
+		perror("incorrect format in file");
+	free_objects(&world->objects);
+	if (world->exit_code)
+		exit(world->exit_code);
+	return ;
+}
+
 int	main(int argc, char **argv)
 {
 	t_mlx				mlx_data;
@@ -31,7 +44,8 @@ int	main(int argc, char **argv)
 
 	ft_bzero(&world, sizeof(t_world));
 	parse(&world, argc, argv);
-
+	parsing_exit(&world);
+	exit (0);
 	print_matrix(world.cam.tranformation.grid, 4);
 	printf("\n");
 	print_matrix(world.cam.inverse->grid, 4);

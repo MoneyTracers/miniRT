@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/14 15:53:01 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/11/26 14:03:20 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,11 @@ typedef	struct s_light
 	struct s_light	*next;
 }	t_light;
 
+typedef enum e_error
+{
+	GNL,
+	INC_FORMAT,
+} e_error;
 
 typedef struct s_world
 {
@@ -97,9 +102,12 @@ typedef struct s_world
 	float			ambientf;
 	t_camera		cam;
 	t_object		*objects;
+	int				exit_code;
+	int				err;
 }	t_world;
 
 void	debugger(char *format, ...);
 void	exit_err(char *err, int ec);
+void set_error(t_world *world, int exit_code, int err_msg, void *mem);
 
 #endif

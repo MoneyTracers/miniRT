@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 14:31:28 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/13 14:07:26 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/26 14:34:40 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <list.h>
 #include <calculations.h>
 #include <camera.h>
+#include <free.h>
 
 void	parse_add_ambient(t_world *world, char *str)
 {

@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:57:19 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/14 15:39:10 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/11/26 14:13:04 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,20 @@ void	parse_lines(t_world *world, int line_count, char *file)
 	{
 		parse.str = get_next_line(fd, 0);
 		if (parse.str == NULL)
-			exit_err("gln error", 1);
+			set_error(world, 1, GNL, NULL);
+		if (world->exit_code)
+			break ; 
 		parse.type = parse_check_identify(parse.str);
 		parse_check_identifier(&parse);
 		if (parse_check_correctness(&parse))
-			exit_err("incorrect format in file", 1);
+			set_error(world, 1, INC_FORMAT, NULL);
+		if (world->exit_code)
+			break ; 
 		parse_add_object(world, &parse);
 		i++;
 	}
+	free(parse.str);
+	parse.str = NULL;
 	get_next_line(0, 2);
 }
 
