@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:50:44 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/22 13:26:26 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/27 15:38:41 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 t_matrix	submatrix(t_matrix matrix, int row, int col, int size)
 {
 	t_matrix	sub;
-	int		i;
-	int		j;
-	int		new_row;
-	int		new_col;
+	int			i;
+	int			j;
+	int			new_row;
+	int			new_col;
 
 	i = 0;
 	new_row = 0;
@@ -49,7 +49,7 @@ float	minor(t_matrix matrix, int row, int col, int size)
 {
 	t_matrix	sub;
 	float		minor_value;
-	
+
 	sub = submatrix(matrix, row, col, size);
 	minor_value = determinant(sub, size - 1);
 	return (minor_value);
@@ -85,11 +85,11 @@ float	determinant(t_matrix matrix, int size)
 	return (det);
 }
 
-void	print_matrix(t_matrix matrix, int size)
+void	print_matrix(t_matrix matrix, int size) // DELETE THIS
 {
-	for(int i = 0; i < size; i++)
+	for (int i = 0; i < size; i++)
 	{
-		for(int j = 0; j < size; j++)
+		for (int j = 0; j < size; j++)
 			printf("%f ", matrix.grid[i][j]);
 		printf("\n");
 	}
@@ -101,7 +101,7 @@ t_matrix	invert_matrix(t_matrix matrix, int size)
 	t_matrix	inverted;
 	int			i;
 	int			j;
-	
+
 	det = determinant(matrix, size);
 	i = 0;
 	while (i < size)

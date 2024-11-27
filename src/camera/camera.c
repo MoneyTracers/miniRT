@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 13:54:57 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/27 12:23:46 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/27 14:21:02 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,16 @@ t_matrix	view_matrix(t_tuple left, t_tuple forward, t_tuple up)
 	return (transform);
 }
 
-t_matrix	view_transformation(t_camera *cam, t_tuple from, t_tuple to, t_tuple up)
+t_matrix	view_transform(t_camera *cam, t_tuple from, t_tuple to, t_tuple up)
 {
 	t_matrix	orientation;
 	t_matrix	translation;
 	t_matrix	transformation;
 
-	cam->pos = from;
+	cam->pos = from; //CAM->POS 0,0,0 NOT WORKING
+	cam->normal = to;
 	cam->forward = normalize(subtract_tuple(to, from));
-	if (ft_fabs(cam->forward.y) > 0.9)
+	if (ft_fabs(cam->normal.y) > 0.9)
 		up = create_vector(0, 0, 1);
 	cam->left = normalize(get_cross_product(cam->forward, normalize(up)));
 	cam->true_up = normalize(get_cross_product(cam->left, cam->forward));
@@ -78,19 +79,18 @@ t_ray	ray_for_pixel(t_camera camera, int x, int y)
 {
 	t_ray	ray;
 	t_tuple	pixel;
-	float	xoffset;
-	float	yoffset;
-	float	world_x;
-	float	world_y;
+	float	offset[2];
+	float	world[2];
 
-	xoffset = ((float)x + 0.5) * camera.pixel_size;
-	yoffset = ((float)y + 0.5) * camera.pixel_size;
-	world_x = camera.half_width - xoffset;
-	world_y = camera.half_height - yoffset;
-	pixel = multiply_matrix_tuple(camera.inverse, create_point(world_x, world_y, -1));
+	offset[X] = ((float)x + 0.5) * camera.pixel_size;
+	offset[Y] = ((float)y + 0.5) * camera.pixel_size;
+	world[X] = camera.half_width - offset[X];
+	world[Y] = camera.half_height - offset[Y];
+	pixel = multiply_matrix_tuple(camera.inverse, \
+			create_point(world[X], world[Y], -1));
 	ray.origin = multiply_matrix_tuple(camera.inverse, create_point(0, 0, 0));
 	ray.direction = normalize(subtract_tuple(pixel, ray.origin));
-	return (ray); 
+	return (ray);
 }
 
 void	render(t_mlx *mlx_data, t_camera camera, t_world *world)
@@ -100,10 +100,10 @@ void	render(t_mlx *mlx_data, t_camera camera, t_world *world)
 	int		x;
 	int		y;
 	int		i;
-	
+
 	mlx_data->img_count++;
 	x = 0;
-	while(x < camera.image_width)
+	while (x < camera.image_width)
 	{
 		y = 0;
 		while (y < camera.image_heigth)

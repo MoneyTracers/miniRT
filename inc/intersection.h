@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 14:34:14 by maraasve          #+#    #+#             */
-/*   Updated: 2024/10/31 17:51:04 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/27 16:02:45 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@
 # include <shapes.h>
 # include <minirt.h>
 
+typedef enum s_values 
+{
+	A = 0,
+	B,
+	C
+} t_values;
+
 typedef struct	s_intersection
 {
 	float					t;
@@ -27,14 +34,15 @@ typedef struct	s_intersection
 
 typedef struct s_comps
 {
-	float	t;
+	float		t;
 	t_object	*object;
-	t_tuple	point;
-	t_tuple	over_point;
-	t_tuple	eyev;
-	t_tuple	normalv;
-	t_tuple	reflectv;
-	bool	inside;
+	t_tuple		point;
+	t_tuple		over_point;
+	t_tuple		eyev;
+	t_tuple		normalv;
+	t_tuple		reflectv;
+	bool		inside;
+	bool		shadow;
 }	t_comps;
 
 typedef struct	s_ray
@@ -49,5 +57,10 @@ t_color			color_at(t_world *world, t_ray ray, int *remaining);
 t_intersection	*get_hit(t_intersection *intersections);
 t_tuple			position(t_ray ray, float time);
 t_tuple			normal_at(t_object *shape, t_tuple point);
+float			get_discriminant(float a, float b, float c);
+int				intersect_plane(t_intersection **head, t_ray ray, t_object *object);
+int				intersect_sphere(t_intersection **head, t_ray ray, t_object *object);
+int				intersect_cone(t_intersection **head, t_ray ray, t_object *object);
+int				intersect_cylinder(t_intersection **head, t_ray ray, t_object *object);
 
 #endif

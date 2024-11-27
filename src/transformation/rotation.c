@@ -6,14 +6,14 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:25:45 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/19 13:04:25 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/27 15:42:41 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <transformation.h>
 #include <free.h>
 
-t_matrix rotation_matrix_from_normal(t_tuple normal)
+t_matrix	rotation_matrix_from_normal(t_tuple normal)
 {
 	t_tuple	up;
 	t_tuple	axis;

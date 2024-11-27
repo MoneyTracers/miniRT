@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 17:48:24 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/19 13:03:09 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/27 15:42:56 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ t_matrix	transformation_matrix(t_transformation transform)
 	t_matrix	transformation;
 
 	transformation = multiply_matrices(transform.translation, transform.rotate);
-    transformation = multiply_matrices(transformation, transform.scale);
+	transformation = multiply_matrices(transformation, transform.scale);
 	return (transformation);
 }
-

@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:49:59 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/27 12:38:25 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/27 15:31:04 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,30 +36,22 @@ int	move_cam(int keycode, t_camera *cam)
 	else if (keycode == ZOOM_OUT)
 		from = subtract_tuple(from, scale_tuple(cam->forward, 10));
 	to = add_tuple(from, cam->forward);
-	cam->transformation = view_transformation(cam, from, to, create_vector(0, 1, 0));
+	cam->transformation = view_transform(cam, from, to, create_vector(0, 1, 0));
 	cam->inverse = invert_matrix(cam->transformation, 4);
 	return (1);
 }
 
-
-void	print_tuple(t_tuple tuple, char *str)
-{
-	printf("%s: x = %f | y = %f | z = %f\n", str, tuple.x, tuple.y, tuple.z);
-}
-
-t_matrix rotation_around_axis(t_tuple axis, float angle) 
+t_matrix	rotation_around_axis(t_tuple axis, float angle)
 {
 	t_matrix	rotation;
 	float		cos_theta;
-    float		sin_theta;
-    float		one_minus_cos;
+	float		sin_theta;
+	float		one_minus_cos;
 
-    axis = normalize(axis);
-    
-    cos_theta = cos(angle);
-    sin_theta = sin(angle);
-    one_minus_cos = 1.0f - cos_theta;
-    
+	axis = normalize(axis);
+	cos_theta = cos(angle);
+	sin_theta = sin(angle);
+	one_minus_cos = 1.0f - cos_theta;
 	rotation = create_identity_matrix();
 	rotation.grid[0][0] = cos_theta + axis.x * axis.x * one_minus_cos;
 	rotation.grid[0][1] = axis.x * axis.y * one_minus_cos - axis.z * sin_theta;
@@ -70,18 +62,18 @@ t_matrix rotation_around_axis(t_tuple axis, float angle)
 	rotation.grid[2][0] = axis.z * axis.x * one_minus_cos - axis.y * sin_theta;
 	rotation.grid[2][1] = axis.z * axis.y * one_minus_cos + axis.x * sin_theta;
 	rotation.grid[2][2] = cos_theta + axis.z * axis.z * one_minus_cos;
-    return (rotation);
+	return (rotation);
 }
 
-int rotate_cam(int keycode, t_camera *cam) 
+int	rotate_cam(int keycode, t_camera *cam)
 {
 	t_matrix	rotation;
-    t_tuple		look_point;
+	t_tuple		look_point;
 	t_tuple		target;
-    float		angle;
+	float		angle;
 	float		cur_pitch;
-    
-    target = add_tuple(cam->pos, cam->forward);
+
+	target = add_tuple(cam->pos, cam->forward);
 	if (keycode == A_KEY || keycode == D_KEY)
 	{
 		if (keycode == A_KEY)
@@ -96,10 +88,9 @@ int rotate_cam(int keycode, t_camera *cam)
 		look_point = multiply_matrix_tuple(rotation, look_point);
 		cam->forward = normalize(look_point);
 	}
-	else if (keycode == W_KEY || keycode == S_KEY) 
+	else if (keycode == W_KEY || keycode == S_KEY)
 	{
 		cur_pitch = asin(cam->forward.y);
-	
 		if (keycode == W_KEY)
 			angle = 0.3;
 		else
@@ -111,13 +102,12 @@ int rotate_cam(int keycode, t_camera *cam)
 		look_point = multiply_matrix_tuple(rotation, look_point);
 		cam->forward = normalize(look_point);
 	}
-	t_tuple up;
+	t_tuple	up;
 	if (ft_fabs(cam->normal.y) > 0.9) // this doesnt seem to work
 		up = create_vector(0, 0, 1);
 	else
 		up = create_vector(0, 1, 0);
-	cam->transformation = view_transformation(cam, cam->pos, 
-	add_tuple(cam->pos, cam->forward), up);
+	cam->transformation = view_transform(cam, cam->pos, add_tuple(cam->pos, cam->forward), up);
 	cam->inverse = invert_matrix(cam->transformation, 4);
 	return (1);
 }
@@ -134,9 +124,11 @@ int	keypress(int keycode, t_mlx *data)
 		mlx_loop_end(data->mlx);
 		return (1);
 	}
-	if (keycode == UP_KEY || keycode == DOWN_KEY || keycode == LEFT_KEY || keycode == RIGHT_KEY || keycode == ZOOM_IN || keycode == ZOOM_OUT)
+	if (keycode == UP_KEY || keycode == DOWN_KEY || keycode == LEFT_KEY || \
+		keycode == RIGHT_KEY || keycode == ZOOM_IN || keycode == ZOOM_OUT)
 		changed = move_cam(keycode, cam);
-	else if (keycode == W_KEY || keycode == A_KEY || keycode == S_KEY || keycode == D_KEY)
+	else if (keycode == W_KEY || keycode == A_KEY || keycode == S_KEY || \
+				keycode == D_KEY)
 		changed = rotate_cam(keycode, cam);
 	if (changed)
 	{

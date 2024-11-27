@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   camera.h                                           :+:      :+:    :+:   */
+/*   trgb.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/11 13:31:42 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/27 13:09:15 by maraasve         ###   ########.fr       */
+/*   Created: 2024/11/27 12:51:26 by maraasve          #+#    #+#             */
+/*   Updated: 2024/11/27 12:51:30 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CAMERA_H
-# define CAMERA_H
-
-# include <minirt.h>
-# include <matrix.h>
-# include <mini_mlx.h>
-
-typedef enum e_axis 
+int	create_trgb(float t, float r, float g, float b)
 {
-    X = 0,
-    Y,
-    Z,
-}	t_axis;
+	int	red;
+	int	green;
+	int	blue;
+	int	alpha;
 
-void		render(t_mlx *mlx_data, t_camera camera, t_world *world);
-void		new_camera(t_camera *cam, float fov, t_matrix transformation);
-t_matrix	view_transform(t_camera *cam, t_tuple from, t_tuple to, t_tuple up);
-
-#endif
+	alpha = (int)t;
+	red = (int)r;
+	green = (int)g;
+	blue = (int)b;
+	return (alpha << 24 | red << 16 | green << 8 | blue);
+}

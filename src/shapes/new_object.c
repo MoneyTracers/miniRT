@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 13:06:16 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/19 12:56:20 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/27 15:32:17 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,9 @@
 #include <free.h>
 #include <libft.h>
 
-// t_object_base	*new_object_base(t_matrix transformation, t_material material)
-// {
-// 	t_object_base	*new;
-
-// 	new = malloc(sizeof(t_object));
-// 	if(!new)
-// 		return (NULL);
-// 	new->transformation = transformation;
-// 	if (!is_identity_matrix(transformation.grid, 4))
-// 		new->inverted = invert_matrix(transformation.grid, 4);
-// 	else
-// 		new->inverted = NULL;
-// 	return (new);
-// }
-
 void	add_object_to_list(t_object **head, t_object *new)
 {
-	t_object *cur;
+	t_object	*cur;
 
 	if (!head || !new)
 		return ;

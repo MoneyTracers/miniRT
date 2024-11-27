@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 14:34:11 by maraasve          #+#    #+#             */
-/*   Updated: 2024/10/31 15:59:38 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/27 12:48:50 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,12 @@ typedef	struct	s_color
 
 t_color	new_color(float r, float g, float b);
 t_color	add_colors(t_color one, t_color two);
-t_color	subtract_colors(t_color one, t_color two);
 t_color	colors_multi_scalar(t_color one, float scalar);
 t_color	colors_multiply(t_color one, t_color two);
 int		create_trgb(float t, float r, float g, float b);
 t_color clamp_color(t_color color);
+
+// t_color	subtract_colors(t_color one, t_color two);
+// NOT USING THIS FUNCTION, CAN PROBABLY BE DELETED
 
 #endif

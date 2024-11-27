@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   camera.h                                           :+:      :+:    :+:   */
+/*   new_light.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/11 13:31:42 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/27 13:09:15 by maraasve         ###   ########.fr       */
+/*   Created: 2024/11/27 15:20:00 by maraasve          #+#    #+#             */
+/*   Updated: 2024/11/27 15:20:19 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CAMERA_H
-# define CAMERA_H
+#include <lighting.h>
 
-# include <minirt.h>
-# include <matrix.h>
-# include <mini_mlx.h>
-
-typedef enum e_axis 
+t_light	*new_light(t_tuple pos, t_color color, float brightness)
 {
-    X = 0,
-    Y,
-    Z,
-}	t_axis;
+	t_light	*new;
 
-void		render(t_mlx *mlx_data, t_camera camera, t_world *world);
-void		new_camera(t_camera *cam, float fov, t_matrix transformation);
-t_matrix	view_transform(t_camera *cam, t_tuple from, t_tuple to, t_tuple up);
-
-#endif
+	new = malloc(sizeof(t_light));
+	if (!new)
+		return (NULL);
+	new->pos = pos;
+	new->color = color;
+	new->brightness = brightness;
+	new->next = NULL;
+	return (new);
+}
