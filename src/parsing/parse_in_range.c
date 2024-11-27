@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 13:57:38 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/27 15:25:47 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/27 19:55:22 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	parse_inrange_rgb_loop(int index, char *rgb, int check, int *i)
 			return (0);
 		check++;
 		*i += 1;
-		if ((rgb[*i] == ' ' || rgb[*i] == '\n') && check)
+		if ((rgb[*i] == ' ' || rgb[*i] == '\n' || rgb[*i] == '\0') && check)
 			break ;
 	}
 	return (1);
@@ -82,7 +82,8 @@ int	parse_inrange_rgb(int min, int max, char *rgb, int *i)
 		col = atoin(&rgb[start], *i - start);
 		if (col < min || col > max)
 			return (0);
-		*i += 1;
+		if (rgb[*i] != '\0')
+			*i += 1;
 		index++;
 	}
 	return (1);
