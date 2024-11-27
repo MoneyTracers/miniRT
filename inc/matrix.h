@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 14:34:44 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/22 16:36:32 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/27 12:37:05 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <tuples.h>
 # include <stdlib.h>
-# define MAX_PITCH 1.5
+# define MAX_PITCH 0.7
 
 typedef struct	s_matrix
 {

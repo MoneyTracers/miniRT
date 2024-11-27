@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:49:59 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/22 17:48:29 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/27 12:38:25 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	move_cam(int keycode, t_camera *cam)
 	return (1);
 }
 
-#define rotation_angle 45
 
 void	print_tuple(t_tuple tuple, char *str)
 {
@@ -89,9 +88,10 @@ int rotate_cam(int keycode, t_camera *cam)
 			angle = -0.3;
 		else
 			angle = 0.3;
-
-		rotation = rotation_around_axis(create_vector(0, 1, 0), angle);
-	
+		if (ft_fabs(cam->forward.y) > 0.9)
+			rotation = rotation_around_axis(create_vector(0, 0, 1), angle);
+		else
+			rotation = rotation_around_axis(create_vector(0, 1, 0), angle);
 		look_point = subtract_tuple(target, cam->pos);
 		look_point = multiply_matrix_tuple(rotation, look_point);
 		cam->forward = normalize(look_point);
@@ -112,8 +112,8 @@ int rotate_cam(int keycode, t_camera *cam)
 		cam->forward = normalize(look_point);
 	}
 	t_tuple up;
-	if (ft_fabs(cam->forward.y) > 0.9) // this doesnt seem to work
-		up = create_vector(1, 0, 0);
+	if (ft_fabs(cam->normal.y) > 0.9) // this doesnt seem to work
+		up = create_vector(0, 0, 1);
 	else
 		up = create_vector(0, 1, 0);
 	cam->transformation = view_transformation(cam, cam->pos, 
