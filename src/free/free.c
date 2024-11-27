@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/02 12:43:48 by marieke       #+#    #+#                 */
-/*   Updated: 2024/11/26 17:37:31 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/27 14:14:32 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ void	free_objects(t_object **head)
 	while (cur)
 	{
 		next = cur->next;
-		// if ((cur->type == CYLINDER || cur->type == CONE) && cur->cylinder)
-		// 	free(cur->cylinder);
-		// if (cur->type == PLANE && cur->plane)
-		// 	free(cur->plane);
-		// if (cur->type == SPHERE && cur->sphere)
-		// 	free(cur->sphere);
+		if ((cur->type == CYLINDER || cur->type == CONE) && cur->cylinder)
+			free(cur->cylinder);
+		if (cur->type == PLANE && cur->plane)
+			free(cur->plane);
+		if (cur->type == SPHERE && cur->sphere)
+			free(cur->sphere);
 		if (cur)
 			free(cur);
 		cur = next;

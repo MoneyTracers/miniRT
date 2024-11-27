@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 14:32:54 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/26 17:16:37 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/27 14:32:06 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,14 @@ void	parse_add_sphere(t_world *world, char *str)
 	t_tuple				coor;
 	float				diameter;
 	t_material			m;
+	t_sphere			*sphere;
 
 	i = 0;
 	coor = parse_get_coordinates(str, &i);
 	diameter = parse_get_float(str, &i);
 	m = default_material();
 	m.color = parse_get_color(str, &i);
+	sphere = new_sphere();
 	transform.rotate = create_identity_matrix();
 	transform.scale = scale_matrix(diameter, diameter, diameter);
 	transform.translation = translation_matrix(coor.x, coor.y, coor.z);
@@ -43,11 +45,13 @@ void	parse_add_plane(t_world *world, char *str)
 	t_tuple				coor;
 	t_tuple				normal_vec;
 	t_material			m;
+	t_plane				*plane;
 
 	i = 0;
 	coor = parse_get_coordinates(str, &i);
 	normal_vec = parse_get_normal(str, &i);
 	m = default_material();
+	plane = new_plane(normal_vec);
 	m.color = parse_get_color(str, &i);
 	transform.rotate = create_identity_matrix();
 	transform.scale = create_identity_matrix();
@@ -78,6 +82,7 @@ void	parse_add_cyl(t_world *world, char *str)
 	int					i;
 	t_tuple				coor;
 	t_tuple				normal_vec;
+	
 
 	i = 0;
 	coor = parse_get_coordinates(str, &i);
