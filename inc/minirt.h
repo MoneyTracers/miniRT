@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/26 17:39:55 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/27 15:15:28 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef	struct s_light
 typedef enum e_error
 {
 	GNL,
+	CLOSE,
 	INC_FORMAT,
 	A_IDENTIFIER,
 	L_IDENTIFIER,

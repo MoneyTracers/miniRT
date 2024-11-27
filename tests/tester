@@ -42,7 +42,7 @@ norminette=1
 trap ctrl_c INT
 
 function ctrl_c() {
-        utils/fix_permissions.sh
+        bash utils/fix_permissions.sh
 		exit 2
 }
 
@@ -259,3 +259,5 @@ random_case_test $random_cases $normal_template
 
 
 rm -rf temp.*
+
+bash utils/fix_permissions.sh

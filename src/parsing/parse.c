@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:57:19 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/26 17:54:37 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/27 15:25:30 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,22 @@ void	parse_add_object(t_world *world, t_parse *parse)
 	parse->str = NULL;
 }
 
+void	parse_lines_str(t_world *world, t_parse *parse, int fd)
+{
+	parse->str = get_next_line(fd, 0);
+	if (parse->str == NULL)
+		set_error(world, 1, GNL, NULL);
+	if (world->exit_code)
+		return ;
+	parse->type = parse_check_identify(parse->str);
+	parse_check_identifier(world, parse);
+	if (!world->exit_code && parse_check_correctness(parse))
+		set_error(world, 1, INC_FORMAT, NULL);
+	if (world->exit_code)
+		return ;
+	parse_add_object(world, parse);
+}
+
 void	parse_lines(t_world *world, int line_count, char *file)
 {
 	int		i;
@@ -43,20 +59,11 @@ void	parse_lines(t_world *world, int line_count, char *file)
 	fd = parse_open_file(file);
 	while (i < line_count && !world->exit_code)
 	{
-		parse.str = get_next_line(fd, 0);
-		if (parse.str == NULL)
-			set_error(world, 1, GNL, NULL);
-		if (world->exit_code)
-			break ;
-		parse.type = parse_check_identify(parse.str);
-		parse_check_identifier(world, &parse);
-		if (!world->exit_code && parse_check_correctness(&parse))
-			set_error(world, 1, INC_FORMAT, NULL);
-		if (world->exit_code)
-			break ;
-		parse_add_object(world, &parse);
+		parse_lines_str(world, &parse, fd);
 		i++;
 	}
+	if (close(fd))
+		set_error(world, 1, CLOSE, NULL);
 	free(parse.str);
 	parse.str = NULL;
 	get_next_line(0, 2);

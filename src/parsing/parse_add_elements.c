@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 14:32:54 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/27 14:32:06 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/27 16:00:29 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,85 +17,73 @@
 
 void	parse_add_sphere(t_world *world, char *str)
 {
-	int					i;
-	t_transformation	transform;
-	t_tuple				coor;
-	float				diameter;
-	t_material			m;
-	t_sphere			*sphere;
+	t_sphere_parse	parse;
 
-	i = 0;
-	coor = parse_get_coordinates(str, &i);
-	diameter = parse_get_float(str, &i);
-	m = default_material();
-	m.color = parse_get_color(str, &i);
-	sphere = new_sphere();
-	transform.rotate = create_identity_matrix();
-	transform.scale = scale_matrix(diameter, diameter, diameter);
-	transform.translation = translation_matrix(coor.x, coor.y, coor.z);
-	add_object_to_list(&world->objects, new_object(SPHERE, m, transformation_matrix(transform), (void *)sphere));
+	parse.i = 0;
+	parse.coor = parse_get_coordinates(str, &parse.i);
+	parse.diameter = parse_get_float(str, &parse.i);
+	parse.m = default_material();
+	parse.m.color = parse_get_color(str, &parse.i);
+	parse.transform.rotate = create_identity_matrix();
+	parse.transform.scale = scale_matrix(parse.diameter, parse.diameter, \
+	parse.diameter);
+	parse.transform.translation = translation_matrix(parse.coor.x, \
+	parse.coor.y, parse.coor.z);
+	add_object_to_list(&world->objects, new_object(SPHERE, parse.m, \
+	transformation_matrix(parse.transform), (void *)new_sphere()));
 	return ;
 }
 
-// TODO:translate normal_vec to radians
-void	parse_add_plane(t_world *world, char *str)
+t_transformation	get_transform_plane(t_tuple coor)
 {
-	int					i;
 	t_transformation	transform;
-	t_tuple				coor;
-	t_tuple				normal_vec;
-	t_material			m;
-	t_plane				*plane;
 
-	i = 0;
-	coor = parse_get_coordinates(str, &i);
-	normal_vec = parse_get_normal(str, &i);
-	m = default_material();
-	plane = new_plane(normal_vec);
-	m.color = parse_get_color(str, &i);
 	transform.rotate = create_identity_matrix();
 	transform.scale = create_identity_matrix();
 	transform.translation = translation_matrix(coor.x, coor.y, coor.z);
-	add_object_to_list(&world->objects, new_object(PLANE, m, transformation_matrix(transform), (void *)plane));
+	return (transform);
+}
+
+void	parse_add_plane(t_world *world, char *str)
+{
+	t_plane_parse	parse;
+
+	parse.i = 0;
+	parse.coor = parse_get_coordinates(str, &parse.i);
+	parse.normal_vec = parse_get_normal(str, &parse.i);
+	parse.m = default_material();
+	parse.m.color = parse_get_color(str, &parse.i);
+	add_object_to_list(&world->objects, new_object(PLANE, parse.m, \
+	transformation_matrix(get_transform_plane(parse.coor)), \
+	(void *)new_plane(parse.normal_vec)));
 	return ;
 }
 
-// t_matrix	get_rotation(t_tuple from, t_tuple to)
-// {
-// 	t_matrix	rotation;
-// 	t_tuple		axis;
-// 	float		angle;
-	
-// 	axis = get_cross_product(from, to);
-// 	angle = acosf(get_dot_product(from, to));
+t_transformation	get_transform_cyl(t_tuple coor, t_tuple normal, float dia)
+{
+	t_transformation	transform;
 
-// 	rotation_matrix
-// }
+	transform.rotate = rotation_matrix_from_normal(normal);
+	transform.scale = scale_matrix(dia, dia, dia);
+	transform.translation = translation_matrix(coor.x, coor.y, coor.z);
+	return (transform);
+}
 
 void	parse_add_cyl(t_world *world, char *str)
 {
-	t_transformation	transform;
-	t_cylinder			*cyl;
-	t_material			m;
-	float				diameter;
-	float				height;
-	int					i;
-	t_tuple				coor;
-	t_tuple				normal_vec;
-	
+	t_cyl_parse	parse;
 
-	i = 0;
-	coor = parse_get_coordinates(str, &i);
-	normal_vec = parse_get_normal(str, &i);
-	(void)normal_vec;
-	diameter = parse_get_float(str, &i);
-	height = parse_get_float(str, &i);
-	m = default_material();
-	m.color = parse_get_color(str, &i);
-	cyl = new_cylinder(-height / 2, height / 2, true);
-	transform.rotate = rotation_matrix_from_normal(normal_vec);
-	transform.scale = scale_matrix(diameter, diameter, diameter);
-	transform.translation = translation_matrix(coor.x, coor.y, coor.z);
-	add_object_to_list(&world->objects, new_object(CYLINDER, m, transformation_matrix(transform), (void *)cyl));
+	parse.i = 0;
+	parse.coor = parse_get_coordinates(str, &parse.i);
+	parse.normal = parse_get_normal(str, &parse.i);
+	parse.diameter = parse_get_float(str, &parse.i);
+	parse.height = parse_get_float(str, &parse.i);
+	parse.m = default_material();
+	parse.m.color = parse_get_color(str, &parse.i);
+	add_object_to_list(&world->objects, \
+	new_object(CYLINDER, parse.m, transformation_matrix(\
+	get_transform_cyl(parse.coor, \
+	parse.normal, parse.diameter)), \
+	(void *)new_cylinder(-parse.height / 2, parse.height / 2, true)));
 	return ;
 }

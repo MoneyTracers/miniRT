@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/26 17:27:12 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/27 15:17:05 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void parsing_exit(t_world * world)
 {
 	if (world->err == GNL)
 		perror("gnl error");
+	if (world->err == CLOSE)
+		perror("close error");
 	if (world->err == INC_FORMAT)
 		perror("incorrect format in file");
 	free_objects(&world->objects);

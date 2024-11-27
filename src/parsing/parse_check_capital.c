@@ -6,19 +6,19 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:07:59 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/13 12:11:56 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/27 15:20:21 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-  
 #include <parse.h>
 
-int parse_check_ambient(char *str)
+int	parse_check_ambient(char *str)
 {
 	int	i;
-	i = 0;
 
-	debugger(YEL "%s:%d - %s\nparse_check_ambient\n\n" RESET, __FILE__, __LINE__, __FUNCTION__ );
+	i = 0;
+	debugger(YEL "%s:%d - %s\nparse_check_ambient\n\n" RESET, __FILE__, \
+	__LINE__, __FUNCTION__);
 	if (!ft_strncmp(str, "A ", 2))
 		i++;
 	else
@@ -34,11 +34,13 @@ int parse_check_ambient(char *str)
 		return (1);
 	return (0);
 }
-int parse_check_camera(char *str)
+
+int	parse_check_camera(char *str)
 {
 	int	i;
 
-	debugger(YEL "%s:%d - %s\nparse_check_camera\n\n" RESET, __FILE__, __LINE__, __FUNCTION__ );
+	debugger(YEL "%s:%d - %s\nparse_check_camera\n\n" RESET, \
+	__FILE__, __LINE__, __FUNCTION__);
 	i = 0;
 	if (!ft_strncmp(str, "C ", 2))
 		i++;
@@ -57,11 +59,13 @@ int parse_check_camera(char *str)
 		return (1);
 	return (0);
 }
-int parse_check_light(char *str)
+
+int	parse_check_light(char *str)
 {
 	int	i;
 
-	debugger(YEL "%s:%d - %s\nparse_check_light\n\n" RESET, __FILE__, __LINE__, __FUNCTION__ );
+	debugger(YEL "%s:%d - %s\nparse_check_light\n\n" RESET, \
+	__FILE__, __LINE__, __FUNCTION__);
 	i = 0;
 	if (!ft_strncmp(str, "L ", 2))
 		i++;
@@ -83,7 +87,8 @@ int parse_check_light(char *str)
 
 int	parse_check_correctness(t_parse *parse)
 {
-	debugger(YEL "%s:%d - %s\nparse_check_correctness\n\n" RESET, __FILE__, __LINE__, __FUNCTION__ );
+	debugger(YEL "%s:%d - %s\nparse_check_correctness\n\n" RESET, \
+	__FILE__, __LINE__, __FUNCTION__);
 	if (parse->type == ambient)
 		return (parse_check_ambient(parse->str));
 	else if (parse->type == camera)
