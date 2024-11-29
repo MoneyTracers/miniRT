@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:49:59 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/27 15:31:04 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/29 14:41:26 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	rotate_cam(int keycode, t_camera *cam)
 		cam->forward = normalize(look_point);
 	}
 	t_tuple	up;
-	if (ft_fabs(cam->normal.y) > 0.9) // this doesnt seem to work
+	if (ft_fabs(cam->forward.y) > 0.9) // this doesnt seem to work
 		up = create_vector(0, 0, 1);
 	else
 		up = create_vector(0, 1, 0);

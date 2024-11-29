@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:44:06 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/27 15:44:48 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/29 14:39:34 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,6 @@ float	get_magnitude(t_tuple vector)
 	float	magnitude;
 
 	magnitude = sqrtf(powf(vector.x, 2) + powf(vector.y, 2) \
-				+ powf(vector.z, 2) + powf(vector.w, 2));
+				+ powf(vector.z, 2));
 	return (magnitude);
 }

@@ -6,14 +6,14 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 14:43:41 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/27 16:01:21 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:31:21 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <intersection.h>
 #include <list.h>
 
-int	intersect_sphere(t_intersection **head, t_ray ray, t_object *object)
+int	intersect_sphere(t_intersect **head, t_ray ray, t_object *object)
 {
 	t_tuple			sphere_to_ray;
 	float			discriminant;

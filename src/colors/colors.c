@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:47:44 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/27 12:52:01 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:25:21 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,6 @@ t_color	add_colors(t_color one, t_color two)
 	new.b = one.b + two.b;
 	return (new);
 }
-
-// t_color	subtract_colors(t_color one, t_color two)
-// {
-// 	t_color	new;
-
-// 	new.r = one.r - two.r;
-// 	new.g = one.g - two.g;
-// 	new.b = one.b- two.b;
-// 	return (new);
-// }
-// DELETE THIS
 
 t_color	colors_multi_scalar(t_color one, float scalar)
 {

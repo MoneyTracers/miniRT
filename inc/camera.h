@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 13:31:42 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/27 13:09:15 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:37:33 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 # include <matrix.h>
 # include <mini_mlx.h>
 
-typedef enum e_axis 
+typedef enum e_axis
 {
-    X = 0,
-    Y,
-    Z,
+	X = 0,
+	Y,
+	Z,
 }	t_axis;
 
 void		render(t_mlx *mlx_data, t_camera camera, t_world *world);

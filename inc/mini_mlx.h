@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 14:44:16 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/15 17:04:57 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:38:18 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@
 # define ZOOM_OUT 45
 # define ZOOM_IN 61
 
-typedef struct	s_img
+typedef struct s_img
 {
 	void	*image;
 	char	*addr;
 	int		line_length;
 	int		bpp;
 	int		endian;
-} t_img;
+}	t_img;
 
 typedef struct s_mlx
 {

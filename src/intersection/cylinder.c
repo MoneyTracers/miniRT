@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 14:42:50 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/27 16:01:15 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:31:04 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	check_cap(t_ray ray, float t, float radius)
 	return ((powf(x, 2) + powf(z, 2)) <= powf(radius, 2));
 }
 
-bool	intersect_caps(t_intersection **head, t_object *object, t_ray ray)
+bool	intersect_caps(t_intersect **head, t_object *object, t_ray ray)
 {
 	float	t;
 	float	radius;
@@ -50,7 +50,7 @@ bool	intersect_caps(t_intersection **head, t_object *object, t_ray ray)
 	return (SUCCESS);
 }
 
-int	cyl_cone_algo(t_intersection **head, t_ray ray, t_object *obj, float val[3])
+int	cyl_cone_algo(t_intersect **head, t_ray ray, t_object *obj, float val[3])
 {
 	float	discriminant;
 	float	t;
@@ -79,7 +79,7 @@ int	cyl_cone_algo(t_intersection **head, t_ray ray, t_object *obj, float val[3])
 	return (SUCCESS);
 }
 
-int	intersect_cone(t_intersection **head, t_ray ray, t_object *object)
+int	intersect_cone(t_intersect **head, t_ray ray, t_object *object)
 {
 	float	val[3];
 	float	t;
@@ -88,7 +88,8 @@ int	intersect_cone(t_intersection **head, t_ray ray, t_object *object)
 		powf(ray.direction.z, 2);
 	val[B] = 2 * ray.origin.x * ray.direction.x - 2 * ray.origin.y * \
 		ray.direction.y + 2 * ray.origin.z * ray.direction.z;
-	val[C] = powf(ray.origin.x, 2) - powf(ray.origin.y, 2) + powf(ray.origin.z, 2);
+	val[C] = powf(ray.origin.x, 2) - powf(ray.origin.y, 2) + \
+			powf(ray.origin.z, 2);
 	if (equal_float(val[A], 0))
 	{
 		if (equal_float(val[B], 0))
@@ -103,7 +104,7 @@ int	intersect_cone(t_intersection **head, t_ray ray, t_object *object)
 	return (SUCCESS);
 }
 
-int	intersect_cylinder(t_intersection **head, t_ray ray, t_object *object)
+int	intersect_cylinder(t_intersect **head, t_ray ray, t_object *object)
 {
 	float	val[3];
 

@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 12:09:43 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/27 14:53:40 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:31:42 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ void	add_light_to_list(t_light **head, t_light *new_light)
 	new_light->next = NULL;
 }
 
-t_intersection	*new_intersect(float t, t_object *object)
+t_intersect	*new_intersect(float t, t_object *object)
 {
-	t_intersection	*new;
+	t_intersect	*new;
 
-	new = malloc(sizeof(t_intersection));
+	new = malloc(sizeof(t_intersect));
 	if (!new)
 		return (NULL);
 	new->t = t;
@@ -63,10 +63,10 @@ t_intersection	*new_intersect(float t, t_object *object)
 	return (new);
 }
 
-int	add_intersect_sorted(t_intersection **head, t_intersection *new)
+int	add_intersect_sorted(t_intersect **head, t_intersect *new)
 {
-	t_intersection	*cur;
-	t_intersection	*prev;
+	t_intersect	*cur;
+	t_intersect	*prev;
 
 	if (!head || !new)
 		return (ERROR);

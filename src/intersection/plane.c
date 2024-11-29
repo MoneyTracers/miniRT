@@ -6,14 +6,14 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 14:43:58 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/27 16:01:18 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:31:19 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <intersection.h>
 #include <list.h>
 
-int	intersect_plane(t_intersection **head, t_ray ray, t_object *object)
+int	intersect_plane(t_intersect **head, t_ray ray, t_object *object)
 {
 	t_tuple	plane_pos;
 	float	t;

@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 14:39:19 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/27 14:50:30 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:31:16 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ float	get_discriminant(float a, float b, float c)
 	return (discriminant);
 }
 
-int	local_intersect(t_intersection **head, t_object *object, t_ray ray)
+int	local_intersect(t_intersect **head, t_object *object, t_ray ray)
 {
 	if (object->type == SPHERE)
 	{
@@ -47,7 +47,7 @@ int	local_intersect(t_intersection **head, t_object *object, t_ray ray)
 	return (SUCCESS);
 }
 
-int	intersect(t_intersection **head, t_object *object, t_ray ray)
+int	intersect(t_intersect **head, t_object *object, t_ray ray)
 {
 	if (!is_identity_matrix(object->transformation, 4))
 	{
@@ -60,10 +60,10 @@ int	intersect(t_intersection **head, t_object *object, t_ray ray)
 	return (SUCCESS);
 }
 
-t_intersection	*intersect_world(t_world *world, t_ray ray)
+t_intersect	*intersect_world(t_world *world, t_ray ray)
 {
 	t_object		*cur;
-	t_intersection	*list;
+	t_intersect	*list;
 
 	list = NULL;
 	cur = world->objects;

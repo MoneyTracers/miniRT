@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:43:48 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/27 12:52:20 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:30:55 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ void	free_mlx(t_mlx *data)
 	free(data->mlx);
 }
 
-void	free_intersection(t_intersection **intersection)
+void	free_intersection(t_intersect **intersection)
 {
-	t_intersection	*cur;
-	t_intersection	*next;
+	t_intersect	*cur;
+	t_intersect	*next;
 
 	if (!intersection || !*intersection)
 		return ;

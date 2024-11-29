@@ -6,12 +6,21 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:50:44 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/27 15:38:41 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:25:03 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <matrix.h>
 #include <free.h>
+
+void	reset_col_row(int *new_col, int *new_row, int size)
+{
+	if ((*new_col) == size - 1)
+	{
+		(*new_col) = 0;
+		(*new_row)++;
+	}
+}
 
 t_matrix	submatrix(t_matrix matrix, int row, int col, int size)
 {
@@ -32,11 +41,7 @@ t_matrix	submatrix(t_matrix matrix, int row, int col, int size)
 			if (i != row && j != col)
 			{
 				sub.grid[new_row][new_col++] = matrix.grid[i][j];
-				if (new_col == size - 1)
-				{
-					new_col = 0;
-					new_row++;
-				}
+				reset_col_row(&new_col, &new_row, size);
 			}
 			j++;
 		}
@@ -45,24 +50,16 @@ t_matrix	submatrix(t_matrix matrix, int row, int col, int size)
 	return (sub);
 }
 
-float	minor(t_matrix matrix, int row, int col, int size)
-{
-	t_matrix	sub;
-	float		minor_value;
-
-	sub = submatrix(matrix, row, col, size);
-	minor_value = determinant(sub, size - 1);
-	return (minor_value);
-}
-
 float	cofactor(t_matrix matrix, int row, int col, int size)
 {
-	float	minor_value;
+	float		minor;
+	t_matrix	sub;
 
-	minor_value = minor(matrix, row, col, size);
+	sub = submatrix(matrix, row, col, size);
+	minor = determinant(sub, size - 1);
 	if ((row + col) % 2)
-		return (-minor_value);
-	return (minor_value);
+		return (-minor);
+	return (minor);
 }
 
 float	determinant(t_matrix matrix, int size)
@@ -72,7 +69,8 @@ float	determinant(t_matrix matrix, int size)
 
 	det = 0;
 	if (size == 2)
-		return (matrix.grid[0][0] * matrix.grid[1][1] - matrix.grid[0][1] * matrix.grid[1][0]);
+		return (matrix.grid[0][0] * matrix.grid[1][1] - \
+				matrix.grid[0][1] * matrix.grid[1][0]);
 	else
 	{
 		col = 0;
@@ -83,16 +81,6 @@ float	determinant(t_matrix matrix, int size)
 		}
 	}
 	return (det);
-}
-
-void	print_matrix(t_matrix matrix, int size) // DELETE THIS
-{
-	for (int i = 0; i < size; i++)
-	{
-		for (int j = 0; j < size; j++)
-			printf("%f ", matrix.grid[i][j]);
-		printf("\n");
-	}
 }
 
 t_matrix	invert_matrix(t_matrix matrix, int size)

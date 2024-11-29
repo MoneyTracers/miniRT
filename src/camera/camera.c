@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 13:54:57 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/27 14:21:02 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/29 14:34:06 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ t_matrix	view_transform(t_camera *cam, t_tuple from, t_tuple to, t_tuple up)
 	t_matrix	translation;
 	t_matrix	transformation;
 
-	cam->pos = from; //CAM->POS 0,0,0 NOT WORKING
+	cam->pos = from;
 	cam->normal = to;
 	cam->forward = normalize(subtract_tuple(to, from));
-	if (ft_fabs(cam->normal.y) > 0.9)
+	if (ft_fabs(cam->forward.y) > 0.7)
 		up = create_vector(0, 0, 1);
 	cam->left = normalize(get_cross_product(cam->forward, normalize(up)));
 	cam->true_up = normalize(get_cross_product(cam->left, cam->forward));

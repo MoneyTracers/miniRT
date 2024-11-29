@@ -6,14 +6,14 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 14:51:06 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/27 14:56:52 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:30:35 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <intersection.h>
 #include <reflection.h>
 
-t_comps	prepare_comps(t_intersection *intersection, t_ray ray)
+t_comps	prepare_comps(t_intersect *intersection, t_ray ray)
 {
 	t_comps	comps;
 	t_tuple	over_point;
