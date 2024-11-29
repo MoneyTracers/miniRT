@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 16:20:17 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/26 14:02:43 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/29 12:33:58 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void set_error(t_world *world, int exit_code, int err_msg, void *mem)
 
 void exit_err(char *err, int ec)
 {
+	write(2, "Error\n", 6);
 	perror(err);
 	exit (ec);
 }

@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/27 17:55:47 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/29 12:34:18 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 
 void parsing_exit(t_world * world)
 {
+	if (world->exit_code)
+		write(2, "Error\n", 6);
 	if (world->err == GNL)
 		perror("gnl error");
 	else if (world->err == CLOSE)
