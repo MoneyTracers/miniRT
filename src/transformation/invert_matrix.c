@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/07 12:50:44 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/29 15:59:17 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/29 16:00:42 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,21 +83,6 @@ float	determinant(t_matrix matrix, int size)
 	return (det);
 }
 
-<<<<<<< HEAD
-void	print_matrix(t_matrix matrix, int size)
-{
-	debugger(RED"%s:%d - %s\nprint matrix\t\n\n"RESET, \
-	__FILE__, __LINE__, __FUNCTION__);
-	for(int i = 0; i < size; i++)
-	{
-		for(int j = 0; j < size; j++)
-			printf("%f ", matrix.grid[i][j]);
-		printf("\n");
-	}
-}
-
-=======
->>>>>>> 772aee92fa345764db2f9f25be9ac00cc171da13
 t_matrix	invert_matrix(t_matrix matrix, int size)
 {
 	float		det;
