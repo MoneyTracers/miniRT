@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 14:34:14 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/29 15:34:14 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/29 17:36:16 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct s_comps
 	t_tuple		eyev;
 	t_tuple		normalv;
 	t_tuple		reflectv;
-	bool		inside;
 	bool		shadow;
 }	t_comps;
 

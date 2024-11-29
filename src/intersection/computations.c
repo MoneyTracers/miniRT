@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 14:51:06 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/29 15:30:35 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/29 17:36:07 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,7 @@ t_comps	prepare_comps(t_intersect *intersection, t_ray ray)
 	over_point = add_tuple(comps.point, scale_tuple(comps.normalv, EPSILON));
 	comps.over_point = over_point;
 	comps.shadow = false;
-	if (get_dot_product(comps.normalv, comps.eyev) < 0)
-	{
-		comps.inside = true;
+	if (get_dot_product(comps.normalv, comps.eyev) < 0 && comps.object->type != PLANE)
 		comps.normalv = negate_vector(comps.normalv);
-	}
-	else
-		comps.inside = false;
 	return (comps);
 }

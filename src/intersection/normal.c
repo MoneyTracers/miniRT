@@ -6,38 +6,41 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 12:24:15 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/27 14:40:55 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/29 17:34:19 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <intersection.h>
 
-t_tuple	local_normal_at(t_object *object, t_tuple local_point)
+t_tuple	cyl_normal(t_object *object, t_tuple local_point)
 {
 	float	dist;
 	float	y;
 
+	dist = powf(local_point.x, 2) + powf(local_point.z, 2);
+	if (dist < 1 && local_point.y >= object->cylinder->max - EPSILON)
+		return (create_vector(0, 1, 0));
+	else if (dist < 1 && local_point.y <= object->cylinder->min + EPSILON)
+		return (create_vector(0, -1, 0));
+	else if (object->type == CYLINDER)
+		return (create_vector(local_point.x, 0, local_point.z));
+	else
+	{
+		y = sqrtf(powf(local_point.x, 2) + powf(local_point.y, 2));
+		if (local_point.y < 0)
+			y = -y;
+		return (create_vector(local_point.x, -y, local_point.z));
+	}
+}
+
+t_tuple	local_normal_at(t_object *object, t_tuple local_point)
+{
 	if (object->type == SPHERE)
 		return (subtract_tuple(local_point, object->sphere->center));
 	else if (object->type == PLANE)
 		return (object->plane->normal);
 	else if (object->type == CYLINDER || object->type == CONE)
-	{
-		dist = powf(local_point.x, 2) + powf(local_point.z, 2);
-		if (dist < 1 && local_point.y >= object->cylinder->max - EPSILON)
-			return (create_vector(0, 1, 0));
-		else if (dist < 1 && local_point.y <= object->cylinder->min + EPSILON)
-			return (create_vector(0, -1, 0));
-		else if (object->type == CYLINDER)
-			return (create_vector(local_point.x, 0, local_point.z));
-		else
-		{
-			y = sqrtf(powf(local_point.x, 2) + powf(local_point.y, 2));
-			if (local_point.y < 0)
-				y = -y;
-			return (create_vector(local_point.x, -y, local_point.z));
-		}
-	}
+		return (cyl_normal(object, local_point));
 	return (create_vector(0, 0, 0));
 }
 

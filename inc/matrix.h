@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 14:34:44 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/29 15:37:57 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/29 16:17:35 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,9 @@ bool		is_identity_matrix(t_matrix matrix, int size);
 t_matrix	submatrix(t_matrix matrix, int row, int col, int size);
 float		determinant(t_matrix matrix, int size);
 t_matrix	invert_matrix(t_matrix matrix, int size);
+
+
+void print_matrix(t_matrix m);
+//delete this later
 
 #endif
