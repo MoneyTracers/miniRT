@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 13:57:38 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/27 19:55:22 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/29 15:50:38 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	parse_inrange_rgb(int min, int max, char *rgb, int *i)
 
 	index = 0;
 	check = 0;
+	*i = parse_skipwhitespace(rgb, *i);
 	while (rgb && index < 3)
 	{
 		start = *i;
@@ -86,5 +87,6 @@ int	parse_inrange_rgb(int min, int max, char *rgb, int *i)
 			*i += 1;
 		index++;
 	}
+	*i = parse_skipwhitespace(rgb, *i);
 	return (1);
 }

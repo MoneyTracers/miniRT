@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:57:19 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/27 20:06:53 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/29 15:49:05 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	parse_line_count_loop(int fd, int *line_count)
 			*line_count += 1;
 		i++;
 	}
-	if (ret < 99 && buf[ret-1] != '\n')
+	if (ret < 99 && buf[ret - 1] != '\n')
 		*line_count += 1;
 	return (1);
 }
