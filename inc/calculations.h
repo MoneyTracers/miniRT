@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calculations.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 15:32:05 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/11 16:01:29 by marieke          ###   ########.fr       */
+/*   Updated: 2024/11/27 16:05:16 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ t_tuple	get_cross_product(t_tuple vector1, t_tuple vector2);
 float	ft_fabs(float a);
 bool	equal_float(float a, float b);
 float	degrees_to_radians(float degrees);
+float	get_magnitude(t_tuple vector);
 
 #endif

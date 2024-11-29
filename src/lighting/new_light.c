@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list.h                                             :+:      :+:    :+:   */
+/*   new_light.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/31 15:04:09 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/29 15:34:26 by maraasve         ###   ########.fr       */
+/*   Created: 2024/11/27 15:20:00 by maraasve          #+#    #+#             */
+/*   Updated: 2024/11/27 15:20:19 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIST_H
-# define LIST_H
+#include <lighting.h>
 
-# include <shapes.h>
-# include <lighting.h>
-# include <intersection.h>
+t_light	*new_light(t_tuple pos, t_color color, float brightness)
+{
+	t_light	*new;
 
-void			add_shape_to_list(t_object **head, t_object *new_shape);
-void			add_light_to_list(t_light **head, t_light *new_light);
-int				add_intersect_sorted(t_intersect **head, t_intersect *new);
-t_intersect		*new_intersect(float t, t_object *object);
-
-#endif
+	new = malloc(sizeof(t_light));
+	if (!new)
+		return (NULL);
+	new->pos = pos;
+	new->color = color;
+	new->brightness = brightness;
+	new->next = NULL;
+	return (new);
+}

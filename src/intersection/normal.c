@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 12:24:15 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/19 12:57:21 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/27 14:40:55 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,21 @@ t_tuple	normal_at(t_object *object, t_tuple point)
 	t_tuple		local_point;
 	t_tuple		local_normal;
 	t_tuple		world_normal;
-	
+	t_matrix	transposed;
+
 	if (!is_identity_matrix(object->transformation, 4))
 	{
 		local_point = multiply_matrix_tuple(object->inverted, point);
 		local_normal = local_normal_at(object, local_point);
-		world_normal = multiply_matrix_tuple(transpose_matrix(object->inverted), local_normal);
+		transposed = transpose_matrix(object->inverted);
+		world_normal = multiply_matrix_tuple(transposed, local_normal);
 	}
 	else
 	{
 		local_point = point;
 		local_normal = local_normal_at(object, local_point);
-		world_normal = multiply_matrix_tuple(transpose_matrix(create_identity_matrix()), local_normal);
+		transposed = transpose_matrix(create_identity_matrix());
+		world_normal = multiply_matrix_tuple(transposed, local_normal);
 	}
 	world_normal.w = 0;
 	world_normal = normalize(world_normal);

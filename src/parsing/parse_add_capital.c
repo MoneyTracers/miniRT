@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   parse_add_capital.c                                :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: spenning <spenning@student.codam.nl>         +#+                     */
+/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 14:31:28 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/26 17:50:39 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/29 15:58:34 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,16 @@ void	parse_add_ambient(t_world *world, char *str)
 
 void	parse_add_camera(t_world *world, char *str)
 {
-	t_matrix	view_transform;
+	t_matrix	view;
+	t_tuple		up;
 	int			i;
 
 	i = 1;
 	world->cam.pos = parse_get_coordinates(str, &i);
 	world->cam.normal = parse_get_normal(str, &i);
-	view_transform = view_transformation(&world->cam, world->cam.pos, \
-	world->cam.normal, create_vector(0, 1, 0));
-	new_camera(&world->cam, degrees_to_radians(parse_get_float(str, &i)), \
-	view_transform);
+	up = create_vector(0, 1, 0);
+	view = view_transform(&world->cam, world->cam.pos, world->cam.normal, up);
+	new_camera(&world->cam, degrees_to_radians(parse_get_float(str, &i)), view);
 	return ;
 }
 
