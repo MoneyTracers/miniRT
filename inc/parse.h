@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/12/03 18:47:45 by spenning      ########   odam.nl         */
+/*   Updated: 2024/12/03 22:29:22 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_parse
 typedef struct s_pobj
 {
 	int					i;
+	int					type;
 	float				diameter;
 	float				height;
 	t_tuple				coor;
