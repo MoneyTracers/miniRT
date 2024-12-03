@@ -6,11 +6,10 @@
 /*   By: mynodeus <mynodeus@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/10 19:06:39 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/07 11:07:15 by spenning      ########   odam.nl         */
+/*   Updated: 2024/12/03 15:02:57 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-  
 #include <parse.h>
 
 static char	*skipwhitespaces(char *c_ptr)
@@ -25,7 +24,7 @@ static char	*skipwhitespaces(char *c_ptr)
 static int	detect_plusmignus(char *c_ptr)
 {
 	size_t	plus_flag;
-	size_t	minus_flag;	
+	size_t	minus_flag;
 
 	plus_flag = 0;
 	minus_flag = 0;
@@ -70,5 +69,3 @@ int	atoin(const char *nptr, int len)
 		return (result);
 	return (0);
 }
-
-

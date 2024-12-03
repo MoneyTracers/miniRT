@@ -6,11 +6,10 @@
 /*   By: mynodeus <mynodeus@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/10 19:06:39 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/26 13:48:56 by spenning      ########   odam.nl         */
+/*   Updated: 2024/12/03 15:02:11 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-  
 #include <parse.h>
 
 static char	*skipwhitespaces(char *c_ptr)
@@ -44,11 +43,11 @@ static int	detect_plusmignus(char *c_ptr)
 	return (4);
 }
 
-float decimals(float result, const char *str, int i, int len)
+float	decimals(float result, const char *str, int i, int len)
 {
 	int	nexponent;
-	int temp;
-	int chr;
+	int	temp;
+	int	chr;
 
 	nexponent = 1;
 	if (len < i)
@@ -70,9 +69,9 @@ float decimals(float result, const char *str, int i, int len)
 float	atofn(const char *nptr, int len)
 {
 	float		result;
-	int		index;
-	int		flag;
-	char	*c_ptr;
+	int			index;
+	int			flag;
+	char		*c_ptr;
 
 	c_ptr = (char *)nptr;
 	result = 0;
@@ -81,19 +80,17 @@ float	atofn(const char *nptr, int len)
 	flag = detect_plusmignus(c_ptr);
 	if (flag == 1 || flag == 2)
 		c_ptr++;
-	while (c_ptr[index] != '.' && c_ptr[index] != ' ' \
-	&& c_ptr[index] != '\0' \
+	while (c_ptr[index] != '.' && c_ptr[index] != ' ' && c_ptr[index] != '\0' \
 	&& (c_ptr[index] > 47) && (c_ptr[index] < 58))
 	{
 		result = result * 10 + (c_ptr[index] - 48);
 		index++;
 	}
 	if (c_ptr[index] != '\0')
-		result = decimals(result, &c_ptr[index], index, len - index);
+		result = decimals(result, c_ptr, index, len);
 	if (flag == 1)
 		return (result * -1);
 	if (flag == 2 || flag == 3)
 		return (result);
 	return (0);
 }
-
