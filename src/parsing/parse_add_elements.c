@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 14:32:54 by spenning      #+#    #+#                 */
-/*   Updated: 2024/12/03 18:30:55 by spenning      ########   odam.nl         */
+/*   Updated: 2024/12/03 22:20:01 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	parse_add_sphere(t_world *world, char *str)
 
 	sp = NULL;
 	ft_bzero(&parse, sizeof(parse));
+	parse.type = SPHERE;
 	parse.coor = parse_get_coordinates(str, &parse.i);
 	parse.diameter = parse_get_float(str, &parse.i);
 	parse.m = default_material();
@@ -63,6 +64,7 @@ void	parse_add_plane(t_world *world, char *str)
 
 	pl = NULL;
 	ft_bzero(&parse, sizeof(parse));
+	parse.type = PLANE;
 	parse.coor = parse_get_coordinates(str, &parse.i);
 	parse.normal = parse_get_normal(str, &parse.i);
 	if (get_magnitude(parse.normal) != 1)
@@ -83,6 +85,7 @@ void	parse_add_cyl(t_world *world, char *str)
 
 	cyl = NULL;
 	ft_bzero(&parse, sizeof(parse));
+	parse.type = CYLINDER;
 	parse.coor = parse_get_coordinates(str, &parse.i);
 	parse.normal = parse_get_normal(str, &parse.i);
 	if (get_magnitude(parse.normal) != 1)

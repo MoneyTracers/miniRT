@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 14:32:54 by spenning      #+#    #+#                 */
-/*   Updated: 2024/12/03 18:26:07 by spenning      ########   odam.nl         */
+/*   Updated: 2024/12/03 22:20:10 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	parse_add_obj(t_world *world, void *shape, t_matrix mat, t_pobj parse)
 		set_error(world, 1, OBJECT, NULL);
 		return ;
 	}
-	obj = new_object(SPHERE, parse.m, mat, shape);
+	obj = new_object(parse.type, parse.m, mat, shape);
 	if (!obj)
 	{
 		set_error(world, 1, OBJECT, NULL);
