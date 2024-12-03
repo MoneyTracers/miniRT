@@ -58,3 +58,4 @@ logs/
 temp.*
 failed_cases
 failed_mem_cases
+build_bonus/

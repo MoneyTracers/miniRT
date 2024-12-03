@@ -5,6 +5,7 @@ CC          := cc
 
 #The Target Binary Program
 TARGET      := miniRT
+TARGET_BONUS      := miniRT_bonus
 
 #The Directories, Source, Includes, Objects, Binary and Resources
 SRCDIR      := src
@@ -15,6 +16,11 @@ BUILDIR     := build
 RESDIR      := res
 SRCEXT      := c
 OBJEXT      := o
+
+#Bonus
+OBJDIR_BONUS      := build_bonus/obj
+TARGETDIR_BONUS   := build_bonus/bin
+BUILDIR_BONUS     := build_bonus
 
 #Flags, Libraries and Includes
 CFLAGS      := -Wall -Werror -Wextra -I./inc -I./lib/libft/inc -g
@@ -46,10 +52,6 @@ all: submodule build $(LIB)/$(MLX)/$(MLX.A) $(LIB)/$(LIBFT)/$(LIB)/$(LIBFT.A) $(
 
 #Remake
 re: fclean all
-
-
-bonus: CFLAGS += -DBONUS
-bonus: fclean all
 
 debug: CFLAGS += -DDEBUG
 debug: fclean all
@@ -94,5 +96,36 @@ $(OBJDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
 	$(CC) $(CFLAGS) $(MLX_C_FLAGS) -c -o $@ $^ -g
 
 
-#Non-File Targets
+bonus: CFLAGS += -DBONUS
+bonus: submodule build_bonus $(LIB)/$(MLX)/$(MLX.A) $(LIB)/$(LIBFT)/$(LIB)/$(LIBFT.A) $(TARGETDIR_BONUS)/$(TARGET_BONUS)
+
+debug_bonus: CFLAGS += -DDEBUG
+debug_bonus: fclean bonus
+
+build_bonus:
+	@mkdir -p $(TARGETDIR_BONUS)
+	@mkdir -p $(OBJDIR_BONUS)
+
+#Clean only Objects
+clean_bonus:
+	@$(RM) -rf $(OBJDIR_BONUS)
+	@$(MAKE) -C $(LIB)/$(LIBFT) clean
+	@$(MAKE) -C $(LIB)/$(MLX) clean
+
+#Full Clean, Objects and Binaries
+fclean_bonus: clean_bonus
+	@$(RM) -rf $(BUILDIR_BONUS)
+	@$(MAKE) -C $(LIB)/$(LIBFT) fclean
+	@$(MAKE) -C $(LIB)/$(MLX) clean
+
+#Link
+$(TARGETDIR_BONUS)/$(TARGET_BONUS) : $(OBJECTS)
+	$(CC) $(OBJECTS) $(MLX_L_FLAGS) $(LIB)/$(LIBFT)/$(LIB)/$(LIBFT.A) -o $(TARGETDIR_BONUS)/$(TARGET_BONUS)  -g
+
+#Compile
+$(OBJDIR_BONUS)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
+	@echo "Creating directory $(@D)"
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) $(MLX_C_FLAGS) -c -o $@ $^ -g
+
 .PHONY: all re clean fclean lib
