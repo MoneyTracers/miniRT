@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/27 15:57:38 by spenning      ########   odam.nl         */
+/*   Updated: 2024/12/03 18:11:58 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,32 +37,17 @@ typedef struct s_parse
 	int		L_identifier;
 } t_parse;
 
-typedef struct s_sphere_parse
+typedef struct s_pobj
 {
 	int					i;
-	t_transformation	transform;
-	t_tuple				coor;
 	float				diameter;
+	float				height;
+	t_tuple				coor;
+	t_tuple				normal;
+	t_tuple				normal_vec;
 	t_material			m;
-} t_sphere_parse;
-
-typedef struct s_plane_parse
-{
-	int			i;
-	t_tuple		coor;
-	t_tuple		normal_vec;
-	t_material	m;
-} t_plane_parse;
-
-typedef struct s_cyl_parse
-{
-	t_material	m;
-	float		diameter;
-	float		height;
-	int			i;
-	t_tuple		coor;
-	t_tuple		normal;
-} t_cyl_parse;
+	t_transformation	transform;
+} t_pobj;
 
 
 t_tuple parse_get_normal(char *str, int *i);
@@ -97,6 +82,7 @@ int	parse_check_identify(char *str);
 int	parse_open_file(char *file);
 void	parse_lines(t_world *world, int line_count, char *file);
 void	parse(t_world *world, int argc, char **argv);
+void	parse_add_obj(t_world *world, void *shape, t_matrix matrix, t_pobj parse);
 
 #endif
 

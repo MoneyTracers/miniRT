@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 14:31:28 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/29 15:58:34 by spenning      ########   odam.nl         */
+/*   Updated: 2024/12/03 18:19:41 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,16 @@ void	parse_add_light(t_world *world, char *str)
 	t_color	color;
 	float	brightness;
 	int		i;
+	t_light	*light;
 
 	i = 1;
 	pos = parse_get_coordinates(str, &i);
 	brightness = parse_get_float(str, &i);
 	color = parse_get_color(str, &i);
-	add_light_to_list(&world->lights, new_light(pos, color, brightness));
+	light = new_light(pos, color, brightness);
+	if (!light)
+		set_error(world, 1, LIGHT, NULL);
+	if (!world->exit_code)
+		add_light_to_list(&world->lights, light);
 	return ;
 }

@@ -45,4 +45,5 @@ src/utils/atoin.c\
 src/utils/exit.c\
 src/parsing/parse_get.c\
 src/parsing/parse_in_range.c\
-src/parsing/parse_is_variable.c
+src/parsing/parse_is_variable.c\
+src/parsing/parse_add_obj.c\
