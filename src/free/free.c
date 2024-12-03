@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:43:48 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/29 15:30:55 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/12/03 13:59:26 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,11 @@ void	free_lights(t_light **head)
 		cur = cur->next;
 		free(tmp);
 	}
+}
+
+void	free_minirt(t_world *world)
+{
+	free_objects(&world->objects);
+	free_lights(&world->lights);
+	free_mlx(world->mlx_data);
 }

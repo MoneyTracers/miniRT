@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 17:28:02 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/29 15:38:55 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/12/03 13:58:15 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@
 #  define BONUS 0
 # endif
 
+typedef struct s_mlx t_mlx;
+
 typedef struct s_camera
 {
 	int			image_width;
@@ -81,6 +83,7 @@ typedef struct s_world
 	float			ambientf;
 	t_camera		cam;
 	t_object		*objects;
+	t_mlx			*mlx_data;
 }	t_world;
 
 void	debugger(char *format, ...);

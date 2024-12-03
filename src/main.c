@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 17:06:00 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/29 15:26:20 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/12/03 13:57:20 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ int	main(int argc, char **argv)
 	}
 
 	mlx_data.world = &world; // added world to data struct for the keyhooks, for now
-
+	world.mlx_data = &mlx_data;
+	
 	hooks(&mlx_data);
 	render(&mlx_data, world.cam, &world);
 	printf("DONE\n");
