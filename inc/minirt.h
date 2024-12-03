@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/01 17:28:02 by maraasve          #+#    #+#             */
-/*   Updated: 2024/12/03 18:04:11 by maraasve         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   minirt.h                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
+/*   Updated: 2024/12/03 18:50:30 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,9 @@ enum e_error
 	A_IDENTIFIER,
 	L_IDENTIFIER,
 	C_IDENTIFIER,
+	NORMAL,
+	OBJECT,
+	LIGHT
 };
 
 typedef struct s_world

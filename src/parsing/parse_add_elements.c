@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 14:32:54 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/27 16:00:29 by spenning      ########   odam.nl         */
+/*   Updated: 2024/12/03 18:30:55 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,6 @@
 #include <shapes.h>
 #include <transformation.h>
 #include <free.h>
-
-void	parse_add_sphere(t_world *world, char *str)
-{
-	t_sphere_parse	parse;
-
-	parse.i = 0;
-	parse.coor = parse_get_coordinates(str, &parse.i);
-	parse.diameter = parse_get_float(str, &parse.i);
-	parse.m = default_material();
-	parse.m.color = parse_get_color(str, &parse.i);
-	parse.transform.rotate = create_identity_matrix();
-	parse.transform.scale = scale_matrix(parse.diameter, parse.diameter, \
-	parse.diameter);
-	parse.transform.translation = translation_matrix(parse.coor.x, \
-	parse.coor.y, parse.coor.z);
-	add_object_to_list(&world->objects, new_object(SPHERE, parse.m, \
-	transformation_matrix(parse.transform), (void *)new_sphere()));
-	return ;
-}
 
 t_transformation	get_transform_plane(t_tuple coor)
 {
@@ -42,21 +23,6 @@ t_transformation	get_transform_plane(t_tuple coor)
 	transform.scale = create_identity_matrix();
 	transform.translation = translation_matrix(coor.x, coor.y, coor.z);
 	return (transform);
-}
-
-void	parse_add_plane(t_world *world, char *str)
-{
-	t_plane_parse	parse;
-
-	parse.i = 0;
-	parse.coor = parse_get_coordinates(str, &parse.i);
-	parse.normal_vec = parse_get_normal(str, &parse.i);
-	parse.m = default_material();
-	parse.m.color = parse_get_color(str, &parse.i);
-	add_object_to_list(&world->objects, new_object(PLANE, parse.m, \
-	transformation_matrix(get_transform_plane(parse.coor)), \
-	(void *)new_plane(parse.normal_vec)));
-	return ;
 }
 
 t_transformation	get_transform_cyl(t_tuple coor, t_tuple normal, float dia)
@@ -69,21 +35,65 @@ t_transformation	get_transform_cyl(t_tuple coor, t_tuple normal, float dia)
 	return (transform);
 }
 
-void	parse_add_cyl(t_world *world, char *str)
+void	parse_add_sphere(t_world *world, char *str)
 {
-	t_cyl_parse	parse;
+	t_pobj			parse;
+	t_sphere		*sp;
 
-	parse.i = 0;
+	sp = NULL;
+	ft_bzero(&parse, sizeof(parse));
+	parse.coor = parse_get_coordinates(str, &parse.i);
+	parse.diameter = parse_get_float(str, &parse.i);
+	parse.m = default_material();
+	parse.m.color = parse_get_color(str, &parse.i);
+	parse.transform.rotate = create_identity_matrix();
+	parse.transform.scale = scale_matrix(parse.diameter, parse.diameter, \
+	parse.diameter);
+	parse.transform.translation = translation_matrix(parse.coor.x, \
+	parse.coor.y, parse.coor.z);
+	sp = (void *)new_sphere();
+	parse_add_obj(world, sp, transformation_matrix(parse.transform), parse);
+	return ;
+}
+
+void	parse_add_plane(t_world *world, char *str)
+{
+	t_pobj			parse;
+	t_plane			*pl;
+
+	pl = NULL;
+	ft_bzero(&parse, sizeof(parse));
 	parse.coor = parse_get_coordinates(str, &parse.i);
 	parse.normal = parse_get_normal(str, &parse.i);
+	if (get_magnitude(parse.normal) != 1)
+		set_error(world, 1, NORMAL, NULL);
+	parse.m = default_material();
+	parse.m.color = parse_get_color(str, &parse.i);
+	if (!world->exit_code)
+		pl = (void *)new_plane(parse.normal);
+	parse_add_obj(world, pl, \
+	transformation_matrix(get_transform_plane(parse.coor)), parse);
+	return ;
+}
+
+void	parse_add_cyl(t_world *world, char *str)
+{
+	t_pobj			parse;
+	t_cylinder		*cyl;
+
+	cyl = NULL;
+	ft_bzero(&parse, sizeof(parse));
+	parse.coor = parse_get_coordinates(str, &parse.i);
+	parse.normal = parse_get_normal(str, &parse.i);
+	if (get_magnitude(parse.normal) != 1)
+		set_error(world, 1, NORMAL, NULL);
 	parse.diameter = parse_get_float(str, &parse.i);
 	parse.height = parse_get_float(str, &parse.i);
 	parse.m = default_material();
 	parse.m.color = parse_get_color(str, &parse.i);
-	add_object_to_list(&world->objects, \
-	new_object(CYLINDER, parse.m, transformation_matrix(\
-	get_transform_cyl(parse.coor, \
-	parse.normal, parse.diameter)), \
-	(void *)new_cylinder(-parse.height / 2, parse.height / 2, true)));
+	if (!world->exit_code)
+		cyl = (void *)new_cylinder(-parse.height / 2, parse.height / 2, true);
+	parse_add_obj(world, cyl, transformation_matrix(\
+	get_transform_cyl(parse.coor, parse.normal, parse.diameter)), parse);
 	return ;
 }

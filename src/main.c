@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/30 17:06:00 by maraasve          #+#    #+#             */
-/*   Updated: 2024/12/03 17:37:37 by maraasve         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   main.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
+/*   Updated: 2024/12/03 18:48:28 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 #include <camera.h>
 #include <parse.h>
 
-void	parsing_exit(t_world *world)
+void	parsing_exit_message(t_world *world)
 {
 	if (world->exit_code)
 		write(2, "Error\n", 6);
@@ -40,6 +40,17 @@ void	parsing_exit(t_world *world)
 		write(2, "too many ambient light objects in .rt\n", 38);
 	else if (world->err == C_IDENTIFIER)
 		write(2, "too many camera's in .rt\n", 25);
+	else if (world->err == OBJECT)
+		write(2, "error in allocation for object\n", 31);
+	else if (world->err == LIGHT)
+		write(2, "error in allocation for light\n", 30);
+	else if (world->err == NORMAL)
+		write(2, "vector not normalized\n", 22);
+}
+
+void	parsing_exit(t_world *world)
+{
+	parsing_exit_message(world);
 	if (world->exit_code)
 	{
 		free_objects(&world->objects);
@@ -68,8 +79,9 @@ int	main(int argc, char **argv)
 	hooks(&mlx_data);
 	debugger(BLU "\nstart render\n"RESET);
 	render(&mlx_data, world.cam, &world);
-	mlx_put_image_to_window(mlx_data.mlx, mlx_data.window, \
-							mlx_data.img1.image, 0, 0);
+	printf("DONE\n");
+	mlx_put_image_to_window(mlx_data.mlx, \
+	mlx_data.window, mlx_data.img1.image, 0, 0);
 	mlx_loop(mlx_data.mlx);
 	free_mlx(&mlx_data);
 	free_lights(&world.lights);

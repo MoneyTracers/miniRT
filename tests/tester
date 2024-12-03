@@ -111,6 +111,7 @@ C_template=$(find ./ -name C_template)
 cy_template=$(find ./ -name cy_template)
 pl_template=$(find ./ -name pl_template)
 sp_template=$(find ./ -name sp_template)
+vector_template=$(find ./ -name sp_template)
 normal_template=$(find ./ -name normal_template)
 
 A_cases=$(find ./ -name A_cases)
@@ -120,6 +121,7 @@ cy_cases=$(find ./ -name cy_cases)
 pl_cases=$(find ./ -name pl_cases)
 sp_cases=$(find ./ -name sp_cases)
 random_cases=$(find ./ -name random_cases)
+vector_cases=$(find ./ -name vector_cases)
 
 #timeout
 timout="timeout --preserve-status 1s"
@@ -256,6 +258,7 @@ random_case_test $sp_cases $sp_template
 random_case_test $pl_cases $pl_template
 random_case_test $cy_cases $cy_template
 random_case_test $random_cases $normal_template
+random_case_test $vector_cases $vector_template
 
 
 rm -rf temp.*

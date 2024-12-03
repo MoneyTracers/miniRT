@@ -31,6 +31,7 @@ MLX         := mlx_linux
 MLX.A       := libmlx.a
 #MLX_L_FLAGS := -Llib/mlx_linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
 #MLX_C_FLAGS := -I/usr/include -Ilib/mlx_linux -Ilib/libft -O3
+CFLAGS_BONUS      := -Wall -Werror -Wextra -DBONUS -I./inc -I./lib/libft/inc -g
 DEBUG_FLAGS := -fsanitize=address -g
 
 ifeq ($(shell uname), Darwin)
@@ -45,6 +46,7 @@ endif
 #DO NOT EDIT BELOW THIS LINE
 #---------------------------------------------------------------------------------
 OBJECTS     := $(patsubst $(SRCDIR)/%,$(OBJDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
+OBJECTS_BONUS     := $(patsubst $(SRCDIR)/%,$(OBJDIR_BONUS)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
 
 #Default Make
 
@@ -95,12 +97,12 @@ $(OBJDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(MLX_C_FLAGS) -c -o $@ $^ -g
 
-
-bonus: CFLAGS += -DBONUS
 bonus: submodule build_bonus $(LIB)/$(MLX)/$(MLX.A) $(LIB)/$(LIBFT)/$(LIB)/$(LIBFT.A) $(TARGETDIR_BONUS)/$(TARGET_BONUS)
 
-debug_bonus: CFLAGS += -DDEBUG
+debug_bonus: CFLAGS_BONUS += -DDEBUG
 debug_bonus: fclean bonus
+
+re_bonus: fclean_bonus bonus
 
 build_bonus:
 	@mkdir -p $(TARGETDIR_BONUS)
@@ -119,13 +121,13 @@ fclean_bonus: clean_bonus
 	@$(MAKE) -C $(LIB)/$(MLX) clean
 
 #Link
-$(TARGETDIR_BONUS)/$(TARGET_BONUS) : $(OBJECTS)
-	$(CC) $(OBJECTS) $(MLX_L_FLAGS) $(LIB)/$(LIBFT)/$(LIB)/$(LIBFT.A) -o $(TARGETDIR_BONUS)/$(TARGET_BONUS)  -g
+$(TARGETDIR_BONUS)/$(TARGET_BONUS) : $(OBJECTS_BONUS)
+	$(CC) $(OBJECTS_BONUS) $(MLX_L_FLAGS) $(LIB)/$(LIBFT)/$(LIB)/$(LIBFT.A) -o $(TARGETDIR_BONUS)/$(TARGET_BONUS)  -g
 
 #Compile
 $(OBJDIR_BONUS)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
 	@echo "Creating directory $(@D)"
 	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) $(MLX_C_FLAGS) -c -o $@ $^ -g
+	$(CC) $(CFLAGS_BONUS) $(MLX_C_FLAGS) -c -o $@ $^ -g
 
 .PHONY: all re clean fclean lib
