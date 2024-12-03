@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 14:32:54 by spenning      #+#    #+#                 */
-/*   Updated: 2024/12/03 18:25:14 by spenning      ########   odam.nl         */
+/*   Updated: 2024/12/03 18:30:55 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	parse_add_sphere(t_world *world, char *str)
 {
 	t_pobj			parse;
 	t_sphere		*sp;
-	t_object		*obj;
 
+	sp = NULL;
 	ft_bzero(&parse, sizeof(parse));
 	parse.coor = parse_get_coordinates(str, &parse.i);
 	parse.diameter = parse_get_float(str, &parse.i);
@@ -60,8 +60,8 @@ void	parse_add_plane(t_world *world, char *str)
 {
 	t_pobj			parse;
 	t_plane			*pl;
-	t_object		*obj;
 
+	pl = NULL;
 	ft_bzero(&parse, sizeof(parse));
 	parse.coor = parse_get_coordinates(str, &parse.i);
 	parse.normal = parse_get_normal(str, &parse.i);
@@ -80,8 +80,8 @@ void	parse_add_cyl(t_world *world, char *str)
 {
 	t_pobj			parse;
 	t_cylinder		*cyl;
-	t_object		*obj;
 
+	cyl = NULL;
 	ft_bzero(&parse, sizeof(parse));
 	parse.coor = parse_get_coordinates(str, &parse.i);
 	parse.normal = parse_get_normal(str, &parse.i);
