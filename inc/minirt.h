@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 17:28:02 by maraasve          #+#    #+#             */
-/*   Updated: 2024/12/03 16:06:32 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/12/03 17:15:58 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@
 
 typedef float				t_fvec \
 __attribute__ ((vector_size (4 * sizeof(float))));
+
+typedef struct s_mlx t_mlx;
 
 typedef struct s_camera
 {
