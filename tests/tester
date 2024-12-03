@@ -38,6 +38,16 @@ memory=1
 null_check=0
 norminette=1
 
+# trap ctrl-c and call ctrl_c()
+trap ctrl_c INT
+
+function ctrl_c() {
+        bash utils/fix_permissions.sh
+		exit 2
+}
+
+bash utils/no_permissions.sh
+
 
 # parse options
 while [ "$#" -gt 0 ]; do
@@ -249,3 +259,5 @@ random_case_test $random_cases $normal_template
 
 
 rm -rf temp.*
+
+bash utils/fix_permissions.sh

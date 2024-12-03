@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:02:22 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/13 13:44:17 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/26 17:41:37 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	parse_check_identify(char *str)
 }
 
 //TODO: count amount of objects for array later
-void	parse_check_identifier(t_parse *parse)
+void	parse_check_identifier(t_world *world, t_parse *parse)
 {
 	debugger(CYN "%s:%d - %s\nparse str:\t%s" RESET, __FILE__, \
 	__LINE__, __FUNCTION__, parse->str);
@@ -47,19 +47,19 @@ void	parse_check_identifier(t_parse *parse)
 	if (parse->type == ambient)
 	{
 		if (parse->A_identifier)
-			exit_err("too many A identifiers", 1);
+			set_error(world, 1, A_IDENTIFIER, NULL);
 		parse->A_identifier++;
 	}
 	else if (parse->type == camera)
 	{
 		if (parse->C_identifier)
-			exit_err("too many C identifiers", 1);
+			set_error(world, 1, C_IDENTIFIER, NULL);
 		parse->C_identifier++;
 	}
 	else if (parse->type == light)
 	{
 		if (parse->L_identifier && !BONUS)
-			exit_err("too many L identifiers", 1);
+			set_error(world, 1, L_IDENTIFIER, NULL);
 		parse->L_identifier++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 13:57:38 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/13 12:12:11 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/29 15:50:38 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,28 @@ int	parse_inrange_int(int min, int max, char *str, int *i)
 	return (0);
 }
 
+int	parse_inrange_rgb_loop(int index, char *rgb, int check, int *i)
+{
+	while (index != 2)
+	{
+		if (rgb[*i] == ',')
+			break ;
+		if (!ft_isdigit(rgb[*i]))
+			return (0);
+		*i += 1;
+	}
+	while (index == 2)
+	{
+		if (!ft_isdigit(rgb[*i]))
+			return (0);
+		check++;
+		*i += 1;
+		if ((rgb[*i] == ' ' || rgb[*i] == '\n' || rgb[*i] == '\0') && check)
+			break ;
+	}
+	return (1);
+}
+
 int	parse_inrange_rgb(int min, int max, char *rgb, int *i)
 {
 	int	index;
@@ -52,31 +74,19 @@ int	parse_inrange_rgb(int min, int max, char *rgb, int *i)
 
 	index = 0;
 	check = 0;
+	*i = parse_skipwhitespace(rgb, *i);
 	while (rgb && index < 3)
 	{
 		start = *i;
-		while (index != 2)
-		{
-			if (rgb[*i] == ',')
-				break ;
-			if (!ft_isdigit(rgb[*i]))
-				return (0);
-			*i += 1;
-		}
-		while (index == 2)
-		{
-			if (!ft_isdigit(rgb[*i]))
-				return (0);
-			check++;
-			*i += 1;
-			if ((rgb[*i] == ' ' || rgb[*i] == '\n') && check)
-				break ;
-		}
+		if (!parse_inrange_rgb_loop(index, rgb, check, i))
+			return (0);
 		col = atoin(&rgb[start], *i - start);
 		if (col < min || col > max)
 			return (0);
-		*i += 1;
+		if (rgb[*i] != '\0')
+			*i += 1;
 		index++;
 	}
+	*i = parse_skipwhitespace(rgb, *i);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/13 14:20:27 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/29 15:59:07 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,32 @@
 #include <camera.h>
 #include <parse.h>
 
+
+void parsing_exit(t_world * world)
+{
+	if (world->exit_code)
+		write(2, "Error\n", 6);
+	if (world->err == GNL)
+		perror("gnl error");
+	else if (world->err == CLOSE)
+		perror("close error");
+	else if (world->err == INC_FORMAT)
+		write(2, "incorrect format in file\n", 25);
+	else if (world->err == L_IDENTIFIER)
+		write(2, "too many lights in .rt\n", 23);
+	else if (world->err == A_IDENTIFIER)
+		write(2, "too many ambient light objects in .rt\n", 38);
+	else if (world->err == C_IDENTIFIER)
+		write(2, "too many camera's in .rt\n", 25);
+	if (world->exit_code)
+	{
+		free_objects(&world->objects);
+		free_lights(&world->lights);
+		exit(world->exit_code);
+	}
+	return ;
+}
+
 int	main(int argc, char **argv)
 {
 	t_mlx				mlx_data;
@@ -31,27 +57,25 @@ int	main(int argc, char **argv)
 
 	ft_bzero(&world, sizeof(t_world));
 	parse(&world, argc, argv);
+	parsing_exit(&world);
 
-	print_matrix(world.cam.tranformation.grid, 4);
-	printf("\n");
-	print_matrix(world.cam.inverse->grid, 4);
-	
+	ft_bzero(&mlx_data, sizeof(t_mlx));
 	if (!init_mlx(&mlx_data))
 	{
 		free_objects(&world.objects);
 		return (1);
 	}
-	
+
+	mlx_data.world = &world; // added world to data struct for the keyhooks, for now
+
 	hooks(&mlx_data);
 	debugger(BLU "\nstart render\n"RESET);
 	render(&mlx_data, world.cam, &world);
-	debugger(GRN"DONE\n"RESET);
-	mlx_put_image_to_window(mlx_data.mlx, mlx_data.window, mlx_data.image, 0, 0);
+	printf("DONE\n");
+	mlx_put_image_to_window(mlx_data.mlx, mlx_data.window, mlx_data.img1.image, 0, 0);
 	mlx_loop(mlx_data.mlx);
 	
 	free_mlx(&mlx_data);
 	free_lights(&world.lights);
 	free_objects(&world.objects);
-	free_matrix(world.cam.tranformation.grid, 4);
-	free_matrix(world.cam.inverse->grid, 4);
 }

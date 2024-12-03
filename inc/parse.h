@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/11/13 12:11:56 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/27 15:57:38 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 #ifndef PARSE_H
 # define PARSE_H
+
+# include <transformation.h>
 
 enum identifiers
 {
@@ -34,6 +36,34 @@ typedef struct s_parse
 	int		C_identifier;
 	int		L_identifier;
 } t_parse;
+
+typedef struct s_sphere_parse
+{
+	int					i;
+	t_transformation	transform;
+	t_tuple				coor;
+	float				diameter;
+	t_material			m;
+} t_sphere_parse;
+
+typedef struct s_plane_parse
+{
+	int			i;
+	t_tuple		coor;
+	t_tuple		normal_vec;
+	t_material	m;
+} t_plane_parse;
+
+typedef struct s_cyl_parse
+{
+	t_material	m;
+	float		diameter;
+	float		height;
+	int			i;
+	t_tuple		coor;
+	t_tuple		normal;
+} t_cyl_parse;
+
 
 t_tuple parse_get_normal(char *str, int *i);
 int parse_check_unidentified(char *str);
@@ -62,7 +92,7 @@ int	parse_skipwhitespace(char *str, int i);
 int	parse_inrange_float(float min, float max, char *str, int *i);
 void	parse_check_extension(char *file);
 int	parse_check_correctness(t_parse *parse);
-void	parse_check_identifier(t_parse *parse);
+void	parse_check_identifier(t_world *world, t_parse *parse);
 int	parse_check_identify(char *str);
 int	parse_open_file(char *file);
 void	parse_lines(t_world *world, int line_count, char *file);

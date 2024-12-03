@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:29:18 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/13 14:00:52 by spenning      ########   odam.nl         */
+/*   Updated: 2024/11/29 15:50:30 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	parse_check_sphere(char *str)
 	i = parse_skipwhitespace(str, i);
 	if (!parse_inrange_rgb(0, 255, str, &i))
 		return (1);
+	i = parse_skipwhitespace(str, i);
 	if (str[i] != '\n' && str[i] != '\0')
 		return (1);
 	return (0);
@@ -57,6 +58,7 @@ int	parse_check_plane(char *str)
 	i = parse_skipwhitespace(str, i);
 	if (!parse_inrange_rgb(0, 255, str, &i))
 		return (1);
+	i = parse_skipwhitespace(str, i);
 	if (str[i] != '\n' && str[i] != '\0')
 		return (1);
 	return (0);
@@ -78,12 +80,12 @@ int	parse_check_cyl(char *str)
 	i = parse_skipwhitespace(str, i);
 	if (!parse_isnormalvec(str, &i))
 		return (1);
-	if (!parse_isfloat(str, ' ', &i))
-		return (1);
 	i = parse_skipwhitespace(str, i);
 	if (!parse_isfloat(str, ' ', &i))
 		return (1);
 	i = parse_skipwhitespace(str, i);
+	if (!parse_isfloat(str, ' ', &i))
+		return (1);
 	if (!parse_inrange_rgb(0, 255, str, &i))
 		return (1);
 	if (str[i] != '\n' && str[i] != '\0')

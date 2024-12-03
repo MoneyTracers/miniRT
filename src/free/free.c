@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/02 12:43:48 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/06 14:00:00 by maraasve         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   free.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/10/02 12:43:48 by marieke       #+#    #+#                 */
+/*   Updated: 2024/11/29 15:59:33 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,17 @@
 void	free_mlx(t_mlx *data)
 {
 	mlx_loop_end(data->mlx);
-	mlx_destroy_image(data->mlx, data->image);
+	mlx_destroy_image(data->mlx, data->img1.image);
+	mlx_destroy_image(data->mlx, data->img2.image);
 	mlx_destroy_display(data->mlx);
 	mlx_destroy_window(data->mlx, data->window);
 	free(data->mlx);
 }
 
-void	free_matrix(float **grid, int size)
+void	free_intersection(t_intersect **intersection)
 {
-	int	i;
-
-	i = 0;
-	while (i < size)
-	{
-		free(grid[i]);
-		i++;
-	}
-	free(grid);
-}
-
-void	free_intersection(t_intersection **intersection)
-{
-	t_intersection *cur;
-	t_intersection *next;
+	t_intersect	*cur;
+	t_intersect	*next;
 
 	if (!intersection || !*intersection)
 		return ;
@@ -63,19 +51,14 @@ void	free_objects(t_object **head)
 	while (cur)
 	{
 		next = cur->next;
-		free_matrix(cur->transformation.grid, 4);
-		if (cur->inverted)
-		{
-			free_matrix(cur->inverted->grid, 4);
-			free(cur->inverted);
-		}
-		if (cur->type == CYLINDER || cur->type == CONE)
+		if ((cur->type == CYLINDER || cur->type == CONE) && cur->cylinder)
 			free(cur->cylinder);
-		if (cur->type == PLANE)
+		if (cur->type == PLANE && cur->plane)
 			free(cur->plane);
-		if (cur->type == SPHERE)
+		if (cur->type == SPHERE && cur->sphere)
 			free(cur->sphere);
-		free(cur);
+		if (cur)
+			free(cur);
 		cur = next;
 	}
 	(*head) = NULL;
@@ -93,11 +76,4 @@ void	free_lights(t_light **head)
 		cur = cur->next;
 		free(tmp);
 	}
-}
-
-void	free_transformation_matrix(t_transformation *transform)
-{
-	free_matrix(transform->rotate.grid, 4);
-	free_matrix(transform->scale.grid, 4);
-	free_matrix(transform->translation.grid, 4);
 }

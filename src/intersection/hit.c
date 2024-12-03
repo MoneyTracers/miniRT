@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   hit.c                                              :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/10/23 12:37:18 by marieke       #+#    #+#                 */
-/*   Updated: 2024/11/12 13:51:16 by spenning      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   hit.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/23 12:37:18 by marieke           #+#    #+#             */
+/*   Updated: 2024/11/29 15:31:11 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 #include <free.h>
 #include <lighting.h>
 
-t_intersection	*get_hit(t_intersection *intersections)
+t_intersect	*get_hit(t_intersect *intersections)
 {
-	t_intersection	*cur;
+	t_intersect	*cur;
 
 	cur = intersections;
 	while (cur)
@@ -33,27 +33,28 @@ static t_color	shade_hit(t_world *world, t_comps comps, int *remaining)
 {
 	t_object	*shape;
 	t_light		*cur;
-	t_color		total_color;
-	bool		shadow = false;
+	t_color		color;
+	t_color		light_result;
 
 	shape = comps.object;
-	total_color = new_color(0, 0, 0);
+	color = new_color(0, 0, 0);
 	cur = world->lights;
 	while (cur)
 	{
-		shadow = is_shadowed(world, *cur, comps.over_point);
-		total_color = add_colors(total_color, lighting(world, *cur, shape->material, comps.over_point, comps.eyev, comps.normalv, shadow));
+		comps.shadow = is_shadowed(world, *cur, comps.over_point);
+		light_result = lighting(world, *cur, shape->material, comps);
+		color = add_colors(color, light_result);
 		cur = cur->next;
 	}
-	total_color = add_colors(total_color, reflected_color(world, comps, remaining));
-	return (clamp_color(total_color));
+	color = add_colors(color, reflected_color(world, comps, remaining));
+	return (clamp_color(color));
 }
 
 t_color	color_at(t_world *world, t_ray ray, int *remaining)
 {
 	t_comps			comps;
-	t_intersection *hit;
-	t_intersection *list;
+	t_intersect	*hit;
+	t_intersect	*list;
 
 	list = NULL;
 	list = intersect_world(world, ray);

@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 15:57:47 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/06 14:00:59 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/11/27 12:54:07 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ t_tuple	position(t_ray ray, float time)
 
 t_ray	transform_ray(t_ray ray, t_matrix transformation)
 {
-	t_ray	transformed;
+	t_ray	new;
 
-	transformed.origin = multiply_matrix_tuple(transformation, ray.origin);
-	transformed.direction = multiply_matrix_tuple(transformation, ray.direction);
-	return (transformed);
+	new.origin = multiply_matrix_tuple(transformation, ray.origin);
+	new.direction = multiply_matrix_tuple(transformation, ray.direction);
+	return (new);
 }
