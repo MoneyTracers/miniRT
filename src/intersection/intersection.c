@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 14:39:19 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/29 15:31:16 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/12/03 14:06:30 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,7 @@ int	local_intersect(t_intersect **head, t_object *object, t_ray ray)
 int	intersect(t_intersect **head, t_object *object, t_ray ray)
 {
 	if (!is_identity_matrix(object->transformation, 4))
-	{
 		ray = transform_ray(ray, object->inverted);
-		if (isnan(ray.origin.x) || isnan(ray.direction.x))
-			return (SUCCESS); //MIGHT BE DELETED
-	}
 	if (local_intersect(head, object, ray) == ERROR)
 		return (ERROR);
 	return (SUCCESS);
@@ -72,7 +68,9 @@ t_intersect	*intersect_world(t_world *world, t_ray ray)
 		if (intersect(&list, cur, ray) == ERROR)
 		{
 			free_intersection(&list);
-			return (NULL); //need error value here
+			free_minirt(world);
+			exit(1);
+			//exit_err(); fix this
 		}
 		cur = cur->next;
 	}
