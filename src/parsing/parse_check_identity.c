@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:02:22 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/26 17:41:37 by spenning      ########   odam.nl         */
+/*   Updated: 2024/12/03 15:16:06 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	parse_check_identifier(t_world *world, t_parse *parse)
 	}
 	else if (parse->type == light)
 	{
-		if (parse->L_identifier && !BONUS)
+		if (parse->L_identifier != 0 && !BONUS)
 			set_error(world, 1, L_IDENTIFIER, NULL);
 		parse->L_identifier++;
 	}
