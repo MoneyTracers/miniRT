@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 17:28:02 by maraasve          #+#    #+#             */
-/*   Updated: 2024/12/03 17:45:26 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/12/03 18:04:11 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 
 # define SUCCESS 0
 # define ERROR 1
-# define EPSILON 0.001
+# define EPSILON 0.01
 
 # ifndef DEBUG
 #  define DEBUG 0
