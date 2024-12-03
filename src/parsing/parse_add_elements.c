@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 14:32:54 by spenning      #+#    #+#                 */
-/*   Updated: 2024/12/03 18:15:01 by spenning      ########   odam.nl         */
+/*   Updated: 2024/12/03 18:25:14 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,13 @@ void	parse_add_plane(t_world *world, char *str)
 
 	ft_bzero(&parse, sizeof(parse));
 	parse.coor = parse_get_coordinates(str, &parse.i);
-	parse.normal_vec = parse_get_normal(str, &parse.i);
+	parse.normal = parse_get_normal(str, &parse.i);
+	if (get_magnitude(parse.normal) != 1)
+		set_error(world, 1, NORMAL, NULL);
 	parse.m = default_material();
 	parse.m.color = parse_get_color(str, &parse.i);
-	pl = (void *)new_plane(parse.normal_vec);
+	if (!world->exit_code)
+		pl = (void *)new_plane(parse.normal);
 	parse_add_obj(world, pl, \
 	transformation_matrix(get_transform_plane(parse.coor)), parse);
 	return ;
@@ -82,11 +85,14 @@ void	parse_add_cyl(t_world *world, char *str)
 	ft_bzero(&parse, sizeof(parse));
 	parse.coor = parse_get_coordinates(str, &parse.i);
 	parse.normal = parse_get_normal(str, &parse.i);
+	if (get_magnitude(parse.normal) != 1)
+		set_error(world, 1, NORMAL, NULL);
 	parse.diameter = parse_get_float(str, &parse.i);
 	parse.height = parse_get_float(str, &parse.i);
 	parse.m = default_material();
 	parse.m.color = parse_get_color(str, &parse.i);
-	cyl = (void *)new_cylinder(-parse.height / 2, parse.height / 2, true);
+	if (!world->exit_code)
+		cyl = (void *)new_cylinder(-parse.height / 2, parse.height / 2, true);
 	parse_add_obj(world, cyl, transformation_matrix(\
 	get_transform_cyl(parse.coor, parse.normal, parse.diameter)), parse);
 	return ;

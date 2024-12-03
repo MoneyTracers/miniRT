@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/12/03 18:11:58 by spenning      ########   odam.nl         */
+/*   Updated: 2024/12/03 18:24:51 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ typedef struct s_pobj
 	float				height;
 	t_tuple				coor;
 	t_tuple				normal;
-	t_tuple				normal_vec;
 	t_material			m;
 	t_transformation	transform;
 } t_pobj;

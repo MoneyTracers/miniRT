@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/12/03 18:17:53 by spenning      ########   odam.nl         */
+/*   Updated: 2024/12/03 18:23:35 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ typedef enum e_error
 	A_IDENTIFIER,
 	L_IDENTIFIER,
 	C_IDENTIFIER,
+	NORMAL,
 	OBJECT,
 	LIGHT
 } e_error;

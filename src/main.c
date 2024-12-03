@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/12/03 18:20:59 by spenning      ########   odam.nl         */
+/*   Updated: 2024/12/03 18:27:32 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 #include <camera.h>
 #include <parse.h>
 
-void	parsing_exit(t_world *world)
+void	parsing_exit_message(t_world *world)
 {
 	if (world->exit_code)
 		write(2, "Error\n", 6);
@@ -44,6 +44,13 @@ void	parsing_exit(t_world *world)
 		write(2, "error in allocation for object\n", 31);
 	else if (world->err == LIGHT)
 		write(2, "error in allocation for light\n", 30);
+	else if (world->err == NORMAL)
+		write(2, "vector not normalized\n", 22);
+}
+
+void	parsing_exit(t_world *world)
+{
+	parsing_exit_message(world);
 	if (world->exit_code)
 	{
 		free_objects(&world->objects);
