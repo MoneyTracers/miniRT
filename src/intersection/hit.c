@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 12:37:18 by marieke           #+#    #+#             */
-/*   Updated: 2024/12/02 16:16:55 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/12/03 17:35:20 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static t_color	shade_hit(t_world *world, t_comps comps, int *remaining)
 
 t_color	color_at(t_world *world, t_ray ray, int *remaining)
 {
-	t_comps			comps;
+	t_comps		comps;
 	t_intersect	*hit;
 	t_intersect	*list;
 

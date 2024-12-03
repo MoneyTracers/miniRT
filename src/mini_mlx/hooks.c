@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:49:59 by maraasve          #+#    #+#             */
-/*   Updated: 2024/12/03 14:16:00 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/12/03 17:34:59 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,83 +41,10 @@ int	move_cam(int keycode, t_camera *cam)
 	return (1);
 }
 
-t_matrix	rotation_around_axis(t_tuple axis, float angle)
-{
-	t_matrix	rotation;
-	float		cos_theta;
-	float		sin_theta;
-	float		one_minus_cos;
-
-	axis = normalize(axis);
-	cos_theta = cos(angle);
-	sin_theta = sin(angle);
-	one_minus_cos = 1.0f - cos_theta;
-	rotation = create_identity_matrix();
-	rotation.grid[0][0] = cos_theta + axis.x * axis.x * one_minus_cos;
-	rotation.grid[0][1] = axis.x * axis.y * one_minus_cos - axis.z * sin_theta;
-	rotation.grid[0][2] = axis.x * axis.z * one_minus_cos + axis.y * sin_theta;
-	rotation.grid[1][0] = axis.y * axis.x * one_minus_cos + axis.z * sin_theta;
-	rotation.grid[1][1] = cos_theta + axis.y * axis.y * one_minus_cos;
-	rotation.grid[1][2] = axis.y * axis.z * one_minus_cos - axis.x * sin_theta;
-	rotation.grid[2][0] = axis.z * axis.x * one_minus_cos - axis.y * sin_theta;
-	rotation.grid[2][1] = axis.z * axis.y * one_minus_cos + axis.x * sin_theta;
-	rotation.grid[2][2] = cos_theta + axis.z * axis.z * one_minus_cos;
-	return (rotation);
-}
-
-int	rotate_cam(int keycode, t_camera *cam)
-{
-	t_matrix	rotation;
-	t_tuple		look_point;
-	t_tuple		target;
-	float		angle;
-	float		cur_pitch;
-
-	target = add_tuple(cam->pos, cam->forward);
-	if (keycode == A_KEY || keycode == D_KEY)
-	{
-		if (keycode == A_KEY)
-			angle = -0.3;
-		else
-			angle = 0.3;
-		if (ft_fabs(cam->forward.y) > 0.9)
-			rotation = rotation_around_axis(create_vector(0, 0, 1), angle);
-		else
-			rotation = rotation_around_axis(create_vector(0, 1, 0), angle);
-		look_point = subtract_tuple(target, cam->pos);
-		look_point = multiply_matrix_tuple(rotation, look_point);
-		cam->forward = normalize(look_point);
-	}
-	else if (keycode == W_KEY || keycode == S_KEY)
-	{
-		cur_pitch = asin(cam->forward.y);
-		if (keycode == W_KEY)
-			angle = 0.3;
-		else
-			angle = -0.3;
-		if (cur_pitch + angle > MAX_PITCH || cur_pitch + angle < -MAX_PITCH)
-			return (0);
-		rotation = rotation_around_axis(cam->left, angle);
-		look_point = subtract_tuple(target, cam->pos);
-		look_point = multiply_matrix_tuple(rotation, look_point);
-		cam->forward = normalize(look_point);
-	}
-	t_tuple	up;
-	if (ft_fabs(cam->forward.y) > 0.9) // this doesnt seem to work
-		up = create_vector(0, 0, 1);
-	else
-		up = create_vector(0, 1, 0);
-	cam->transformation = view_transform(cam, cam->pos, add_tuple(cam->pos, cam->forward), up);
-	cam->inverse = invert_matrix(cam->transformation, 4);
-	return (1);
-}
-
 int	keypress(int keycode, t_mlx *data)
 {
 	t_camera	*cam;
-	int			changed;
 
-	changed = 0;
 	cam = &data->world->cam;
 	if (keycode == ESC_KEY)
 	{
@@ -126,17 +53,15 @@ int	keypress(int keycode, t_mlx *data)
 	}
 	if (keycode == UP_KEY || keycode == DOWN_KEY || keycode == LEFT_KEY || \
 		keycode == RIGHT_KEY || keycode == ZOOM_IN || keycode == ZOOM_OUT)
-		changed = move_cam(keycode, cam);
-	else if (keycode == W_KEY || keycode == A_KEY || keycode == S_KEY || \
-				keycode == D_KEY)
-		changed = rotate_cam(keycode, cam);
-	if (changed)
 	{
+		move_cam(keycode, cam);
 		render(data, *cam, data->world);
 		if (data->img_count % 2)
-			mlx_put_image_to_window(data->mlx, data->window, data->img1.image, 0, 0);
+			mlx_put_image_to_window(data->mlx, data->window, \
+									data->img1.image, 0, 0);
 		else
-			mlx_put_image_to_window(data->mlx, data->window, data->img2.image, 0, 0);
+			mlx_put_image_to_window(data->mlx, data->window, \
+									data->img2.image, 0, 0);
 	}
 	return (1);
 }

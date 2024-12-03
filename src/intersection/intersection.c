@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 14:39:19 by marieke           #+#    #+#             */
-/*   Updated: 2024/12/03 14:06:30 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/12/03 17:35:43 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	intersect(t_intersect **head, t_object *object, t_ray ray)
 
 t_intersect	*intersect_world(t_world *world, t_ray ray)
 {
-	t_object		*cur;
+	t_object	*cur;
 	t_intersect	*list;
 
 	list = NULL;
@@ -69,8 +69,7 @@ t_intersect	*intersect_world(t_world *world, t_ray ray)
 		{
 			free_intersection(&list);
 			free_minirt(world);
-			exit(1);
-			//exit_err(); fix this
+			exit_err("malloc error", 1);
 		}
 		cur = cur->next;
 	}
