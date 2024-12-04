@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   parse_check_identity.c                             :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: spenning <spenning@student.codam.nl>         +#+                     */
+/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:02:22 by spenning      #+#    #+#                 */
-/*   Updated: 2024/12/04 11:28:14 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/12/04 11:51:21 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 

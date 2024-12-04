@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 13:54:57 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/29 16:59:37 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/12/03 17:33:07 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,6 @@ t_matrix	view_matrix(t_tuple left, t_tuple forward, t_tuple up)
 	transform.grid[2][2] = -forward.z;
 	return (transform);
 }
-
-#include <stdio.h>
-void print_matrix(t_matrix m)
-{
-    int i, j;
-
-    for (i = 0; i < 4; i++)
-    {
-        for (j = 0; j < 4; j++)
-        {
-            printf("%f ", m.grid[i][j]);
-        }
-        printf("\n");
-    }
-printf("\n");
-}
-
 
 t_matrix	view_transform(t_camera *cam, t_tuple from, t_tuple to, t_tuple up)
 {
@@ -117,7 +100,7 @@ void	render(t_mlx *mlx_data, t_camera camera, t_world *world)
 	int		x;
 	int		y;
 	int		i;
-	
+
 	mlx_data->img_count++;
 	x = 0;
 	while (x < camera.image_width)

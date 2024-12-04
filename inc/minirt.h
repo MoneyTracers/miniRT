@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/12/03 18:23:35 by spenning      ########   odam.nl         */
+/*   Updated: 2024/12/03 18:50:30 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 
 # define SUCCESS 0
 # define ERROR 1
-# define EPSILON 0.001
+# define EPSILON 0.01
 
 # ifndef DEBUG
 #  define DEBUG 0
@@ -49,9 +49,9 @@
 # endif
 
 typedef float				t_fvec \
-__attribute__ ((vector_size (4 * sizeof(float))));
+__attribute__ ((vector_size (4 *sizeof(float))));
 
-typedef struct s_mlx t_mlx;
+typedef struct s_mlx		t_mlx;
 
 typedef struct s_camera
 {
@@ -79,7 +79,7 @@ typedef struct s_light
 	struct s_light	*next;
 }	t_light;
 
-typedef enum e_error
+enum e_error
 {
 	DEFAULT,
 	GNL,
@@ -91,7 +91,7 @@ typedef enum e_error
 	NORMAL,
 	OBJECT,
 	LIGHT
-} e_error;
+};
 
 typedef struct s_world
 {
@@ -107,6 +107,6 @@ typedef struct s_world
 
 void	debugger(char *format, ...);
 void	exit_err(char *err, int ec);
-void set_error(t_world *world, int exit_code, int err_msg, void *mem);
+void	set_error(t_world *world, int exit_code, int err_msg, void *mem);
 
 #endif
