@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/12/03 22:19:18 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/12/04 11:35:02 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ enum identifiers
 	sphere,
 	plane,
 	cyl,
+	cone,
 	unidentified
 };
 
@@ -55,6 +56,7 @@ int parse_check_unidentified(char *str);
 int parse_check_cyl(char *str);
 int parse_check_plane(char *str);
 int parse_check_sphere(char *str);
+int	parse_check_cone(char *str);
 int	parse_line_count(char *str);
 void	parse_add_sphere(t_world *world, char *str);
 void	parse_add_plane(t_world *world, char *str);
@@ -83,6 +85,9 @@ int	parse_open_file(char *file);
 void	parse_lines(t_world *world, int line_count, char *file);
 void	parse(t_world *world, int argc, char **argv);
 void	parse_add_obj(t_world *world, void *shape, t_matrix matrix, t_pobj parse);
+t_transformation	get_transform_plane(t_tuple coor);
+t_transformation	get_transform_cyl(t_tuple coor, t_tuple normal, float dia);
+void	parse_add_cone(t_world *world, char *str);
 
 #endif
 
