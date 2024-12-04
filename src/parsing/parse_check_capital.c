@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:07:59 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/29 13:37:38 by spenning      ########   odam.nl         */
+/*   Updated: 2024/12/04 11:44:32 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,10 @@ int	parse_check_correctness(t_parse *parse)
 		return (parse_check_plane(parse->str));
 	else if (parse->type == cyl)
 		return (parse_check_cyl(parse->str));
+	else if (parse->type == cone && !BONUS)
+		return (1);
+	else if (parse->type == cone)
+		return (parse_check_cone(parse->str));
 	else if (parse->type == unidentified)
 		return (parse_check_unidentified(parse->str));
 	return (1);

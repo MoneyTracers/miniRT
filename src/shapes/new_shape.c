@@ -1,17 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   new_shape.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/27 15:31:42 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/27 15:31:51 by maraasve         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   new_shape.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/11/27 15:31:42 by maraasve      #+#    #+#                 */
+/*   Updated: 2024/12/04 11:33:33 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <shapes.h>
 #include <tuples.h>
+
+t_cone	*new_cone(float min, float max, bool capped)
+{
+	t_cone	*cone;
+
+	cone = malloc(sizeof(t_cone));
+	if (!cone)
+		return (NULL);
+	cone->min = min;
+	cone->max = max;
+	cone->capped = capped;
+	return (cone);
+}
 
 t_cylinder	*new_cylinder(float min, float max, bool capped)
 {

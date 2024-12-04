@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   shapes.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/31 14:51:48 by maraasve          #+#    #+#             */
-/*   Updated: 2024/11/29 15:44:08 by maraasve         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   shapes.h                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/10/31 14:51:48 by maraasve      #+#    #+#                 */
+/*   Updated: 2024/12/04 11:36:13 by mynodeus      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,13 @@ typedef struct s_cylinder
 	bool	capped;
 }	t_cylinder;
 
+typedef struct s_cone
+{
+	float	min;
+	float	max;
+	bool	capped;
+}	t_cone;
+
 typedef struct s_plane
 {
 	t_tuple	normal;
@@ -64,6 +71,7 @@ typedef struct s_object
 		t_cylinder	*cylinder;
 		t_sphere	*sphere;
 		t_plane		*plane;
+		t_cone		*cone;
 	};
 	struct s_object	*next;
 }	t_object;
@@ -74,5 +82,6 @@ void		add_object_to_list(t_object **head, t_object *new);
 t_sphere	*new_sphere(void);
 t_cylinder	*new_cylinder(float min, float max, bool capped);
 t_plane		*new_plane(t_tuple normal);
+t_cone		*new_cone(float min, float max, bool capped);
 
 #endif
