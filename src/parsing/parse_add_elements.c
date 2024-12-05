@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse_add_elements.c                               :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/01 14:32:54 by spenning          #+#    #+#             */
-/*   Updated: 2024/12/04 12:34:07 by marieke          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   parse_add_elements.c                               :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: marieke <marieke@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/11/01 14:32:54 by spenning      #+#    #+#                 */
+/*   Updated: 2024/12/05 17:51:39 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	parse_add_cyl(t_world *world, char *str)
 	parse.m = default_material();
 	parse.m.color = parse_get_color(str, &parse.i);
 	if (!world->exit_code)
-		cyl = (void *)new_cylinder(0, parse.height, true);
+		cyl = (void *)new_cylinder(-parse.height / 2, parse.height / 2, true);
 	parse_add_obj(world, cyl, transformation_matrix(\
 	get_transform_cyl(parse.coor, parse.normal, parse.diameter)), parse);
 	return ;
@@ -99,7 +99,7 @@ void	parse_add_cone(t_world *world, char *str)
 	parse.m = default_material();
 	parse.m.color = parse_get_color(str, &parse.i);
 	if (!world->exit_code)
-		cone = (void *)new_cone(-parse.height, 0, true);
+		cone = (void *)new_cone(-parse.height / 2, 0, true);
 	parse_add_obj(world, cone, transformation_matrix(\
 	get_transform_cyl(parse.coor, parse.normal, parse.diameter)), parse);
 	return ;
