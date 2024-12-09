@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 14:32:54 by spenning      #+#    #+#                 */
-/*   Updated: 2024/12/09 14:26:32 by spenning      ########   odam.nl         */
+/*   Updated: 2024/12/09 14:41:55 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	parse_add_plane(t_world *world, char *str)
 	parse.normal = parse_get_normal(str, &parse.i);
 	if (get_magnitude(parse.normal) != 1)
 		set_error(world, 1, NORMAL, NULL);
-	printf("normal: %f\n", get_magnitude(parse.normal));
 	parse.m = default_material();
 	parse.m.color = parse_get_color(str, &parse.i);
 	if (!world->exit_code)
