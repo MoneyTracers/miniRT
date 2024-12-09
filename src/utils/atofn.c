@@ -6,7 +6,7 @@
 /*   By: mynodeus <mynodeus@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/10 19:06:39 by spenning      #+#    #+#                 */
-/*   Updated: 2024/12/03 15:02:11 by spenning      ########   odam.nl         */
+/*   Updated: 2024/12/09 14:38:53 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ float	atofn(const char *nptr, int len)
 	c_ptr = skipwhitespaces(c_ptr);
 	flag = detect_plusmignus(c_ptr);
 	if (flag == 1 || flag == 2)
-		c_ptr++;
+		index++;
 	while (c_ptr[index] != '.' && c_ptr[index] != ' ' && c_ptr[index] != '\0' \
 	&& (c_ptr[index] > 47) && (c_ptr[index] < 58))
 	{
