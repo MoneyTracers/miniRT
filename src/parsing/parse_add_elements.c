@@ -6,7 +6,7 @@
 /*   By: marieke <marieke@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 14:32:54 by spenning      #+#    #+#                 */
-/*   Updated: 2024/12/05 17:51:39 by spenning      ########   odam.nl         */
+/*   Updated: 2024/12/09 13:25:00 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,29 +78,6 @@ void	parse_add_cyl(t_world *world, char *str)
 	if (!world->exit_code)
 		cyl = (void *)new_cylinder(-parse.height / 2, parse.height / 2, true);
 	parse_add_obj(world, cyl, transformation_matrix(\
-	get_transform_cyl(parse.coor, parse.normal, parse.diameter)), parse);
-	return ;
-}
-
-void	parse_add_cone(t_world *world, char *str)
-{
-	t_pobj			parse;
-	t_cone			*cone;
-
-	cone = NULL;
-	ft_bzero(&parse, sizeof(parse));
-	parse.type = CONE;
-	parse.coor = parse_get_coordinates(str, &parse.i);
-	parse.normal = parse_get_normal(str, &parse.i);
-	if (get_magnitude(parse.normal) != 1)
-		set_error(world, 1, NORMAL, NULL);
-	parse.diameter = parse_get_float(str, &parse.i);
-	parse.height = parse_get_float(str, &parse.i);
-	parse.m = default_material();
-	parse.m.color = parse_get_color(str, &parse.i);
-	if (!world->exit_code)
-		cone = (void *)new_cone(-parse.height / 2, 0, true);
-	parse_add_obj(world, cone, transformation_matrix(\
 	get_transform_cyl(parse.coor, parse.normal, parse.diameter)), parse);
 	return ;
 }

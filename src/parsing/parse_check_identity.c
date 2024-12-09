@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:02:22 by spenning      #+#    #+#                 */
-/*   Updated: 2024/12/04 11:51:21 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/12/09 13:26:06 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ int	parse_check_identify(char *str)
 		type = plane;
 	else if (!ft_strncmp(str, "cy ", 2))
 		type = cyl;
-	else if (!ft_strncmp(str, "co ", 2))
-		type = cone;
 	else
 		type = unidentified;
 	return (type);

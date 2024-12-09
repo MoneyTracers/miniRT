@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:57:19 by spenning      #+#    #+#                 */
-/*   Updated: 2024/12/04 11:30:24 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/12/09 13:26:52 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ void	parse_add_object(t_world *world, t_parse *parse)
 		parse_add_plane(world, parse->str);
 	else if (parse->type == cyl)
 		parse_add_cyl(world, parse->str);
-	else if (parse->type == cone)
-		parse_add_cone(world, parse->str);
 	free(parse->str);
 	parse->str = NULL;
 }

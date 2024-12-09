@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:29:18 by spenning      #+#    #+#                 */
-/*   Updated: 2024/12/04 11:29:19 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/12/09 13:25:43 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,35 +71,6 @@ int	parse_check_cyl(char *str)
 	debugger(YEL "\nparse_check_cyl\n\n" RESET);
 	i = 0;
 	if (!ft_strncmp(str, "cy ", 3))
-		i += 2;
-	else
-		return (1);
-	i = parse_skipwhitespace(str, i);
-	if (!parse_iscoordinates(str, &i))
-		return (1);
-	i = parse_skipwhitespace(str, i);
-	if (!parse_isnormalvec(str, &i))
-		return (1);
-	i = parse_skipwhitespace(str, i);
-	if (!parse_isfloat(str, ' ', &i))
-		return (1);
-	i = parse_skipwhitespace(str, i);
-	if (!parse_isfloat(str, ' ', &i))
-		return (1);
-	if (!parse_inrange_rgb(0, 255, str, &i))
-		return (1);
-	if (str[i] != '\n' && str[i] != '\0')
-		return (1);
-	return (0);
-}
-
-int	parse_check_cone(char *str)
-{
-	int	i;
-
-	debugger(YEL "\nparse_check_cone\n\n" RESET);
-	i = 0;
-	if (!ft_strncmp(str, "co ", 3))
 		i += 2;
 	else
 		return (1);

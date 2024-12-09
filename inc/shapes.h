@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/31 14:51:48 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/12/04 11:36:13 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/12/09 13:28:37 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ typedef enum e_object_type
 	SPHERE,
 	PLANE,
 	CYLINDER,
-	CONE
 }	t_object_type;
 
 typedef struct s_material
