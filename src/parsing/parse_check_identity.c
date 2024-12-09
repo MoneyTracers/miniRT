@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/30 14:02:22 by spenning      #+#    #+#                 */
-/*   Updated: 2024/12/09 13:26:06 by spenning      ########   odam.nl         */
+/*   Updated: 2024/12/09 13:51:43 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,20 @@ void	parse_check_identifier(t_world *world, t_parse *parse)
 	__LINE__, __FUNCTION__);
 	if (parse->type == ambient)
 	{
-		if (parse->A_identifier)
-			set_error(world, 1, A_IDENTIFIER, NULL);
-		parse->A_identifier++;
+		if (parse->a_identifier)
+			set_error(world, 1, a_identifier, NULL);
+		parse->a_identifier++;
 	}
 	else if (parse->type == camera)
 	{
-		if (parse->C_identifier)
-			set_error(world, 1, C_IDENTIFIER, NULL);
-		parse->C_identifier++;
+		if (parse->c_identifier)
+			set_error(world, 1, c_identifier, NULL);
+		parse->c_identifier++;
 	}
 	else if (parse->type == light)
 	{
-		if (parse->L_identifier != 0 && BONUS == 0)
-			set_error(world, 1, L_IDENTIFIER, NULL);
-		parse->L_identifier++;
+		if (parse->l_identifier != 0 && BONUS == 0)
+			set_error(world, 1, l_identifier, NULL);
+		parse->l_identifier++;
 	}
 }

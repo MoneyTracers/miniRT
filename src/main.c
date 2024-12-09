@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/12/03 18:48:28 by spenning      ########   odam.nl         */
+/*   Updated: 2024/12/09 13:51:43 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ void	parsing_exit_message(t_world *world)
 		perror("close error");
 	else if (world->err == INC_FORMAT)
 		write(2, "incorrect format in file\n", 25);
-	else if (world->err == L_IDENTIFIER)
+	else if (world->err == l_identifier)
 		write(2, "too many lights in .rt\n", 23);
-	else if (world->err == A_IDENTIFIER)
+	else if (world->err == a_identifier)
 		write(2, "too many ambient light objects in .rt\n", 38);
-	else if (world->err == C_IDENTIFIER)
+	else if (world->err == c_identifier)
 		write(2, "too many camera's in .rt\n", 25);
 	else if (world->err == OBJECT)
 		write(2, "error in allocation for object\n", 31);

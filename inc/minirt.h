@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/12/03 18:50:30 by spenning      ########   odam.nl         */
+/*   Updated: 2024/12/09 13:51:43 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,9 @@ enum e_error
 	GNL,
 	CLOSE,
 	INC_FORMAT,
-	A_IDENTIFIER,
-	L_IDENTIFIER,
-	C_IDENTIFIER,
+	a_identifier,
+	l_identifier,
+	c_identifier,
 	NORMAL,
 	OBJECT,
 	LIGHT
