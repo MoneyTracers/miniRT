@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   intersection.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/19 14:39:19 by marieke           #+#    #+#             */
-/*   Updated: 2024/12/03 17:35:43 by maraasve         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   intersection.c                                     :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/10/19 14:39:19 by marieke       #+#    #+#                 */
+/*   Updated: 2024/12/09 13:33:06 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,6 @@ int	local_intersect(t_intersect **head, t_object *object, t_ray ray)
 	else if (object->type == CYLINDER)
 	{
 		if (intersect_cylinder(head, ray, object) == ERROR)
-			return (ERROR);
-	}
-	else if (object->type == CONE)
-	{
-		if (intersect_cone(head, ray, object) == ERROR)
 			return (ERROR);
 	}
 	return (SUCCESS);

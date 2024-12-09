@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   new_object.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/19 13:06:16 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/27 15:32:17 by maraasve         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   new_object.c                                       :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/10/19 13:06:16 by marieke       #+#    #+#                 */
+/*   Updated: 2024/12/09 13:35:21 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ void	add_shape_to_object(t_object *object, void *shape)
 		object->cylinder = (t_cylinder *)shape;
 	else if (object->type == SPHERE)
 		object->sphere = (t_sphere *)shape;
-	else if (object->type == CONE)
-		object->cylinder = (t_cylinder *)shape;
 	else if (object->type == PLANE)
 		object->plane = (t_plane *)shape;
 }

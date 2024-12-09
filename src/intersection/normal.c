@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   normal.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/23 12:24:15 by marieke           #+#    #+#             */
-/*   Updated: 2024/11/29 17:34:19 by maraasve         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   normal.c                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/10/23 12:24:15 by marieke       #+#    #+#                 */
+/*   Updated: 2024/12/09 13:33:43 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_tuple	local_normal_at(t_object *object, t_tuple local_point)
 		return (subtract_tuple(local_point, object->sphere->center));
 	else if (object->type == PLANE)
 		return (object->plane->normal);
-	else if (object->type == CYLINDER || object->type == CONE)
+	else if (object->type == CYLINDER)
 		return (cyl_normal(object, local_point));
 	return (create_vector(0, 0, 0));
 }

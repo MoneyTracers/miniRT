@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/01 17:28:02 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/12/04 11:51:06 by mynodeus      ########   odam.nl         */
+/*   Updated: 2024/12/09 13:36:42 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ enum e_identifiers
 	sphere,
 	plane,
 	cyl,
-	cone,
 	unidentified
 };
 

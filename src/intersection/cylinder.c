@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cylinder.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/27 14:42:50 by maraasve          #+#    #+#             */
-/*   Updated: 2024/12/09 13:25:36 by maraasve         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   cylinder.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/11/27 14:42:50 by maraasve      #+#    #+#                 */
+/*   Updated: 2024/12/09 13:32:25 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,12 @@ bool	intersect_caps(t_intersect **head, t_object *object, t_ray ray)
 	if (!object->cylinder->capped || equal_float(ray.direction.y, 0))
 		return (SUCCESS);
 	radius = 1;
-	if (object->type == CONE)
-		radius = fabs(object->cylinder->min);
 	t = (object->cylinder->min - ray.origin.y) / ray.direction.y;
 	if (check_cap(ray, t, radius))
 	{
 		if (add_intersect_sorted(head, new_intersect(t, object)) == ERROR)
 			return (ERROR);
 	}
-	if (object->type == CONE)
-		radius = fabs(object->cylinder->max);
 	t = (object->cylinder->max - ray.origin.y) / ray.direction.y;
 	if (check_cap(ray, t, radius))
 	{
