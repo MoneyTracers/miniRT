@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   parse_add_elements.c                               :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: marieke <marieke@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/11/01 14:32:54 by spenning      #+#    #+#                 */
-/*   Updated: 2024/12/09 13:25:00 by spenning      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   parse_add_elements.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/01 14:32:54 by spenning          #+#    #+#             */
+/*   Updated: 2024/12/09 13:49:38 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <shapes.h>
 #include <transformation.h>
 #include <free.h>
-
 
 void	parse_add_sphere(t_world *world, char *str)
 {
