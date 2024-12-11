@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:57:19 by spenning      #+#    #+#                 */
-/*   Updated: 2024/12/09 13:26:52 by spenning      ########   odam.nl         */
+/*   Updated: 2024/12/11 12:32:12 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,16 @@ void	parse_lines_str(t_world *world, t_parse *parse, int fd)
 	parse_add_object(world, parse);
 }
 
+void	parse_count_identifiers(t_world *world, t_parse *parse)
+{
+	if (!parse->a_identifier)
+		set_error(world, 1, no_a, NULL);
+	if (!parse->c_identifier)
+		set_error(world, 1, no_c, NULL);
+	if (!parse->l_identifier)
+		set_error(world, 1, no_l, NULL);
+}
+
 void	parse_lines(t_world *world, int line_count, char *file)
 {
 	int		i;
@@ -67,6 +77,7 @@ void	parse_lines(t_world *world, int line_count, char *file)
 	free(parse.str);
 	parse.str = NULL;
 	get_next_line(0, 2);
+	parse_count_identifiers(world, &parse);
 }
 
 void	parse(t_world *world, int argc, char **argv)

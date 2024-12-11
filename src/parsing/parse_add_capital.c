@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/11/01 14:31:28 by spenning      #+#    #+#                 */
-/*   Updated: 2024/12/03 18:19:41 by spenning      ########   odam.nl         */
+/*   Updated: 2024/12/11 12:21:01 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	parse_add_camera(t_world *world, char *str)
 	i = 1;
 	world->cam.pos = parse_get_coordinates(str, &i);
 	world->cam.normal = parse_get_normal(str, &i);
+	if (get_magnitude(world->cam.normal) != 1)
+		set_error(world, 1, NORMAL, NULL);
 	up = create_vector(0, 1, 0);
 	view = view_transform(&world->cam, world->cam.pos, world->cam.normal, up);
 	new_camera(&world->cam, degrees_to_radians(parse_get_float(str, &i)), view);
