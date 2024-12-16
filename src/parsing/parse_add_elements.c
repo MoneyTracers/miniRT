@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 14:32:54 by spenning          #+#    #+#             */
-/*   Updated: 2024/12/16 14:35:50 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/12/16 15:33:14 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ void	parse_add_cyl(t_world *world, char *str)
 	if (parse.diameter <= 0)
 		set_error(world, 1, DIAMETER, NULL);
 	parse.height = parse_get_float(str, &parse.i);
+	if (parse.height <= 0)
+		set_error(world, 1, HEIGHT_ERROR, NULL);
 	parse.m = default_material();
 	parse.m.color = parse_get_color(str, &parse.i);
 	if (!world->exit_code)

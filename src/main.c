@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 17:06:00 by maraasve          #+#    #+#             */
-/*   Updated: 2024/12/16 14:03:00 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/12/16 15:34:47 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	parsing_exit_message2(t_world *world)
 {
 	if (world->err == DIAMETER)
 		write(2, "diameter needs to be > 0\n", 25);
+	if (world->err == HEIGHT_ERROR)
+		write(2, "height needs to be > 0\n", 23);
 }
 
 void	parsing_exit_message(t_world *world)

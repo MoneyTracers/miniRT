@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 17:28:02 by maraasve          #+#    #+#             */
-/*   Updated: 2024/12/16 14:01:15 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/12/16 15:32:57 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ enum e_error
 	NORMAL,
 	OBJECT,
 	DIAMETER,
+	HEIGHT_ERROR,
 	LIGHT
 };
 
