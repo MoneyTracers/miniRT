@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/12 15:14:54 by spenning      #+#    #+#                 */
-/*   Updated: 2024/12/12 16:53:15 by spenning      ########   odam.nl         */
+/*   Updated: 2024/12/16 14:36:49 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ int	parse_isfloat_integer(char *num, char end_delim, int *i)
 		return (-1);
 	while (ft_isdigit(num[*i]))
 		*i += 1;
+	if (parse_isfloatoverflow(start, *i))
+		return (-1);
 	if (end_delim && num[*i] == end_delim)
 		return (1);
 	else if (num[*i] == ' ' || num[*i] == '\n')
 		return (1);
 	if (num[*i] != '.')
-		return (-1);
-	if (parse_isfloatoverflow(start, *i))
 		return (-1);
 	*i += 1;
 	return (0);
@@ -52,12 +52,12 @@ int	parse_isfloat_decimal(char *num, char end_delim, int *i)
 		return (-1);
 	while (ft_isdigit(num[*i]))
 		*i += 1;
+	if (parse_isfloatoverflow(start, *i))
+		return (-1);
 	if (end_delim && num[*i] == end_delim)
 		return (1);
 	else if (num[*i] == ' ' || num[*i] == '\n')
 		return (1);
-	if (parse_isfloatoverflow(start, *i))
-		return (-1);
 	return (0);
 }
 
