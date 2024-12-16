@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   atofn.c                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mynodeus <mynodeus@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/10/10 19:06:39 by spenning      #+#    #+#                 */
-/*   Updated: 2024/12/09 14:38:53 by spenning      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   atofn.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/10 19:06:39 by spenning          #+#    #+#             */
+/*   Updated: 2024/12/16 13:51:08 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ float	decimals(float result, const char *str, int i, int len)
 	while (i < len)
 	{
 		chr = (str[i] - 48);
-		temp = 10 * nexponent;
+		temp = powf(10, nexponent);
 		result += (float)chr / temp;
 		i++;
 		nexponent++;
