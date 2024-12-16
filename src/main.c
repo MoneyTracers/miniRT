@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/12/09 13:51:43 by spenning      ########   odam.nl         */
+/*   Updated: 2024/12/11 12:27:51 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ void	parsing_exit_message(t_world *world)
 		write(2, "too many ambient light objects in .rt\n", 38);
 	else if (world->err == c_identifier)
 		write(2, "too many camera's in .rt\n", 25);
+	else if (world->err == no_a || world->err == no_l)
+		write(2, "no (ambient) lighting in .rt\n", 29);
+	else if (world->err == no_c)
+		write(2, "no camera in .rt\n", 17);
 	else if (world->err == OBJECT)
 		write(2, "error in allocation for object\n", 31);
 	else if (world->err == LIGHT)

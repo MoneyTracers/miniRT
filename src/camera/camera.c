@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   camera.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/11 13:54:57 by marieke           #+#    #+#             */
-/*   Updated: 2024/12/03 17:33:07 by maraasve         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   camera.c                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/11/11 13:54:57 by marieke       #+#    #+#                 */
+/*   Updated: 2024/12/12 14:58:45 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ t_matrix	view_transform(t_camera *cam, t_tuple from, t_tuple to, t_tuple up)
 	cam->pos = from;
 	cam->normal = to;
 	cam->forward = normalize(subtract_tuple(to, from));
-	if (ft_fabs(cam->forward.y) > 0.9)
+	if (ft_fabs(cam->normal.y) > 0.9)
 		up = create_vector(0, 0, 1);
-	cam->left = normalize(get_cross_product(cam->forward, normalize(up)));
-	cam->true_up = normalize(get_cross_product(cam->left, cam->forward));
-	orientation = view_matrix(cam->left, cam->forward, cam->true_up);
+	cam->left = get_cross_product(cam->normal, normalize(up));
+	cam->true_up = get_cross_product(cam->left, cam->normal);
+	orientation = view_matrix(cam->left, cam->normal, cam->true_up);
 	translation = translation_matrix(-from.x, -from.y, -from.z);
 	transformation = multiply_matrices(orientation, translation);
 	return (transformation);

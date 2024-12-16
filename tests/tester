@@ -111,8 +111,11 @@ C_template=$(find ./ -name C_template)
 cy_template=$(find ./ -name cy_template)
 pl_template=$(find ./ -name pl_template)
 sp_template=$(find ./ -name sp_template)
-vector_template=$(find ./ -name sp_template)
 normal_template=$(find ./ -name normal_template)
+vector_template_cam=$(find ./ -name vector_template_cam)
+vector_template_cy=$(find ./ -name vector_template_cy)
+vector_template_pl=$(find ./ -name vector_template_pl)
+
 
 A_cases=$(find ./ -name A_cases)
 L_cases=$(find ./ -name L_cases)
@@ -121,7 +124,9 @@ cy_cases=$(find ./ -name cy_cases)
 pl_cases=$(find ./ -name pl_cases)
 sp_cases=$(find ./ -name sp_cases)
 random_cases=$(find ./ -name random_cases)
-vector_cases=$(find ./ -name vector_cases)
+vector_cases_cam=$(find ./ -name vector_cases_cam)
+vector_cases_cy=$(find ./ -name vector_cases_cy)
+vector_cases_pl=$(find ./ -name vector_cases_pl)
 
 #timeout
 timout="timeout --preserve-status 1s"
@@ -178,7 +183,7 @@ random_case_test ()
 	echo -e "${BLU}$name${RESET}"
 	while IFS= read -r line; do
 		echo -ne "${YEL}${i} - $line:${RESET}"
-		random_line=$(shuf -i1-5 -n1)
+		random_line=$(shuf -i1-3 -n1)
 		sed "$random_line i $line" $template > temp.rt
 		timeout --preserve-status 1s $exe temp.rt &> /dev/null
 		exit_code=$(echo $?)
@@ -258,7 +263,9 @@ random_case_test $sp_cases $sp_template
 random_case_test $pl_cases $pl_template
 random_case_test $cy_cases $cy_template
 random_case_test $random_cases $normal_template
-random_case_test $vector_cases $vector_template
+random_case_test $vector_cases_cam $vector_template_cam
+random_case_test $vector_cases_cy $vector_template_cy
+random_case_test $vector_cases_pl $vector_template_pl
 
 
 rm -rf temp.*
