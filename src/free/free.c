@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   free.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/10/02 12:43:48 by marieke       #+#    #+#                 */
-/*   Updated: 2024/12/09 13:34:13 by spenning      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/02 12:43:48 by marieke           #+#    #+#             */
+/*   Updated: 2024/12/16 15:24:38 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	free_mlx(t_mlx *data)
 	mlx_loop_end(data->mlx);
 	mlx_destroy_image(data->mlx, data->img1.image);
 	mlx_destroy_image(data->mlx, data->img2.image);
-	mlx_destroy_display(data->mlx);
 	mlx_destroy_window(data->mlx, data->window);
+	mlx_destroy_display(data->mlx);
 	free(data->mlx);
 }
 
