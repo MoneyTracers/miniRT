@@ -6,7 +6,7 @@
 /*   By: spenning <spenning@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/29 14:57:19 by spenning      #+#    #+#                 */
-/*   Updated: 2024/12/11 12:32:12 by spenning      ########   odam.nl         */
+/*   Updated: 2024/12/16 14:27:39 by spenning      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	parse_lines_str(t_world *world, t_parse *parse, int fd)
 
 void	parse_count_identifiers(t_world *world, t_parse *parse)
 {
+	if (world->exit_code)
+		return ;
 	if (!parse->a_identifier)
 		set_error(world, 1, no_a, NULL);
 	if (!parse->c_identifier)
