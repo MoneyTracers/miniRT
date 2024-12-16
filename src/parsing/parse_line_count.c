@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   parse_line_count.c                                 :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: spenning <spenning@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/10/29 14:57:19 by spenning      #+#    #+#                 */
-/*   Updated: 2024/11/29 15:49:05 by spenning      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   parse_line_count.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/29 14:57:19 by spenning          #+#    #+#             */
+/*   Updated: 2024/12/16 15:54:02 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,7 @@ int	parse_line_count(char *str)
 	}
 	if (close (fd))
 		exit_err("close error in parse_file_line_count", 1);
+	if (line_count > 999)
+		exit_err("too many objs in file", 1);
 	return (line_count);
 }
