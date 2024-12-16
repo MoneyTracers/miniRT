@@ -6,7 +6,7 @@
 /*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 17:28:02 by maraasve          #+#    #+#             */
-/*   Updated: 2024/12/16 15:32:57 by maraasve         ###   ########.fr       */
+/*   Updated: 2024/12/16 15:58:46 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ enum e_error
 	OBJECT,
 	DIAMETER,
 	HEIGHT_ERROR,
+	OBJECT_COUNT,
 	LIGHT
 };
 
@@ -107,6 +108,7 @@ typedef struct s_world
 	t_object		*objects;
 	t_mlx			*mlx_data;
 	int				exit_code;
+	int				obj_count;
 	int				err;
 }	t_world;
 

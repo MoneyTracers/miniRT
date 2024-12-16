@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   parse_add_obj.c                                    :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: spenning <spenning@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/11/01 14:32:54 by spenning      #+#    #+#                 */
-/*   Updated: 2024/12/03 22:20:10 by mynodeus      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   parse_add_obj.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/01 14:32:54 by spenning          #+#    #+#             */
+/*   Updated: 2024/12/16 16:00:57 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@ void	parse_add_obj(t_world *world, void *shape, t_matrix mat, t_pobj parse)
 {
 	t_object		*obj;
 
+	world->obj_count++;
+	if (world->obj_count > 999)
+	{
+		set_error(world, 1, OBJECT_COUNT, NULL);
+		return ;
+	}
 	if (world->exit_code)
 		return ;
 	if (!shape)
