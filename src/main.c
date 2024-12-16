@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/09/30 17:06:00 by maraasve      #+#    #+#                 */
-/*   Updated: 2024/12/11 12:27:51 by spenning      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maraasve <maraasve@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/30 17:06:00 by maraasve          #+#    #+#             */
+/*   Updated: 2024/12/16 14:03:00 by maraasve         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@
 #include <mlx.h>
 #include <camera.h>
 #include <parse.h>
+
+void	parsing_exit_message2(t_world *world)
+{
+	if (world->err == DIAMETER)
+		write(2, "diameter needs to be > 0\n", 25);
+}
 
 void	parsing_exit_message(t_world *world)
 {
@@ -50,6 +56,7 @@ void	parsing_exit_message(t_world *world)
 		write(2, "error in allocation for light\n", 30);
 	else if (world->err == NORMAL)
 		write(2, "vector not normalized\n", 22);
+	parsing_exit_message2(world);
 }
 
 void	parsing_exit(t_world *world)
