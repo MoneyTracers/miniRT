@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   camera.c                                           :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: maraasve <maraasve@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/11/11 13:54:57 by marieke       #+#    #+#                 */
-/*   Updated: 2024/12/12 14:58:45 by spenning      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   camera.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: marieke <marieke@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/11 13:54:57 by marieke           #+#    #+#             */
+/*   Updated: 2024/12/17 13:32:34 by marieke          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	new_camera(t_camera *cam, float fov, t_matrix transformation)
 	cam->image_width = WIDTH;
 	cam->fov = fov;
 	half_view = tanf(fov / 2);
-	cam->aspect_ratio = HEIGHT / WIDTH;
+	cam->aspect_ratio = (float)HEIGHT / (float)WIDTH;
 	if (cam->aspect_ratio >= 1)
 	{
 		cam->half_width = half_view;
